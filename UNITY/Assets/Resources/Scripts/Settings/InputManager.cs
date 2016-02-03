@@ -1,159 +1,254 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
-/// <summary>
-/// Use buttons varible and add buttons or remove them then use methods to check if they are being pressed
-/// </summary>
+#region ENUMS
+
+public enum ControllerAxies
+{
+    LeftStickX,
+    LeftStickY,
+    RightStickX,
+    RightStickY,
+    LeftTrigger,
+    RightTrigger,
+    DPadX,
+    DPadY,
+}
+
+public enum ControllerButtons
+{
+    A,
+    B,
+    X,
+    Y,
+    LB,
+    RB,
+    Select,
+    Start,
+    LeftStick,
+    RightStick,
+    DPadUp,
+    DPadDown,
+    DPadLeft,
+    DPadRight
+}
+
+#endregion
+
 public class InputManager
 {
-    public static List<Button> buttons = new List<Button>();
+    #region Axies
 
-    public static void LoadDefaults()
+    public float GetAxies(ControllerAxies axies)
     {
-        buttons.Add(new Button("Vertical", KeyCode.W, KeyCode.S));
-        buttons.Add(new Button("Horizontal", KeyCode.A, KeyCode.D));
-    }
-
-    #region Public Methods
-
-    /// <summary>
-    /// Use this for joystick or mouse controls. returns a float value between -1, 1
-    /// </summary>
-    /// <param name="name">Name of the axies</param>
-    /// <returns>float (-1 to 1)</returns>
-    public static float GetAxies(string name)
-    {
-        return Input.GetAxis(name);
-    }
-
-    /// <summary>
-    /// If positive is pressed returns 1, if negative is pressed returns -1 otherwise returns 0
-    /// </summary>
-    /// <param name="name">name of the axies</param>
-    /// <returns>returns int depending on what key is pressed</returns>
-    public static int GetButtonAxies(string name)
-    {
-        for (int i = 0; i < buttons.Count; i++)
+        float val = 0;
+        switch(axies)
         {
-            if (buttons[i].name == name)
-            {
-                if (Input.GetKey(buttons[i].positive))
-                {
-                    return 1;
-                }
-                else if (Input.GetKey(buttons[i].negative))
-                {
-                    return -1;
-                }
+            case ControllerAxies.LeftStickX:
+            case ControllerAxies.LeftStickY:
+                val = Input.GetAxis(axies.ToString());
+                break;
+            case ControllerAxies.RightStickX:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    val = Input.GetAxis("4");
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    val = Input.GetAxis("3");
                 else
-                {
-                    break;
-                }
-            }
-        }
-
-        return 0;
-    }
-
-    /// <summary>
-    /// Check if key is pressed
-    /// </summary>
-    /// <param name="name">name of the button</param>
-    /// <returns>True or False if button is pressed</returns>
-    public static bool GetButtonDown(string name)
-    {
-        for (int i = 0; i < buttons.Count; i++)
-        {
-            if (buttons[i].name == name)
-            {
-                if (Input.GetKeyDown(buttons[i].positive) || Input.GetKeyDown(buttons[i].negative))
-                {
-                    return true;
-                }
+                    val = Input.GetAxis("4");
+                break;
+            case ControllerAxies.RightStickY:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    val = Input.GetAxis("5");
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    val = Input.GetAxis("4");
                 else
-                {
-                    break;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// Check if key is released
-    /// </summary>
-    /// <param name="name">name of the button</param>
-    /// <returns>True or False if button is released</returns>
-    public static bool GetButtonUp(string name)
-    {
-        for (int i = 0; i < buttons.Count; i++)
-        {
-            if (buttons[i].name == name)
-            {
-                if (Input.GetKeyUp(buttons[i].positive) || Input.GetKeyUp(buttons[i].negative))
-                {
-                    return true;
-                }
+                    val = Input.GetAxis("5");
+                break;
+            case ControllerAxies.DPadX:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    val = Input.GetAxis("6");
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    val = 0;
                 else
-                {
-                    break;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// Check if key is being pressed
-    /// </summary>
-    /// <param name="name">name of the button</param>
-    /// <returns>True or False if button is being pressed</returns>
-    public static bool GetButton(string name)
-    {
-        for (int i = 0; i < buttons.Count; i++)
-        {
-            if (buttons[i].name == name)
-            {
-                if (Input.GetKey(buttons[i].positive) || Input.GetKey(buttons[i].negative))
-                {
-                    return true;
-                }
+                    val = Input.GetAxis("7");
+                break;
+            case ControllerAxies.DPadY:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    val = Input.GetAxis("7");
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    val = 0;
                 else
-                {
-                    break;
-                }
-            }
+                    val = Input.GetAxis("8");
+                break;
+            case ControllerAxies.LeftTrigger:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    val = Input.GetAxis("9");
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    val = Input.GetAxis("5");
+                else
+                    val = Input.GetAxis("3");
+                break;
+            case ControllerAxies.RightTrigger:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    val = Input.GetAxis("10");
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    val = Input.GetAxis("6");
+                else
+                    val = Input.GetAxis("6");
+                break;
+            default:
+                Debug.Log("Couldn't find controller axies");
+                break;
         }
-
-        return false;
+        return val;
     }
 
-    /// <summary>
-    /// Change Button keys
-    /// </summary>
-    /// <param name="name">Name of button</param>
-    /// <param name="positive">positive key / primary key</param>
-    public static void ChangeButton(string name, KeyCode positive)
+    #endregion
+
+    #region Buttons
+
+    public bool GetButton(ControllerButtons button)
     {
-        for (int i = 0; i < buttons.Count; i++)
-            buttons[i].positive = positive;
+        return Input.GetKey(ConvertToKeyCode(button));
     }
 
-    /// <summary>
-    /// Change Button keys
-    /// </summary>
-    /// <param name="name">Name of button</param>
-    /// <param name="positive">positive key / primary key</param>
-    /// <param name="negative">negative key / alternative key</param>
-    public static void ChangeButton(string name, KeyCode positive, KeyCode negative)
+    public bool GetButtonDown(ControllerButtons button)
     {
-        for (int i = 0; i < buttons.Count; i++)
+        return Input.GetKeyDown(ConvertToKeyCode(button));
+    }
+
+    public bool GetButtonUp(ControllerButtons button)
+    {
+        return Input.GetKeyUp(ConvertToKeyCode(button));
+    }
+
+    #endregion
+
+    #region Private
+
+    private KeyCode ConvertToKeyCode(ControllerButtons button)
+    {
+        KeyCode rtn;
+        switch (button)
         {
-            buttons[i].positive = positive;
-            buttons[i].negative = negative;
+            case ControllerButtons.A:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    rtn = KeyCode.Joystick1Button0;
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    rtn = KeyCode.Joystick1Button16;
+                else
+                    rtn = KeyCode.Joystick1Button0;
+                break;
+            case ControllerButtons.B:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    rtn = KeyCode.Joystick1Button1;
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    rtn = KeyCode.Joystick1Button17;
+                else
+                    rtn = KeyCode.Joystick1Button1;
+                break;
+            case ControllerButtons.X:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    rtn = KeyCode.Joystick1Button2;
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    rtn = KeyCode.Joystick1Button18;
+                else
+                    rtn = KeyCode.Joystick1Button2;
+                break;
+            case ControllerButtons.Y:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    rtn = KeyCode.Joystick1Button3;
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    rtn = KeyCode.Joystick1Button19;
+                else
+                    rtn = KeyCode.Joystick1Button3;
+                break;
+            case ControllerButtons.LB:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    rtn = KeyCode.Joystick1Button4;
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    rtn = KeyCode.Joystick1Button13;
+                else
+                    rtn = KeyCode.Joystick1Button4;
+                break;
+            case ControllerButtons.RB:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    rtn = KeyCode.Joystick1Button5;
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    rtn = KeyCode.Joystick1Button14;
+                else
+                    rtn = KeyCode.Joystick1Button5;
+                break;
+            case ControllerButtons.Select:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    rtn = KeyCode.Joystick1Button6;
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    rtn = KeyCode.Joystick1Button10;
+                else
+                    rtn = KeyCode.Joystick1Button6;
+                break;
+            case ControllerButtons.Start:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    rtn = KeyCode.Joystick1Button7;
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    rtn = KeyCode.Joystick1Button9;
+                else
+                    rtn = KeyCode.Joystick1Button7;
+                break;
+            case ControllerButtons.LeftStick:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    rtn = KeyCode.Joystick1Button8;
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    rtn = KeyCode.Joystick1Button11;
+                else
+                    rtn = KeyCode.Joystick1Button9;
+                break;
+            case ControllerButtons.RightStick:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    rtn = KeyCode.Joystick1Button9;
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    rtn = KeyCode.Joystick1Button12;
+                else
+                    rtn = KeyCode.Joystick1Button10;
+                break;
+            case ControllerButtons.DPadUp:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    rtn = KeyCode.None;
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    rtn = KeyCode.Joystick1Button5;
+                else
+                    rtn = KeyCode.Joystick1Button13;
+                break;
+            case ControllerButtons.DPadDown:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    rtn = KeyCode.None;
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    rtn = KeyCode.Joystick1Button6;
+                else
+                    rtn = KeyCode.Joystick1Button14;
+                break;
+            case ControllerButtons.DPadLeft:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    rtn = KeyCode.None;
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    rtn = KeyCode.Joystick1Button7;
+                else
+                    rtn = KeyCode.Joystick1Button11;
+                break;
+            case ControllerButtons.DPadRight:
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                    rtn = KeyCode.None;
+                else if (Application.platform == RuntimePlatform.OSXPlayer)
+                    rtn = KeyCode.Joystick1Button8;
+                else
+                    rtn = KeyCode.Joystick1Button12;
+                break;
+            default:
+                Debug.Log("Button not mapped");
+                rtn = KeyCode.None;
+                break;
         }
+
+        return rtn;
     }
 
     #endregion
