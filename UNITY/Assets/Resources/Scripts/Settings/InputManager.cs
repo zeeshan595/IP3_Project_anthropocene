@@ -38,7 +38,7 @@ public class InputManager
 {
     #region Axies
 
-    public float GetAxies(ControllerAxies axies)
+    public static float GetAxies(ControllerAxies axies)
     {
         float val = 0;
         switch(axies)
@@ -106,17 +106,17 @@ public class InputManager
 
     #region Buttons
 
-    public bool GetButton(ControllerButtons button)
+    public static bool GetButton(ControllerButtons button)
     {
         return Input.GetKey(ConvertToKeyCode(button));
     }
 
-    public bool GetButtonDown(ControllerButtons button)
+    public static bool GetButtonDown(ControllerButtons button)
     {
         return Input.GetKeyDown(ConvertToKeyCode(button));
     }
 
-    public bool GetButtonUp(ControllerButtons button)
+    public static bool GetButtonUp(ControllerButtons button)
     {
         return Input.GetKeyUp(ConvertToKeyCode(button));
     }
@@ -125,7 +125,7 @@ public class InputManager
 
     #region Private
 
-    private KeyCode ConvertToKeyCode(ControllerButtons button)
+    private static KeyCode ConvertToKeyCode(ControllerButtons button)
     {
         KeyCode rtn;
         switch (button)

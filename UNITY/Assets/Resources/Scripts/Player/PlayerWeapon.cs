@@ -13,7 +13,8 @@ public class PlayerWeapon : MonoBehaviour
 
     private void Update()
     {
-        //creates a ray cast on mouse position
+        bool LeftTrigger = InputManager.GetAxies(ControllerAxies.LeftTrigger) > 0.5f;
+
         Ray ray = playerCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
         RaycastHit rayCastHit;
         if (Physics.Raycast(ray, out rayCastHit, playerStats.gunRange))
