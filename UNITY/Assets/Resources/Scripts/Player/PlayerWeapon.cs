@@ -2,7 +2,8 @@
 
 public class PlayerWeapon : MonoBehaviour
 {
-    public GameObject playerCamera;
+    public Vector3 rayOrigin;
+
     public GameObject redSeed;
     public GameObject blueSeed;
     public GameObject waterEffect;
@@ -21,7 +22,7 @@ public class PlayerWeapon : MonoBehaviour
         bool RightTrigger = InputManager.GetAxies(ControllerAxies.RightTrigger) > 0.5f;
 
 
-        Ray ray = playerCamera.GetComponent<Camera>().ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
+        Ray ray = new Ray(rayOrigin + transform.position, transform.forward);
         Debug.DrawRay(ray.origin, ray.direction * playerStats.gunRange, Color.red);
 
         if (RightTrigger)
