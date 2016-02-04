@@ -22,9 +22,9 @@ public class PlayerCamera : MonoBehaviour {
         float angle = playerTarget.transform.eulerAngles.y;
         
         rightVertical -= InputManager.GetAxies(ControllerAxies.RightStickY);
-        aimTarget.transform.Rotate(-rightVertical * rotateSpeed *20* Time.deltaTime, 0, 0);
+        aimTarget.transform.Rotate(rightVertical * rotateSpeed *20* Time.deltaTime, 0, 0);
         rightVertical = Mathf.Clamp(rightVertical, -maxViewRange, maxViewRange);
-        Quaternion rotation = Quaternion.Euler(rightVertical, angle, 0);
+        Quaternion rotation = Quaternion.Euler(-rightVertical, angle, 0);
         transform.position = playerTarget.transform.position - (rotation * offset);
         transform.LookAt(playerTarget.transform);
 	}
