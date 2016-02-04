@@ -2,18 +2,19 @@
 
 public class PlayerWeapon : MonoBehaviour
 {
-    public Vector3 rayOrigin;
-
     public GameObject redSeed;
-    public GameObject blueSeed;
+    public GameObject playerCamera;
+    public GameObject rayOrigin;
     public GameObject waterEffect;
 
-    private PlayerStats playerStats;
-    private bool isPlayingEffect = false;
+    private PlayerStats player;
+    private RaycastHit hit;
+    private bool isPlanted = false;
+    private bool isWaterEffectOn = false;
 
     private void Start()
     {
-        playerStats = GetComponent<PlayerStats>();
+        player = GetComponent<PlayerStats>();
     }
 
     private void Update()
@@ -21,33 +22,37 @@ public class PlayerWeapon : MonoBehaviour
         bool LeftTrigger = InputManager.GetAxies(ControllerAxies.LeftTrigger) > 0.5f;
         bool RightTrigger = InputManager.GetAxies(ControllerAxies.RightTrigger) > 0.5f;
 
-
-        Ray ray = new Ray(rayOrigin + transform.position, transform.forward);
-        Debug.DrawRay(ray.origin, ray.direction * playerStats.gunRange, Color.red);
-
+        Ray ray = new Ray(rayOrigin.transform.position, playerCamera.transform.forward);
+        Debug.DrawRay(ray.origin, ray.direction * player.gunRange, Color.red);
         if (RightTrigger)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, playerStats.gunRange))
+            if (!isPlanted)
             {
-                if (playerStats.team == TeamType.Red)
+                if (Physics.Raycast(ray, out hit, player.gunRange))
                 {
-                    Instantiate(redSeed, hit.point, Quaternion.identity);
+                    if (hit.collider.tag == "Ground")
+                    {
+                        Instantiate(redSeed, hit.point, Quaternion.identity);
+                        isPlanted = true;
+                    }
                 }
             }
         }
+        else
+            isPlanted = false;
+
         if (LeftTrigger)
         {
-            if (!isPlayingEffect)
+            if (!isWaterEffectOn)
             {
                 waterEffect.GetComponent<ParticleSystem>().Play();
-                isPlayingEffect = true;
+                isWaterEffectOn = true;
             }
         }
         else
         {
-            isPlayingEffect = false;
             waterEffect.GetComponent<ParticleSystem>().Stop();
+            isWaterEffectOn = false;
         }
     }
 }

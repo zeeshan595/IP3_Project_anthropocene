@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour
+{
+    public float rotateSpeed = 5;
 
-    CharacterController controller;
-    PlayerStats player;
-    Vector3 offset;
-    public float rotateSpeed = 500;
+    private CharacterController controller;
+    private PlayerStats player;
+
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         controller = GetComponent<CharacterController>();
         player = GetComponent<PlayerStats>();
 	}
@@ -17,13 +19,19 @@ public class PlayerMovement : MonoBehaviour {
 	void Update () 
     {
         //Move
-        float vertical = InputManager.GetAxies(ControllerAxies.LeftStickY);
+        float vertical = -InputManager.GetAxies(ControllerAxies.LeftStickY);
         float horizontal = InputManager.GetAxies(ControllerAxies.LeftStickX);
-        Vector3 targetDirection = horizontal * transform.right + vertical * -transform.forward;
-        controller.Move(targetDirection * player.speed * Time.deltaTime);
+
+        Vector3 targetDirection = new Vector3(horizontal, 0, vertical);
+        //TODO: Gravity
+        targetDirection = transform.TransformDirection(targetDirection);
+        targetDirection *= player.speed;
+        targetDirection *= Time.deltaTime;
+
+        controller.Move(targetDirection);
+
         //Rotate
         float rightHorizontal = InputManager.GetAxies(ControllerAxies.RightStickX);
-        transform.Rotate(0, rightHorizontal * rotateSpeed *20* Time.deltaTime, 0);
-
+        transform.Rotate(0, rightHorizontal * rotateSpeed * 20 * Time.deltaTime, 0);
 	}
 }
