@@ -15,7 +15,7 @@ public class PlayerCamera : MonoBehaviour {
 	// Update is called once per frame
 	void LateUpdate () 
     {
-        float horizontal = InputManager.GetAxies("Mouse X") * rotateSpeed;
+        float horizontal = InputManager.GetAxies(ControllerAxies.RightStickX) * rotateSpeed;
         playerTarget.transform.Rotate(0, horizontal, 0);
 
         float angle = playerTarget.transform.eulerAngles.y;
