@@ -23,7 +23,10 @@ public class PlayerMovement : MonoBehaviour
         float horizontal = InputManager.GetAxies(ControllerAxies.LeftStickX);
 
         Vector3 targetDirection = new Vector3(horizontal, 0, vertical);
-        //TODO: Gravity
+        if(!controller.isGrounded)
+        {
+            targetDirection.y -= player.gravity;
+        }
         targetDirection = transform.TransformDirection(targetDirection);
         targetDirection *= player.speed;
         targetDirection *= Time.deltaTime;
