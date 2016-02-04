@@ -3,10 +3,10 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
 
-    public float movementSpeed = 10;
     CharacterController controller;
     PlayerStats player;
     Vector3 offset;
+    public float rotateSpeed = 500;
 	// Use this for initialization
 	void Start () {
         controller = GetComponent<CharacterController>();
@@ -16,13 +16,14 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        if (Input.GetKey(KeyCode.W))
-            controller.Move(transform.forward * Time.deltaTime * movementSpeed);
-        if (Input.GetKey(KeyCode.D)) 
-            controller.Move(transform.right * movementSpeed * Time.deltaTime);
-        if (Input.GetKey(KeyCode.A))
-            controller.Move(-transform.right * movementSpeed * Time.deltaTime);
-        if (Input.GetKey(KeyCode.S))
-            controller.Move(-transform.forward * Time.deltaTime * movementSpeed);
+        //Move
+        float vertical = InputManager.GetAxies(ControllerAxies.LeftStickY);
+        float horizontal = InputManager.GetAxies(ControllerAxies.LeftStickX);
+        Vector3 targetDirection = horizontal * transform.right + vertical * -transform.forward;
+        controller.Move(targetDirection * player.speed * Time.deltaTime);
+        //Rotate
+        float rightHorizontal = InputManager.GetAxies(ControllerAxies.RightStickX);
+        transform.Rotate(0, rightHorizontal * rotateSpeed *20* Time.deltaTime, 0);
+
 	}
 }

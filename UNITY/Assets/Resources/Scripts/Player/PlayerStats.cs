@@ -10,4 +10,5 @@ public class PlayerStats : MonoBehaviour
 {
     public float gunRange = 50;
     public TeamType team;
+    public float speed = 10;
 }
