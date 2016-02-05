@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller;
     private PlayerStats player;
     private bool isJumping = false;
+    private float groundPos = 0;
 
 	// Use this for initialization
 	void Start ()
@@ -41,12 +42,13 @@ public class PlayerMovement : MonoBehaviour
         //Jump
         if (InputManager.GetButton(ControllerButtons.A) && controller.isGrounded && !isJumping)
         {
+            groundPos = transform.position.y;
             isJumping = true;
         }
         if (isJumping)
         {
             targetDirection.y = Mathf.Lerp(targetDirection.y, jumpHeight, jumpSpeed * Time.deltaTime);
-            if (Mathf.Abs(jumpHeight - transform.position.y) < 0.5f)
+            if (Mathf.Abs((jumpHeight + groundPos) - transform.position.y) < 0.5f)
             {
                 isJumping = false;
             }
