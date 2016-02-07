@@ -3,9 +3,12 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float rotateSpeed = 5;
-    public float jumpHeight = 20;
-    public float jumpSpeed = 1;
+    [SerializeField]
+    private float rotateSpeed = 5;
+    [SerializeField]
+    private float jumpHeight = 20;
+    [SerializeField]
+    private float jumpSpeed = 1;
 
     private CharacterController controller;
     private PlayerStats player;
@@ -32,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
             targetDirection.y -= player.gravity;
         }
         targetDirection = transform.TransformDirection(targetDirection);
-        targetDirection *= player.speed;
+        targetDirection *= player.playerSpeed;
         targetDirection *= Time.deltaTime;
 
         //Rotate

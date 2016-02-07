@@ -2,10 +2,14 @@
 
 public class PlayerWeapon : MonoBehaviour
 {
-    public GameObject redSeed;
-    public GameObject playerCamera;
-    public GameObject rayOrigin;
-    public GameObject waterEffect;
+    [SerializeField]
+    private GameObject redSeed;
+    [SerializeField]
+    private GameObject playerCamera;
+    [SerializeField]
+    private GameObject rayOrigin;
+    [SerializeField]
+    private GameObject waterEffect;
 
     private PlayerStats player;
     private RaycastHit hit;

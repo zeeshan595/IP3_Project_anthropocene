@@ -3,11 +3,14 @@ using System.Collections;
 
 public class PlayerCamera : MonoBehaviour
 {
-    public float rotateSpeed = 5;
-    public float maxViewRange = 20;
-    public float lookOffset = 5.0f;
-    public bool inverted = false;
-    public GameObject playerTarget;
+    [SerializeField]
+    private float maxViewRange = 20;
+    [SerializeField]
+    private float lookOffset = 5.0f;
+    [SerializeField]
+    private bool inverted = false;
+    [SerializeField]
+    private GameObject playerTarget;
 
     private Vector3 offset;
     private float rightVertical;
@@ -16,13 +19,13 @@ public class PlayerCamera : MonoBehaviour
     void Start ()
     {
         offset = playerTarget.transform.position - transform.position;
+        transform.SetParent(null);
         //Cursor.lockState = CursorLockMode.Locked;
 	}
 	
 	// Update is called once per frame
 	void LateUpdate () 
     {
-       // float rightVertical = InputManager.GetAxies(ControllerAxies.RightStickY) * rotateSpeed;
         float angle = playerTarget.transform.eulerAngles.y;
         
         if (!inverted)
