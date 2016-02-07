@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
-using System;
 
 [NetworkSettings(channel = 1, sendInterval = 0.1f)]
 public class PlayerNetwork : NetworkBehaviour
@@ -27,8 +26,6 @@ public class PlayerNetwork : NetworkBehaviour
     private Vector3 syncedPosition = Vector3.zero;
     [SyncVar(hook = "OnSyncedRotation")]
     private Vector2 syncedRotation = Vector2.zero;
-    [SyncVar]
-    private NetworkInstanceId playerIdentity;
 
     #endregion
 
@@ -52,10 +49,6 @@ public class PlayerNetwork : NetworkBehaviour
             GetComponent<PlayerMovement>().enabled = false;
             GetComponent<PlayerWeapon>().enabled = false;
             Destroy(playerCamera);
-        }
-        else
-        {
-            GetNetIdentity();
         }
     }
 
@@ -100,12 +93,6 @@ public class PlayerNetwork : NetworkBehaviour
                     }
                 }
             }
-
-            //Change player identity
-            if (gameObject.name == "" || gameObject.name == "Player(Clone)")
-            {
-                gameObject.name = "Player " + playerIdentity.ToString();
-            }
         }
     }
 
@@ -128,12 +115,6 @@ public class PlayerNetwork : NetworkBehaviour
     private void CmdSendRotationToServer(Vector2 rot)
     {
         syncedRotation = rot;
-    }
-
-    [Command]
-    private void CmdGetPlayerIdentity(NetworkInstanceId identity)
-    {
-        playerIdentity = identity;
     }
 
     #endregion
@@ -173,14 +154,6 @@ public class PlayerNetwork : NetworkBehaviour
     {
         syncedRotation = rot;
         syncedRotationList.Add(rot);
-    }
-
-    [ClientCallback]
-    private void GetNetIdentity()
-    {
-        playerIdentity = GetComponent<NetworkIdentity>().netId;
-        CmdGetPlayerIdentity(playerIdentity);
-        gameObject.name = "Player " + playerIdentity.ToString();
     }
 
     #endregion
