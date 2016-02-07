@@ -10,7 +10,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField]
     private bool inverted = false;
     [SerializeField]
-    private GameObject playerTarget;
+    private Transform playerTarget;
 
     private Vector3 offset;
     private float rightVertical;
@@ -26,7 +26,7 @@ public class PlayerCamera : MonoBehaviour
 	// Update is called once per frame
 	void LateUpdate () 
     {
-        float angle = playerTarget.transform.eulerAngles.y;
+        float angle = playerTarget.eulerAngles.y;
         
         if (!inverted)
             rightVertical += InputManager.GetAxies(ControllerAxies.RightStickY);
@@ -35,7 +35,7 @@ public class PlayerCamera : MonoBehaviour
 
         rightVertical = Mathf.Clamp(rightVertical, -maxViewRange, maxViewRange);
         Quaternion rotation = Quaternion.Euler(-rightVertical, angle, 0);
-        transform.position = playerTarget.transform.position - (rotation * offset);
-        transform.LookAt(playerTarget.transform.position + (playerTarget.transform.forward * lookOffset));
+        transform.position = playerTarget.position - (rotation * offset);
+        transform.LookAt(playerTarget.position + (playerTarget.forward * lookOffset));
 	}
 }
