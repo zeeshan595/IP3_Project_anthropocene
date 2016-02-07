@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 using System;
 
+[NetworkSettings(channel = 1, sendInterval = 0.1f)]
 public class PlayerNetwork : NetworkBehaviour
 {
     #region Serialized Fields
