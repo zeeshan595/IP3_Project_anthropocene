@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
-public class PlayerWeapon : MonoBehaviour
+[NetworkSettings(channel = 0, sendInterval = 0.1f)]
+public class PlayerWeapon : NetworkBehaviour
 {
     [SerializeField]
     private GameObject redSeed;
@@ -34,11 +36,8 @@ public class PlayerWeapon : MonoBehaviour
             {
                 if (Physics.Raycast(ray, out hit, player.gunRange))
                 {
-                    if (hit.collider.tag == "Ground")
-                    {
-                        Instantiate(redSeed, hit.point, Quaternion.identity);
-                        isPlanted = true;
-                    }
+                    CmdServerInstantiate(hit.point);
+                    isPlanted = true;
                 }
             }
         }
@@ -58,5 +57,17 @@ public class PlayerWeapon : MonoBehaviour
             waterEffect.GetComponent<ParticleSystem>().Stop();
             isWaterEffectOn = false;
         }
+    }
+
+    [Command]
+    private void CmdServerInstantiate(Vector3 pos)
+    {
+        RpcClientsInstantiate(pos);
+    }
+
+    [ClientRpc]
+    private void RpcClientsInstantiate(Vector3 pos)
+    {
+        Instantiate(redSeed, pos, Quaternion.identity);
     }
 }

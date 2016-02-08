@@ -1,160 +1,54 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections.Generic;
 
-[NetworkSettings(channel = 1, sendInterval = 0.1f)]
+[NetworkSettings(channel = 0, sendInterval = 0.1f)]
 public class PlayerNetwork : NetworkBehaviour
 {
-    #region Serialized Fields
-
-    [SerializeField]
-    private bool useTimeTravel = false;
-    [SerializeField]
-    private float normalLerpRate = 18.0f;
-    [SerializeField]
-    private float fastLerpRate = 25.0f;
-    [SerializeField]
-    private float angularLerpRate;
     [SerializeField]
     private GameObject playerCamera;
+    [SerializeField]
+    private GameObject playerNameText;
 
-    #endregion
-
-    #region Network Variables
-
-    [SyncVar (hook ="OnSyncedPosition")]
-    private Vector3 syncedPosition = Vector3.zero;
-    [SyncVar(hook = "OnSyncedRotation")]
-    private Vector2 syncedRotation = Vector2.zero;
-
-    #endregion
-
-    #region Non Serialized Fields
-
-    private List<Vector3> syncedPositionList = new List<Vector3>();
-    private List<Vector2> syncedRotationList = new List<Vector2>();
-    private Vector3 lastPos = Vector3.zero;
-    private Vector2 lastRot = Vector2.zero;
-    private float lerpRate;
-
-    #endregion
-
-    #region Private Methods
+    [SyncVar]
+    private string playerIdentity;
 
     private void Start()
     {
-        lerpRate = normalLerpRate;
         if (!isLocalPlayer)
         {
-            GetComponent<PlayerMovement>().enabled = false;
-            GetComponent<PlayerWeapon>().enabled = false;
+            playerCamera.GetComponent<PlayerCamera>().enabled = false;
             Destroy(playerCamera);
+        }
+        else
+        {
+            gameObject.name = "Player " + GetPlayerIdentity();
+            SendPlayerIdentity();
         }
     }
 
     private void Update()
     {
-        if (!isLocalPlayer)
+        if (gameObject.name == "" || gameObject.name == "Player(Clone)")
         {
-            if (!useTimeTravel)
-            {
-                transform.position = Vector3.Lerp(transform.position, syncedPosition, Time.deltaTime * lerpRate);
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, syncedRotation.y, 0), Time.deltaTime * angularLerpRate);
-            }
-            else
-            {
-                //Position
-                if (syncedPositionList.Count > 0)
-                {
-                    transform.position = Vector3.Lerp(transform.position, syncedPositionList[0], Time.deltaTime * lerpRate);
-                    if (Vector3.Distance(transform.position, syncedPositionList[0]) < 0.1f)
-                    {
-                        syncedPositionList.RemoveAt(0);
-                    }
-                    if (syncedPositionList.Count > 10)
-                    {
-                        lerpRate = fastLerpRate;
-                    }
-                    else
-                    {
-                        lerpRate = normalLerpRate;
-                    }
-                }
-
-                //Rotation
-                if (syncedRotationList.Count > 0)
-                {
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, syncedRotationList[0].y, 0), Time.deltaTime * angularLerpRate);
-                    //TODO: head movment syncedRotationList[0].x
-                    Vector2 newRot = new Vector2(0, transform.rotation.eulerAngles.y);
-                    if (Vector2.Distance(newRot, syncedRotationList[0]) < 1)
-                    {
-                        syncedRotationList.RemoveAt(0);
-                    }
-                }
-            }
+            gameObject.name = playerIdentity;
         }
     }
 
-    private void FixedUpdate()
+    private string GetPlayerIdentity()
     {
-        TransmitInfo();
-    }
-
-    #endregion
-
-    #region Server Commands
-
-    [Command]
-    private void CmdSendPositionToServer(Vector3 pos)
-    {
-        syncedPosition = pos;
+        playerIdentity = "Player " + GetComponent<NetworkIdentity>().netId;
+        return playerIdentity;
     }
 
     [Command]
-    private void CmdSendRotationToServer(Vector2 rot)
+    private void CmdSetPlayerIdentity(string identity)
     {
-        syncedRotation = rot;
-    }
-
-    #endregion
-
-    #region Client Methods
-
-    [ClientCallback]
-    private void TransmitInfo()
-    {
-        if (isLocalPlayer)
-        {
-            if (Vector3.Distance(transform.position, lastPos) > 0.5f)
-            {
-                CmdSendPositionToServer(transform.position);
-                lastPos = transform.position;
-            }
-
-            //TODO: head movment syncedRotationList[0].x
-            Vector2 newRot = new Vector2(0, transform.rotation.eulerAngles.y);
-            if (Vector2.Distance(newRot, lastRot) > 0.5f)
-            {
-                CmdSendRotationToServer(newRot);
-                lastRot = newRot;
-            }
-        }
+        playerIdentity = identity;
     }
 
     [ClientCallback]
-    private void OnSyncedPosition(Vector3 pos)
+    private void SendPlayerIdentity()
     {
-        syncedPosition = pos;
-        syncedPositionList.Add(pos);
+        CmdSetPlayerIdentity(playerIdentity);
     }
-
-    [ClientCallback]
-    private void OnSyncedRotation(Vector2 rot)
-    {
-        syncedRotation = rot;
-        syncedRotationList.Add(rot);
-    }
-
-    #endregion
 }
