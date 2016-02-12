@@ -70,6 +70,12 @@ public class PlayerMovement : NetworkBehaviour
             float vertical = -InputManager.GetAxies(ControllerAxies.LeftStickY);
             float horizontal = InputManager.GetAxies(ControllerAxies.LeftStickX);
 
+            if (vertical == 0)
+                vertical = InputManager.ButtonToAxies(KeyCode.W, KeyCode.S);
+
+            if (horizontal == 0)
+                horizontal = InputManager.ButtonToAxies(KeyCode.D, KeyCode.A);
+
             Vector3 targetDirection = new Vector3(horizontal, 0, vertical);
             if (!controller.isGrounded && !isJumping)
             {
@@ -80,11 +86,11 @@ public class PlayerMovement : NetworkBehaviour
             targetDirection *= Time.deltaTime;
 
             //Rotate
-            float rightHorizontal = InputManager.GetAxies(ControllerAxies.RightStickX);
+            float rightHorizontal = InputManager.GetAxies(ControllerAxies.RightStickX) + InputManager.GetAxies(ControllerAxies.MouseX);
             transform.Rotate(0, rightHorizontal * rotateSpeed * 20 * Time.deltaTime, 0);
 
             //Jump
-            if (InputManager.GetButton(ControllerButtons.A) && controller.isGrounded && !isJumping)
+            if ((Input.GetKey(KeyCode.Space) || InputManager.GetButton(ControllerButtons.A)) && controller.isGrounded && !isJumping)
             {
                 groundPos = transform.position.y;
                 isJumping = true;

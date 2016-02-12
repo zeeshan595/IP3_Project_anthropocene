@@ -29,9 +29,9 @@ public class PlayerCamera : MonoBehaviour
         float angle = playerTarget.eulerAngles.y;
         
         if (!inverted)
-            rightVertical += InputManager.GetAxies(ControllerAxies.RightStickY);
+            rightVertical += InputManager.GetAxies(ControllerAxies.RightStickY) + InputManager.GetAxies(ControllerAxies.MouseY);
         else
-            rightVertical -= InputManager.GetAxies(ControllerAxies.RightStickY);
+            rightVertical -= InputManager.GetAxies(ControllerAxies.RightStickY) - InputManager.GetAxies(ControllerAxies.MouseY);
 
         rightVertical = Mathf.Clamp(rightVertical, -maxViewRange, maxViewRange);
         Quaternion rotation = Quaternion.Euler(-rightVertical, angle, 0);

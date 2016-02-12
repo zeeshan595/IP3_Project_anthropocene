@@ -12,6 +12,8 @@ public enum ControllerAxies
     RightTrigger,
     DPadX,
     DPadY,
+    MouseX,
+    MouseY
 }
 
 public enum ControllerButtons
@@ -45,6 +47,8 @@ public class InputManager
         {
             case ControllerAxies.LeftStickX:
             case ControllerAxies.LeftStickY:
+            case ControllerAxies.MouseX:
+            case ControllerAxies.MouseY:
                 val = Input.GetAxis(axies.ToString());
                 break;
             case ControllerAxies.RightStickX:
@@ -105,6 +109,22 @@ public class InputManager
     #endregion
 
     #region Buttons
+
+    public static float ButtonToAxies(KeyCode positive, KeyCode negative)
+    {
+        if (Input.GetKey(positive))
+        {
+            return 1;
+        }
+        else if (Input.GetKey(negative))
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
     public static bool GetButton(ControllerButtons button)
     {

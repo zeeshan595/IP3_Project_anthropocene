@@ -30,7 +30,7 @@ public class PlayerWeapon : NetworkBehaviour
 
         Ray ray = new Ray(rayOrigin.transform.position, playerCamera.transform.forward);
         Debug.DrawRay(ray.origin, ray.direction * player.gunRange, Color.red);
-        if (RightTrigger)
+        if (RightTrigger || Input.GetKey(KeyCode.Mouse0))
         {
             if (!isPlanted)
             {
@@ -44,7 +44,7 @@ public class PlayerWeapon : NetworkBehaviour
         else
             isPlanted = false;
 
-        if (LeftTrigger)
+        if (LeftTrigger || Input.GetKey(KeyCode.Mouse1))
         {
             if (!isWaterEffectOn)
             {
