@@ -25,37 +25,40 @@ public class PlayerWeapon : NetworkBehaviour
 
     private void Update()
     {
-        bool LeftTrigger = InputManager.GetAxies(ControllerAxies.LeftTrigger) > 0.5f;
-        bool RightTrigger = InputManager.GetAxies(ControllerAxies.RightTrigger) > 0.5f;
-
-        Ray ray = new Ray(rayOrigin.transform.position, playerCamera.transform.forward);
-        Debug.DrawRay(ray.origin, ray.direction * player.gunRange, Color.red);
-        if (RightTrigger || Input.GetKey(KeyCode.Mouse0))
+        if (isLocalPlayer)
         {
-            if (!isPlanted)
+            bool LeftTrigger = InputManager.GetAxies(ControllerAxies.LeftTrigger) > 0.5f;
+            bool RightTrigger = InputManager.GetAxies(ControllerAxies.RightTrigger) > 0.5f;
+
+            Ray ray = new Ray(rayOrigin.transform.position, playerCamera.transform.forward);
+            Debug.DrawRay(ray.origin, ray.direction * player.gunRange, Color.red);
+            if (RightTrigger || Input.GetKey(KeyCode.Mouse0))
             {
-                if (Physics.Raycast(ray, out hit, player.gunRange))
+                if (!isPlanted)
                 {
-                    CmdServerInstantiate(hit.point);
-                    isPlanted = true;
+                    if (Physics.Raycast(ray, out hit, player.gunRange))
+                    {
+                        CmdServerInstantiate(hit.point);
+                        isPlanted = true;
+                    }
                 }
             }
-        }
-        else
-            isPlanted = false;
+            else
+                isPlanted = false;
 
-        if (LeftTrigger || Input.GetKey(KeyCode.Mouse1))
-        {
-            if (!isWaterEffectOn)
+            if (LeftTrigger || Input.GetKey(KeyCode.Mouse1))
             {
-                waterEffect.GetComponent<ParticleSystem>().Play();
-                isWaterEffectOn = true;
+                if (!isWaterEffectOn)
+                {
+                    waterEffect.GetComponent<ParticleSystem>().Play();
+                    isWaterEffectOn = true;
+                }
             }
-        }
-        else
-        {
-            waterEffect.GetComponent<ParticleSystem>().Stop();
-            isWaterEffectOn = false;
+            else
+            {
+                waterEffect.GetComponent<ParticleSystem>().Stop();
+                isWaterEffectOn = false;
+            }
         }
     }
 
