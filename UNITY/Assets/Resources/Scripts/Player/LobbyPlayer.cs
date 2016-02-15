@@ -8,10 +8,12 @@ public class LobbyPlayer : NetworkLobbyPlayer
     public void Ready()
     {
         readyToBegin = true;
+        SendReadyToBeginMessage();
     }
 
     public void UnReady()
     {
         readyToBegin = false;
+        SendNotReadyToBeginMessage();
     }
 }

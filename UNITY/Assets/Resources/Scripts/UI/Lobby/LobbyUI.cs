@@ -37,17 +37,18 @@ public class LobbyUI : MonoBehaviour
 
         for (int i = 0; i < lobby.lobbySlots.Length; i++)
         {
-            LobbyPlayer player = lobby.lobbySlots[i].GetComponent<LobbyPlayer>();
-            if (player != null)
+            if (lobby.lobbySlots[i] != null)
             {
-                //When player joins what needs to happen
-                if (player.team == TeamType.Blue)
+                LobbyPlayer player = lobby.lobbySlots[i].GetComponent<LobbyPlayer>();
+                if (player != null)
                 {
-                    Debug.Log("Blue Team Player");
-                }
-                else
-                {
-                    Debug.Log("Red Team Player");
+                    //When player joins what needs to happen
+
+                    //Ready the player
+                    player.Ready();
+
+                    //Unready the player
+                    //player.UnReady();
                 }
             }
         }

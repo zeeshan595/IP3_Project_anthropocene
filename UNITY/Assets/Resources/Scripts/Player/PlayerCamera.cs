@@ -11,14 +11,14 @@ public class PlayerCamera : MonoBehaviour
     private bool inverted = false;
     [SerializeField]
     private Transform playerTarget;
-
+    [SerializeField]
     private Vector3 offset;
+
     private float rightVertical;
 
     // Use this for initialization
     void Start ()
     {
-        offset = playerTarget.transform.position - transform.position;
         transform.SetParent(null);
         //Cursor.lockState = CursorLockMode.Locked;
 	}
@@ -35,7 +35,7 @@ public class PlayerCamera : MonoBehaviour
 
         rightVertical = Mathf.Clamp(rightVertical, -maxViewRange, maxViewRange);
         Quaternion rotation = Quaternion.Euler(-rightVertical, angle, 0);
-        transform.position = playerTarget.position - (rotation * offset);
+        transform.position = playerTarget.transform.position + playerTarget.transform.TransformDirection(offset);
         transform.LookAt(playerTarget.position + (playerTarget.forward * lookOffset));
 	}
 }

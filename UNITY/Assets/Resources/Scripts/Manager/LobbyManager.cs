@@ -8,6 +8,7 @@ public delegate void OnConntionLostFromServer(NetworkConnection conn);
 
 public class LobbyManager : NetworkLobbyManager
 {
+    //Event Handlers
     public OnConnectedToServer ClientConnected = null;
     public OnConntionLostFromServer ClientDisconnected = null;
 
@@ -95,6 +96,35 @@ public class LobbyManager : NetworkLobbyManager
         base.OnClientDisconnect(conn);
         if (ClientDisconnected != null)
             ClientDisconnected(conn);
+    }
+
+    public override GameObject OnLobbyServerCreateGamePlayer(NetworkConnection conn, short playerControllerId)
+    {
+        Transform spawnPosition = transform;
+        for (int i = 0; i < lobbySlots.Length; i++)
+        {
+            LobbyPlayer player = lobbySlots[i].GetComponent<LobbyPlayer>();
+            if (player.playerControllerId == playerControllerId)
+            {
+                if (player)
+                {
+                    if (player.team == TeamType.Blue)
+                    {
+                        spawnPosition.position = new Vector3(10, 8, 10);
+                        spawnPosition.rotation = Quaternion.Euler(new Vector3(0, -90, 0));
+                    }
+                    else
+                    {
+                        spawnPosition.position = new Vector3(-70, 8, 4);
+                        spawnPosition.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
+                    }
+                    break;
+                }
+                break;
+            }
+        }
+
+        return (GameObject)Instantiate(gamePlayerPrefab, spawnPosition.position, spawnPosition.rotation);
     }
 
     #endregion
