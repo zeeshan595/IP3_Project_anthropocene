@@ -17,6 +17,7 @@ public class PlayerCamera : MonoBehaviour
     private float rightVertical;
     public bool isWallBanging = false;
 
+    private Vector3 velocity = Vector3.zero;
     // Use this for initialization
     void Start ()
     {
@@ -40,37 +41,18 @@ public class PlayerCamera : MonoBehaviour
         transform.position = playerTarget.transform.position + playerTarget.transform.TransformDirection(offset);
         Vector3 playerPos = playerTarget.position + (playerTarget.forward * lookOffset);
         transform.LookAt(playerPos);
-        //StartCoroutine(OffSetCamera());
-        Vector3 dir = playerTarget.position - transform.position;
-        if (Physics.Raycast(transform.position, dir, dir.magnitude - 1))
+
+        Vector3 vec = Vector3.zero;
+        RaycastHit hit = new RaycastHit();
+        if (Physics.Linecast(playerTarget.position, transform.position, out hit))
         {
-            Debug.Log("Object hit!");
-            offset.z = 0;
+            if (hit.transform.gameObject.tag == "Wall")
+            {
+               transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+            }
         }
-        else
-        {
-            Debug.Log("Why am I being turned off?");
-            offset.z = 10;
-        }
-        //if (isWallBanging)
-        //{
-        //    offset.z = 0;
-        //}
-        //else if(!isWallBanging)
-        //{
-            
-        //    offset.z = originalOffSet.z;
-        //}
 	}
 
+  
 
-    //IEnumerator OffSetCamera()
-    //{
-        
-    //    yield return new WaitForSeconds(1);
-    //    if(!Physics.Raycast(transform.position, dir, dir.magnitude - 1))
-    //    {
-    //        offset.z = originalOffSet.z;
-    //    }
-    //}
 }
