@@ -1,44 +1,104 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Networking;
 
 [NetworkSettings(channel = 0, sendInterval = 0.1f)]
 public class PlayerNetwork : NetworkBehaviour
 {
+    #region Serialized Fields
+
     [SerializeField]
     private GameObject playerCamera;
     [SerializeField]
     private GameObject playerNameText;
 
-    [SyncVar]
+    #endregion
+
+    #region Sync Variables
+
+    [SyncVar(hook = "OnPlayerIdentityChanged")]
     private string playerIdentity;
+    [SyncVar(hook = "OnPlayerNameChanged")]
+    private string playerName = "";
+
+    #endregion
+
+    private Transform camTransform;
+    private PlayerStats player;
+
+    #region Private Methods
 
     private void Start()
     {
         if (!isLocalPlayer)
         {
             playerCamera.GetComponent<PlayerCamera>().enabled = false;
+            player.GetComponent<PlayerStats>();
             Destroy(playerCamera);
+            camTransform = Camera.main.gameObject.transform;
+            if (Settings.team != player.team)
+            {
+                playerNameText.SetActive(false);
+            }
         }
         else
         {
-            gameObject.name = "Player " + GetPlayerIdentity();
+            playerIdentity = "Player " + GetComponent<NetworkIdentity>().netId;
+            gameObject.name = playerIdentity;
+            playerName = Settings.username;
             SendPlayerIdentity();
+            SendPlayerName();
+            playerNameText.SetActive(false);
         }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        if (gameObject.name == "" || gameObject.name == "Player(Clone)")
-        {
-            gameObject.name = playerIdentity;
-        }
+        if (camTransform != null)
+            playerNameText.transform.LookAt(camTransform.forward + playerNameText.transform.position);
     }
 
     private string GetPlayerIdentity()
     {
-        playerIdentity = "Player " + GetComponent<NetworkIdentity>().netId;
+        
         return playerIdentity;
     }
+
+    #endregion
+
+    #region Hook
+
+    private void OnPlayerIdentityChanged(string playerIdentity)
+    {
+        this.playerIdentity = playerIdentity;
+        gameObject.name = playerIdentity;
+    }
+
+    private void OnPlayerNameChanged(string playerName)
+    {
+        this.playerName = playerName;
+        playerNameText.GetComponent<TextMesh>().text = playerName;
+    }
+
+    #endregion
+
+    #region Client Call Back
+
+    [ClientCallback]
+    private void SendPlayerIdentity()
+    {
+        CmdSetPlayerIdentity(playerIdentity);
+    }
+
+    [ClientCallback]
+    private void SendPlayerName()
+    {
+        CmdSetPlayername(Settings.username);
+    }
+
+    #endregion
+
+    #region Command
 
     [Command]
     private void CmdSetPlayerIdentity(string identity)
@@ -46,9 +106,11 @@ public class PlayerNetwork : NetworkBehaviour
         playerIdentity = identity;
     }
 
-    [ClientCallback]
-    private void SendPlayerIdentity()
+    [Command]
+    private void CmdSetPlayername(string username)
     {
-        CmdSetPlayerIdentity(playerIdentity);
+        playerName = username;
     }
+
+    #endregion
 }

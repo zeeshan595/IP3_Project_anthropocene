@@ -1,4 +1,5 @@
-﻿using UnityEngine.Networking;
+﻿using UnityEngine;
+using UnityEngine.Networking;
 
 public class LobbyPlayer : NetworkLobbyPlayer
 {
@@ -7,13 +8,39 @@ public class LobbyPlayer : NetworkLobbyPlayer
 
     public void Ready()
     {
-        readyToBegin = true;
-        SendReadyToBeginMessage();
+        if (isLocalPlayer)
+        {
+            readyToBegin = true;
+            SendReadyToBeginMessage();
+        }
     }
 
     public void UnReady()
     {
-        readyToBegin = false;
-        SendNotReadyToBeginMessage();
+        if (isLocalPlayer)
+        {
+            readyToBegin = false;
+            SendNotReadyToBeginMessage();
+        }
+    }
+
+    [ClientCallback]
+    public void ChangeTeam(TeamType team)
+    {
+        if (isLocalPlayer)
+        {
+            Settings.team = team;
+            CmdChangeTeam(team);
+        }
+        else
+        {
+            Debug.Log("You cannot change other player's team");
+        }
+    }
+
+    [Command]
+    private void CmdChangeTeam(TeamType team)
+    {
+        this.team = team;
     }
 }

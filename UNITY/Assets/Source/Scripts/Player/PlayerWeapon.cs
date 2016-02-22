@@ -18,10 +18,12 @@ public class PlayerWeapon : NetworkBehaviour
     private PlayerStats player;
     private bool isPlanted = false;
     private bool isWaterEffectOn = false;
+    private GameObject crossHair;
 
     private void Start()
     {
         player = GetComponent<PlayerStats>();
+        crossHair = GameObject.Find("Canvas").transform.FindChild("Cross Hair").gameObject;
     }
 
     private void Update()
@@ -38,7 +40,8 @@ public class PlayerWeapon : NetworkBehaviour
                 if (!isPlanted)
                 {
                     RaycastHit[] hit = Physics.RaycastAll(ray, player.gunRange);
-                    System.Array.Sort(hit, delegate (RaycastHit hit1, RaycastHit hit2) {
+                    System.Array.Sort(hit, delegate (RaycastHit hit1, RaycastHit hit2)
+                    {
                         return hit1.distance.CompareTo(hit2.distance);
                     });
 
@@ -56,6 +59,7 @@ public class PlayerWeapon : NetworkBehaviour
                                 {
                                     CmdServerInstantiate(hit[i].point, hit[i].normal);
                                     isPlanted = true;
+                                    break;
                                 }
                             }
                         }
@@ -63,7 +67,14 @@ public class PlayerWeapon : NetworkBehaviour
                 }
             }
             else
+            {
                 isPlanted = false;
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, player.gunRange))
+                {
+                    ((RectTransform)crossHair.transform).anchoredPosition = Camera.main.WorldToScreenPoint(hit.point);
+                }
+            }
 
             if (LeftTrigger || Input.GetKey(KeyCode.Mouse1))
             {
@@ -92,10 +103,10 @@ public class PlayerWeapon : NetworkBehaviour
     {
         GameObject flower;
         if (GetComponent<PlayerStats>().team == TeamType.Blue)
-            flower = (GameObject)Instantiate(bluePlants[Random.Range(0, bluePlants.Length)], pos, Quaternion.LookRotation(normal));
+            flower = (GameObject)Instantiate(bluePlants[Random.Range(0, bluePlants.Length)], pos + (normal * 0.05f), Quaternion.LookRotation(normal));
         else
-            flower = (GameObject)Instantiate(redPlants[Random.Range(0, redPlants.Length)], pos, Quaternion.LookRotation(normal));
+            flower = (GameObject)Instantiate(redPlants[Random.Range(0, redPlants.Length)], pos + (normal * 0.05f), Quaternion.LookRotation(normal));
 
-        GameManager.flowers.Add(flower);
+
     }
 }

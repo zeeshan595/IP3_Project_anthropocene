@@ -45,7 +45,7 @@ public class LobbyUI : MonoBehaviour
                     //When player joins what needs to happen
 
                     //Ready the player
-                    player.Ready();
+                    //player.Ready();
 
                     //Unready the player
                     //player.UnReady();
