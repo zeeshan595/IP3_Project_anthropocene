@@ -5,7 +5,9 @@ using UnityEngine.Networking;
 public class PlayerWeapon : NetworkBehaviour
 {
     [SerializeField]
-    private GameObject redSeed;
+    private GameObject[] redPlants;
+    [SerializeField]
+    private GameObject[] bluePlants;
     [SerializeField]
     private GameObject playerCamera;
     [SerializeField]
@@ -14,7 +16,6 @@ public class PlayerWeapon : NetworkBehaviour
     private GameObject waterEffect;
 
     private PlayerStats player;
-    private RaycastHit hit;
     private bool isPlanted = false;
     private bool isWaterEffectOn = false;
 
@@ -36,10 +37,28 @@ public class PlayerWeapon : NetworkBehaviour
             {
                 if (!isPlanted)
                 {
-                    if (Physics.Raycast(ray, out hit, player.gunRange))
+                    RaycastHit[] hit = Physics.RaycastAll(ray, player.gunRange);
+                    System.Array.Sort(hit, delegate (RaycastHit hit1, RaycastHit hit2) {
+                        return hit1.distance.CompareTo(hit2.distance);
+                    });
+
+                    if (hit.Length > 0)
                     {
-                        CmdServerInstantiate(hit.point);
-                        isPlanted = true;
+                        if (hit[0].collider.tag != "Player")
+                        {
+                            for (int i = 0; i < hit.Length; i++)
+                            {
+                                if (hit[i].collider.tag == "Flower")
+                                {
+                                    Destroy(hit[i].collider.gameObject);
+                                }
+                                else
+                                {
+                                    CmdServerInstantiate(hit[i].point, hit[i].normal);
+                                    isPlanted = true;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -63,14 +82,20 @@ public class PlayerWeapon : NetworkBehaviour
     }
 
     [Command]
-    private void CmdServerInstantiate(Vector3 pos)
+    private void CmdServerInstantiate(Vector3 pos, Vector3 normal)
     {
-        RpcClientsInstantiate(pos);
+        RpcClientsInstantiate(pos, normal);
     }
 
     [ClientRpc]
-    private void RpcClientsInstantiate(Vector3 pos)
+    private void RpcClientsInstantiate(Vector3 pos, Vector3 normal)
     {
-        Instantiate(redSeed, pos, Quaternion.identity);
+        GameObject flower;
+        if (GetComponent<PlayerStats>().team == TeamType.Blue)
+            flower = (GameObject)Instantiate(bluePlants[Random.Range(0, bluePlants.Length)], pos, Quaternion.LookRotation(normal));
+        else
+            flower = (GameObject)Instantiate(redPlants[Random.Range(0, redPlants.Length)], pos, Quaternion.LookRotation(normal));
+
+        GameManager.flowers.Add(flower);
     }
 }

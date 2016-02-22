@@ -4,55 +4,53 @@ using System.Collections;
 public class PlayerCamera : MonoBehaviour
 {
     [SerializeField]
-    private float maxViewRange = 20;
+    private float minViewRange = 3;
     [SerializeField]
-    private float lookOffset = 5.0f;
+    private float maxViewRange = 5;
+    [SerializeField]
+    private float distance = 10;
     [SerializeField]
     private bool inverted = false;
     [SerializeField]
     private Transform playerTarget;
     [SerializeField]
-    private Vector3 offset;
-    private Vector3 originalOffSet;
-    private float rightVertical;
-    public bool isWallBanging = false;
+    private float lookOffset = 0;
+    [SerializeField]
+    private float speed = 5.0f;
 
-    private Vector3 velocity = Vector3.zero;
-    // Use this for initialization
-    void Start ()
+    private float rightVertical;
+
+    private void Start ()
     {
         transform.SetParent(null);
         //Cursor.lockState = CursorLockMode.Locked;
-        originalOffSet = offset;
 	}
 	
-	// Update is called once per frame
-	void LateUpdate () 
-    {
-        float angle = playerTarget.eulerAngles.y;
-        
+	private void Update () 
+    {        
         if (!inverted)
-            rightVertical += InputManager.GetAxies(ControllerAxies.RightStickY) + InputManager.GetAxies(ControllerAxies.MouseY);
+            rightVertical += (InputManager.GetAxies(ControllerAxies.RightStickY) + InputManager.GetAxies(ControllerAxies.MouseY)) * Time.deltaTime * speed;
         else
-            rightVertical -= InputManager.GetAxies(ControllerAxies.RightStickY) - InputManager.GetAxies(ControllerAxies.MouseY);
+            rightVertical -= (InputManager.GetAxies(ControllerAxies.RightStickY) + InputManager.GetAxies(ControllerAxies.MouseY)) * Time.deltaTime * speed;
 
-        rightVertical = Mathf.Clamp(rightVertical, -maxViewRange, maxViewRange);
-        Quaternion rotation = Quaternion.Euler(-rightVertical, angle, 0);
-        transform.position = playerTarget.transform.position + playerTarget.transform.TransformDirection(offset);
-        Vector3 playerPos = playerTarget.position + (playerTarget.forward * lookOffset);
-        transform.LookAt(playerPos);
+        ///Change Position
+        rightVertical = Mathf.Clamp(rightVertical, -minViewRange, maxViewRange);
+        Vector3 pos = playerTarget.position; // Set Camera To Player Position
+        pos += (-playerTarget.forward * distance);// Move Camera Back
+        pos += (Vector3.up * rightVertical);// Move Camera Up
 
-        Vector3 vec = Vector3.zero;
-        RaycastHit hit = new RaycastHit();
-        if (Physics.Linecast(playerTarget.position, transform.position, out hit))
+        transform.position = pos;
+        transform.LookAt(playerTarget.position + (Vector3.up * lookOffset));
+    }
+
+    private void LateUpdate()
+    {
+        //If Wall infront
+        Ray ray = new Ray(playerTarget.position - (transform.forward * 0.5f), transform.position - playerTarget.position);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, distance))
         {
-            if (hit.transform.gameObject.tag == "Wall")
-            {
-               transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-            }
+            transform.position = hit.point;
         }
-	}
-
-  
-
+    }
 }
