@@ -107,6 +107,6 @@ public class PlayerWeapon : NetworkBehaviour
         else
             flower = (GameObject)Instantiate(redPlants[Random.Range(0, redPlants.Length)], pos + (normal * 0.05f), Quaternion.LookRotation(normal));
 
-
+        
     }
 }

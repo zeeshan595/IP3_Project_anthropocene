@@ -1,10 +1,21 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Networking;
 
 [NetworkSettings(channel = 0, sendInterval = 0.1f)]
 public class PlayerNetwork : NetworkBehaviour
 {
+    #region Getters & Setters
+
+    public string Username
+    {
+        get
+        {
+            return playerName;
+        }
+    }
+
+    #endregion
+
     #region Serialized Fields
 
     [SerializeField]
@@ -23,8 +34,12 @@ public class PlayerNetwork : NetworkBehaviour
 
     #endregion
 
+    #region Private Variables
+
     private Transform camTransform;
     private PlayerStats player;
+
+    #endregion
 
     #region Private Methods
 
@@ -33,7 +48,7 @@ public class PlayerNetwork : NetworkBehaviour
         if (!isLocalPlayer)
         {
             playerCamera.GetComponent<PlayerCamera>().enabled = false;
-            player.GetComponent<PlayerStats>();
+            player = GetComponent<PlayerStats>();
             Destroy(playerCamera);
             camTransform = Camera.main.gameObject.transform;
             if (Settings.team != player.team)
