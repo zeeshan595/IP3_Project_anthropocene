@@ -27,7 +27,13 @@ public class PlayerWeapon : NetworkBehaviour
             {
                 if (weapons[i].type == Settings.weaponType)
                 {
-                    CmdCreateWeapon((int)Settings.weaponType);
+                    CmdCreateWeapon(i);
+                    if (isServer)
+                    {
+                        GameObject w = (GameObject)Instantiate(weapons[i].gameObject, weaponTransform.position, weaponTransform.rotation);
+                        currentWeapon = w.GetComponent<Weapon>();
+                        w.transform.SetParent(weaponTransform);
+                    }
                     break;
                 }
             }

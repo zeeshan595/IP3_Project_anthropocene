@@ -65,4 +65,10 @@ public class LobbyUI : MonoBehaviour
     {
         lobby.SearchForMatch();
     }
+
+    //Simple username textbox
+    private void OnGUI()
+    {
+        Settings.username = GUILayout.TextField(Settings.username, GUILayout.Width(200));
+    }
 }

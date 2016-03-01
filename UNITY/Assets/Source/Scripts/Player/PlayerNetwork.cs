@@ -86,13 +86,13 @@ public class PlayerNetwork : NetworkBehaviour
     private void OnPlayerIdentityChanged(string playerIdentity)
     {
         this.playerIdentity = playerIdentity;
-        gameObject.name = playerIdentity;
     }
 
     private void OnPlayerNameChanged(string playerName)
     {
         this.playerName = playerName;
         playerNameText.GetComponent<TextMesh>().text = playerName;
+        gameObject.name = playerName;
     }
 
     #endregion
