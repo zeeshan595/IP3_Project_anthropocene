@@ -8,6 +8,7 @@ public class LobbyUI : MonoBehaviour
     public GameObject onlineUI;
 
     private LobbyManager lobby;
+    private bool isRed = false;
 
     private void Start()
     {
@@ -70,5 +71,14 @@ public class LobbyUI : MonoBehaviour
     private void OnGUI()
     {
         Settings.username = GUILayout.TextField(Settings.username, GUILayout.Width(200));
+        isRed = GUILayout.Toggle(isRed, "Is Red");
+        if (isRed)
+        {
+            Settings.team = TeamType.Red;
+        }
+        else
+        {
+            Settings.team = TeamType.Blue;
+        }
     }
 }
