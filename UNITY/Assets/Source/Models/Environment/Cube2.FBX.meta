@@ -1,0 +1,341 @@
+fileFormatVersion: 2
+guid: 35207ee46c4fad44399662cdcfcd6873
+timeCreated: 1457476249
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: body
+    100002: Cube 2
+    100004: //RootNode
+    100006: eyes01
+    100008: Stair_Beam 003
+    100010: Stair_Beam 004
+    100012: Stair_Beam 02
+    100014: Stair_Glass 01
+    100016: Stair_Step 01
+    100018: Stair_Step 02
+    100020: Stair_Step 03
+    100022: Stair_Step 04
+    100024: Stair_Step 05
+    100026: Stair_Step 06
+    100028: Stair_Step 07
+    100030: Stair_Step 08
+    100032: Stair_Step 09
+    100034: Stair_Step 10
+    100036: Stair_Step 11
+    100038: Stair_Step 12
+    100040: Stair_Step 13
+    100042: Stair_Step 14
+    100044: Stair_Step 15
+    100046: Stair_Step 16
+    100048: Stair_Step 17
+    100050: Stair_Step 18
+    100052: Stair_Step 19
+    100054: Stair_Step 20
+    100056: Stair_Step 21
+    100058: Stair_Step 22
+    100060: Stair_Step 23
+    100062: Stair_Step 24
+    100064: Stair_Step 25
+    100066: Stair_Step 26
+    100068: Stair_Step 27
+    100070: Stair_Step 28
+    100072: Stair_Step 29
+    100074: Stair_Step 30
+    100076: Stair_Step 31
+    100078: Stair_Step 32
+    100080: Stair_Step 33
+    100082: Stair_Step 34
+    100084: Stair_Step 35
+    100086: Stair_Step 36
+    100088: Stair_Step 37
+    100090: Stair_Step 38
+    100092: Stair_Step 39
+    100094: Stair_Step 40
+    100096: Stair_Step 41
+    100098: Stair_Step 42
+    100100: Stair_Step 43
+    100102: Stair_Step 44
+    100104: Stair_Step 45
+    100106: Stair_Step 46
+    100108: Stair_Step 47
+    100110: Stair_Step 48
+    100112: Step 06
+    400000: body
+    400002: Cube 2
+    400004: //RootNode
+    400006: eyes01
+    400008: Stair_Beam 003
+    400010: Stair_Beam 004
+    400012: Stair_Beam 02
+    400014: Stair_Glass 01
+    400016: Stair_Step 01
+    400018: Stair_Step 02
+    400020: Stair_Step 03
+    400022: Stair_Step 04
+    400024: Stair_Step 05
+    400026: Stair_Step 06
+    400028: Stair_Step 07
+    400030: Stair_Step 08
+    400032: Stair_Step 09
+    400034: Stair_Step 10
+    400036: Stair_Step 11
+    400038: Stair_Step 12
+    400040: Stair_Step 13
+    400042: Stair_Step 14
+    400044: Stair_Step 15
+    400046: Stair_Step 16
+    400048: Stair_Step 17
+    400050: Stair_Step 18
+    400052: Stair_Step 19
+    400054: Stair_Step 20
+    400056: Stair_Step 21
+    400058: Stair_Step 22
+    400060: Stair_Step 23
+    400062: Stair_Step 24
+    400064: Stair_Step 25
+    400066: Stair_Step 26
+    400068: Stair_Step 27
+    400070: Stair_Step 28
+    400072: Stair_Step 29
+    400074: Stair_Step 30
+    400076: Stair_Step 31
+    400078: Stair_Step 32
+    400080: Stair_Step 33
+    400082: Stair_Step 34
+    400084: Stair_Step 35
+    400086: Stair_Step 36
+    400088: Stair_Step 37
+    400090: Stair_Step 38
+    400092: Stair_Step 39
+    400094: Stair_Step 40
+    400096: Stair_Step 41
+    400098: Stair_Step 42
+    400100: Stair_Step 43
+    400102: Stair_Step 44
+    400104: Stair_Step 45
+    400106: Stair_Step 46
+    400108: Stair_Step 47
+    400110: Stair_Step 48
+    400112: Step 06
+    2300000: Cube 2
+    2300002: Stair_Beam 003
+    2300004: Stair_Beam 004
+    2300006: Stair_Beam 02
+    2300008: Stair_Step 01
+    2300010: Stair_Step 02
+    2300012: Stair_Step 03
+    2300014: Stair_Step 04
+    2300016: Stair_Step 05
+    2300018: Stair_Step 06
+    2300020: Stair_Step 07
+    2300022: Stair_Step 08
+    2300024: Stair_Step 09
+    2300026: Stair_Step 10
+    2300028: Stair_Step 11
+    2300030: Stair_Step 12
+    2300032: Stair_Step 13
+    2300034: Stair_Step 14
+    2300036: Stair_Step 15
+    2300038: Stair_Step 16
+    2300040: Stair_Step 17
+    2300042: Stair_Step 18
+    2300044: Stair_Step 19
+    2300046: Stair_Step 20
+    2300048: Stair_Step 21
+    2300050: Stair_Step 22
+    2300052: Stair_Step 23
+    2300054: Stair_Step 24
+    2300056: Stair_Step 25
+    2300058: Stair_Step 26
+    2300060: Stair_Step 27
+    2300062: Stair_Step 28
+    2300064: Stair_Step 29
+    2300066: Stair_Step 30
+    2300068: Stair_Step 31
+    2300070: Stair_Step 32
+    2300072: Stair_Step 33
+    2300074: Stair_Step 34
+    2300076: Stair_Step 35
+    2300078: Stair_Step 36
+    2300080: Stair_Step 37
+    2300082: Stair_Step 38
+    2300084: Stair_Step 39
+    2300086: Stair_Step 40
+    2300088: Stair_Step 41
+    2300090: Stair_Step 42
+    2300092: Stair_Step 43
+    2300094: Stair_Step 44
+    2300096: Stair_Step 45
+    2300098: Stair_Step 46
+    2300100: Stair_Step 47
+    2300102: Stair_Step 48
+    3300000: Cube 2
+    3300002: Stair_Beam 003
+    3300004: Stair_Beam 004
+    3300006: Stair_Beam 02
+    3300008: Stair_Step 01
+    3300010: Stair_Step 02
+    3300012: Stair_Step 03
+    3300014: Stair_Step 04
+    3300016: Stair_Step 05
+    3300018: Stair_Step 06
+    3300020: Stair_Step 07
+    3300022: Stair_Step 08
+    3300024: Stair_Step 09
+    3300026: Stair_Step 10
+    3300028: Stair_Step 11
+    3300030: Stair_Step 12
+    3300032: Stair_Step 13
+    3300034: Stair_Step 14
+    3300036: Stair_Step 15
+    3300038: Stair_Step 16
+    3300040: Stair_Step 17
+    3300042: Stair_Step 18
+    3300044: Stair_Step 19
+    3300046: Stair_Step 20
+    3300048: Stair_Step 21
+    3300050: Stair_Step 22
+    3300052: Stair_Step 23
+    3300054: Stair_Step 24
+    3300056: Stair_Step 25
+    3300058: Stair_Step 26
+    3300060: Stair_Step 27
+    3300062: Stair_Step 28
+    3300064: Stair_Step 29
+    3300066: Stair_Step 30
+    3300068: Stair_Step 31
+    3300070: Stair_Step 32
+    3300072: Stair_Step 33
+    3300074: Stair_Step 34
+    3300076: Stair_Step 35
+    3300078: Stair_Step 36
+    3300080: Stair_Step 37
+    3300082: Stair_Step 38
+    3300084: Stair_Step 39
+    3300086: Stair_Step 40
+    3300088: Stair_Step 41
+    3300090: Stair_Step 42
+    3300092: Stair_Step 43
+    3300094: Stair_Step 44
+    3300096: Stair_Step 45
+    3300098: Stair_Step 46
+    3300100: Stair_Step 47
+    3300102: Stair_Step 48
+    4300000: Cube 2
+    4300002: Stair_Beam 02
+    4300004: Stair_Step 23
+    4300006: Stair_Step 12
+    4300008: Stair_Step 03
+    4300010: Stair_Step 17
+    4300012: Stair_Step 14
+    4300014: Stair_Step 02
+    4300016: Stair_Step 18
+    4300018: Stair_Step 11
+    4300020: Stair_Step 21
+    4300022: Stair_Step 05
+    4300024: Stair_Step 10
+    4300026: Stair_Step 20
+    4300028: Stair_Step 16
+    4300030: Stair_Step 19
+    4300032: Stair_Step 22
+    4300034: Stair_Step 07
+    4300036: Stair_Step 08
+    4300038: Stair_Step 06
+    4300040: Stair_Step 15
+    4300042: Stair_Step 13
+    4300044: Stair_Step 24
+    4300046: Stair_Step 09
+    4300048: Stair_Step 04
+    4300050: Stair_Step 01
+    4300052: Stair_Step 41
+    4300054: Stair_Step 31
+    4300056: Stair_Step 28
+    4300058: Stair_Step 38
+    4300060: Stair_Step 45
+    4300062: Stair_Step 34
+    4300064: Stair_Step 36
+    4300066: Stair_Step 33
+    4300068: Stair_Step 39
+    4300070: Stair_Step 30
+    4300072: Stair_Step 47
+    4300074: Stair_Step 26
+    4300076: Stair_Step 42
+    4300078: Stair_Step 43
+    4300080: Stair_Step 29
+    4300082: Stair_Step 32
+    4300084: Stair_Step 27
+    4300086: Stair_Step 48
+    4300088: Stair_Step 40
+    4300090: Stair_Step 35
+    4300092: Stair_Step 37
+    4300094: Stair_Step 46
+    4300096: Stair_Step 44
+    4300098: Stair_Step 25
+    4300100: Stair_Beam 003
+    4300102: Stair_Beam 004
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
