@@ -10,7 +10,7 @@ public class WeaponSelection : MonoBehaviour {
     {
         if (weaponType == "pistol")
         {
-            Settings.weaponType = WeaponType.pistol;
+            Settings.weaponType = WeaponType.ScatterGun;
             weaponModels[0].SetActive(true);
             weaponModels[1].SetActive(false);
             weaponModels[2].SetActive(false);
