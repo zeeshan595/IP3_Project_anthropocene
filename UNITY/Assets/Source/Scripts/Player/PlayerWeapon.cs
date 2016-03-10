@@ -49,6 +49,8 @@ public class PlayerWeapon : NetworkBehaviour
 
         if (currentWeapon != null)
         {
+            Debug.DrawRay(currentWeapon.barrel.position, playerCamera.forward);
+
             //Check If Button is pressed
             bool firePressed = InputManager.GetAxies(ControllerAxies.RightTrigger) > 0.5f;
             if (Input.GetKey(KeyCode.Mouse0))
