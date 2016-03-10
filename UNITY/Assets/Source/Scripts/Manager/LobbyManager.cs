@@ -126,5 +126,13 @@ public class LobbyManager : NetworkLobbyManager
         return (GameObject)Instantiate(gamePlayerPrefab, spawnPosition.position, spawnPosition.rotation);
     }
 
+    public override void OnMatchCreate(CreateMatchResponse matchInfo)
+    {
+        if (matchInfo.success)
+        {
+            singleton.StartHost(new MatchInfo(matchInfo));
+        }
+    }
+
     #endregion
 }

@@ -8,11 +8,11 @@ public class PlayerMovement : NetworkBehaviour
     #region Serialized Fields
 
     [SerializeField]
-    private float rotateSpeed = 5;
+    public float rotateSpeed = 5;
     [SerializeField]
-    private float jumpHeight = 20;
+    public float jumpHeight = 20;
     [SerializeField]
-    private float jumpSpeed = 1;
+    public float jumpSpeed = 1;
     //Network
     [SerializeField]
     private float transmitThreshold = 0.5f;

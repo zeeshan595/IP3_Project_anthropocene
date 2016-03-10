@@ -2,7 +2,6 @@
 
 using UnityEngine;
 using UnityEditor;
-using System;
 
 public class WeaponEditor : EditorWindow
 {
@@ -14,6 +13,7 @@ public class WeaponEditor : EditorWindow
     private float waterUsage;
     private float acuracy;
     private float spray;
+    private float tankLimit;
     private bool explode;
     private bool automatic;
 
@@ -24,7 +24,8 @@ public class WeaponEditor : EditorWindow
     {
         // Get existing open window or if none, make a new one:
         WeaponEditor window = (WeaponEditor)EditorWindow.GetWindow(typeof(WeaponEditor));
-        window.maxSize = new Vector2(500, 500);
+        window.maxSize = new Vector2(500, 300);
+        window.minSize = new Vector2(500, 300);
         window.Show();
     }
 
@@ -41,8 +42,7 @@ public class WeaponEditor : EditorWindow
         spray = script.spray;
         explode = script.explode;
         automatic = script.automatic;
-        AssetDatabase.DeleteAsset(path + weapon.ToString() + ".prefab");
-        PrefabUtility.CreatePrefab(path + weapon.ToString() + ".prefab", clone);
+        tankLimit = script.waterTank;
         DestroyImmediate(clone);
     }
 
@@ -59,6 +59,7 @@ public class WeaponEditor : EditorWindow
         script.spray = spray;
         script.explode = explode;
         script.automatic = automatic;
+        script.waterTank = tankLimit;
         AssetDatabase.DeleteAsset(path + weapon.ToString() + ".prefab");
         PrefabUtility.CreatePrefab(path + weapon.ToString() + ".prefab", clone);
         DestroyImmediate(clone);
@@ -104,6 +105,14 @@ public class WeaponEditor : EditorWindow
 
         GUILayout.Label("Water Usage", GUILayout.Width(150));
         waterUsage = EditorGUILayout.FloatField(waterUsage);
+
+        EditorGUILayout.EndHorizontal();
+
+        //tank limit
+        EditorGUILayout.BeginHorizontal();
+
+        GUILayout.Label("Water Tank", GUILayout.Width(150));
+        tankLimit = EditorGUILayout.FloatField(tankLimit);
 
         EditorGUILayout.EndHorizontal();
 
