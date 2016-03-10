@@ -32,8 +32,7 @@ public class WeaponEditor : EditorWindow
     private void LoadWeaponStats()
     {
         GameObject prefab = (GameObject)AssetDatabase.LoadAssetAtPath(path + weapon.ToString() + ".prefab", typeof(GameObject));
-        GameObject clone = (GameObject)Instantiate(prefab, Vector3.zero, Quaternion.identity);
-        Weapon script = clone.GetComponent<Weapon>();
+        Weapon script = prefab.GetComponent<Weapon>();
         crosshair = script.crosshair;
         range = script.range;
         damage = script.damage;
@@ -43,14 +42,12 @@ public class WeaponEditor : EditorWindow
         explode = script.explode;
         automatic = script.automatic;
         tankLimit = script.waterTank;
-        DestroyImmediate(clone);
     }
 
     private void SaveWeapon()
     {
         GameObject prefab = (GameObject)AssetDatabase.LoadAssetAtPath(path + weapon.ToString() + ".prefab", typeof(GameObject));
-        GameObject clone = (GameObject)Instantiate(prefab, Vector3.zero, Quaternion.identity);
-        Weapon script = clone.GetComponent<Weapon>();
+        Weapon script = prefab.GetComponent<Weapon>();
         script.crosshair = crosshair;
         script.range = range;
         script.damage = damage;
@@ -60,9 +57,6 @@ public class WeaponEditor : EditorWindow
         script.explode = explode;
         script.automatic = automatic;
         script.waterTank = tankLimit;
-        AssetDatabase.DeleteAsset(path + weapon.ToString() + ".prefab");
-        PrefabUtility.CreatePrefab(path + weapon.ToString() + ".prefab", clone);
-        DestroyImmediate(clone);
     }
 
     private void OnGUI()

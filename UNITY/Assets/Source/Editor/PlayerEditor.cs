@@ -49,22 +49,15 @@ public class PlayerEditor : EditorWindow
     private void SavePlayer()
     {
         GameObject prefab = (GameObject)AssetDatabase.LoadAssetAtPath(path + "Player.prefab", typeof(GameObject));
-        GameObject clone = (GameObject)Instantiate(prefab, Vector3.zero, Quaternion.identity);
-        PlayerStats script = clone.GetComponent<PlayerStats>();
-        PlayerMovement script2 = clone.GetComponent<PlayerMovement>();
 
-        script.playerSpeed = playerSpeed;
-        script.gravity = gravity;
-        script.health = health;
-        script.water = water;
+        prefab.GetComponent<PlayerStats>().playerSpeed = playerSpeed;
+        prefab.GetComponent<PlayerStats>().gravity = gravity;
+        prefab.GetComponent<PlayerStats>().health = health;
+        prefab.GetComponent<PlayerStats>().water = water;
 
-        script2.jumpHeight = jumpHeight;
-        script2.rotateSpeed = rotateSpeed;
-        script2.jumpSpeed = jumpSpeed;
-
-        AssetDatabase.DeleteAsset(path + "Player.prefab");
-        PrefabUtility.CreatePrefab(path + "Player.prefab", clone);
-        DestroyImmediate(clone);
+        prefab.GetComponent<PlayerMovement>().jumpHeight = jumpHeight;
+        prefab.GetComponent<PlayerMovement>().rotateSpeed = rotateSpeed;
+        prefab.GetComponent<PlayerMovement>().jumpSpeed = jumpSpeed;
     }
 
     private void OnGUI()
