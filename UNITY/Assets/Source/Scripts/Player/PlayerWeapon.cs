@@ -18,6 +18,7 @@ public class PlayerWeapon : NetworkBehaviour
     private bool fireButtonReleased = false;
     private Transform playerCamera;
     private PlayerStats player;
+    private int currentWeaponID = 0;
 
     private void Start()
     {
@@ -28,12 +29,7 @@ public class PlayerWeapon : NetworkBehaviour
                 if (weapons[i].type == Settings.weaponType)
                 {
                     CmdCreateWeapon(i);
-                    if (isServer)
-                    {
-                        GameObject w = (GameObject)Instantiate(weapons[i].gameObject, weaponTransform.position, weaponTransform.rotation);
-                        currentWeapon = w.GetComponent<Weapon>();
-                        w.transform.SetParent(weaponTransform);
-                    }
+                    currentWeaponID = i;
                     break;
                 }
             }
@@ -81,9 +77,15 @@ public class PlayerWeapon : NetworkBehaviour
                     else if (hit[0].collider.tag != "Flower")
                     {
                         if (player.team == TeamType.Red)
-                            CmdHitSomething(hit[0].point + (hit[0].normal * 0.1f), hit[0].normal, true);
+                        {
+                            CmdHitSomething(hit[0].point + (hit[0].normal * 0.1f), hit[0].normal, true, playerControllerId);
+                            Instantiate(redFlower, hit[0].point + (hit[0].normal * 0.1f), Quaternion.LookRotation(hit[0].normal));
+                        }
                         else
-                            CmdHitSomething(hit[0].point + (hit[0].normal * 0.1f), hit[0].normal, false);
+                        {
+                            CmdHitSomething(hit[0].point + (hit[0].normal * 0.1f), hit[0].normal, false, playerControllerId);
+                            Instantiate(blueFlower, hit[0].point + (hit[0].normal * 0.1f), Quaternion.LookRotation(hit[0].normal));
+                        }
                     }
                 }
 
@@ -92,12 +94,42 @@ public class PlayerWeapon : NetworkBehaviour
             else if (!firePressed)
                 fireButtonReleased = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            currentWeaponID++;
+            if (currentWeaponID >= weapons.Length)
+                currentWeaponID = 0;
+
+            CmdResetWeapon(currentWeaponID);
+
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+
+        }
     }
 
     [Command]
-    private void CmdHitSomething(Vector3 point, Vector3 normal, bool isRed)
+    private void CmdResetWeapon(int id)
     {
-        RpcHitSomething(point, normal, isRed);
+        RpcResetWeapon(id);
+    }
+
+    [ClientRpc]
+    private void RpcResetWeapon(int id)
+    {
+        Destroy(currentWeapon.gameObject);
+        GameObject w = (GameObject)Instantiate(weapons[id].gameObject, weaponTransform.position, weaponTransform.rotation);
+        currentWeapon = w.GetComponent<Weapon>();
+        Debug.Log(currentWeapon.type.ToString());
+        w.transform.SetParent(weaponTransform);
+    }
+
+    [Command]
+    private void CmdHitSomething(Vector3 point, Vector3 normal, bool isRed, short controlID)
+    {
+        RpcHitSomething(point, normal, isRed, controlID);
     }
 
     [Command]
@@ -115,8 +147,11 @@ public class PlayerWeapon : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void RpcHitSomething(Vector3 point, Vector3 normal, bool isRed)
+    private void RpcHitSomething(Vector3 point, Vector3 normal, bool isRed, short controlID)
     {
+        if (this.playerControllerId == controlID)
+            return;
+
         if (isRed)
             Instantiate(redFlower, point, Quaternion.LookRotation(normal));
         else
