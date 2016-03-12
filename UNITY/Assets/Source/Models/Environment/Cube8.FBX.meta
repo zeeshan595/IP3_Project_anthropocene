@@ -1,48 +1,52 @@
 fileFormatVersion: 2
-guid: e187379df13b32249a1d9b52da183b20
-timeCreated: 1457737199
+guid: 445e0d3687f227e408743dc058f8e439
+timeCreated: 1457790505
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Cube8
-    100004: Cube8_Banner
-    100006: Cube8_Hat 003
-    100008: Cube8_Hat 004
-    100010: Cube8_Hat 01
-    100012: Cube8_Hat 02
-    100014: Cube8_Hate 03
-    100016: Cube8_Head 01
-    100018: Cube8_Head 02
-    100020: Cube8_Head 03
-    100022: Cube8_Head 04
-    100024: Cube8_Head 05
-    100026: Cube8_Stand 004
-    100028: Cube8_Stand 005
-    100030: Cube8_Stand 01
-    100032: Cube8_Stand 02
-    100034: Cube8_Stand 03
-    100036: Star001
-    400000: //RootNode
-    400002: Cube8
-    400004: Cube8_Banner
-    400006: Cube8_Hat 003
-    400008: Cube8_Hat 004
-    400010: Cube8_Hat 01
-    400012: Cube8_Hat 02
-    400014: Cube8_Hate 03
-    400016: Cube8_Head 01
-    400018: Cube8_Head 02
-    400020: Cube8_Head 03
-    400022: Cube8_Head 04
-    400024: Cube8_Head 05
-    400026: Cube8_Stand 004
-    400028: Cube8_Stand 005
-    400030: Cube8_Stand 01
-    400032: Cube8_Stand 02
-    400034: Cube8_Stand 03
-    400036: Star001
+    100000: body
+    100002: //RootNode
+    100004: Cube8
+    100006: Cube8_Banner
+    100008: Cube8_Hat 003
+    100010: Cube8_Hat 004
+    100012: Cube8_Hat 01
+    100014: Cube8_Hat 02
+    100016: Cube8_Hate 03
+    100018: Cube8_Head 01
+    100020: Cube8_Head 02
+    100022: Cube8_Head 03
+    100024: Cube8_Head 04
+    100026: Cube8_Head 05
+    100028: Cube8_Stand 004
+    100030: Cube8_Stand 005
+    100032: Cube8_Stand 01
+    100034: Cube8_Stand 02
+    100036: Cube8_Stand 03
+    100038: Cube8_Star
+    100040: eyes01
+    400000: body
+    400002: //RootNode
+    400004: Cube8
+    400006: Cube8_Banner
+    400008: Cube8_Hat 003
+    400010: Cube8_Hat 004
+    400012: Cube8_Hat 01
+    400014: Cube8_Hat 02
+    400016: Cube8_Hate 03
+    400018: Cube8_Head 01
+    400020: Cube8_Head 02
+    400022: Cube8_Head 03
+    400024: Cube8_Head 04
+    400026: Cube8_Head 05
+    400028: Cube8_Stand 004
+    400030: Cube8_Stand 005
+    400032: Cube8_Stand 01
+    400034: Cube8_Stand 02
+    400036: Cube8_Stand 03
+    400038: Cube8_Star
+    400040: eyes01
     2300000: Cube8
     2300002: Cube8_Banner
     2300004: Cube8_Hat 003
@@ -60,7 +64,7 @@ ModelImporter:
     2300028: Cube8_Stand 01
     2300030: Cube8_Stand 02
     2300032: Cube8_Stand 03
-    2300034: Star001
+    2300034: Cube8_Star
     3300000: Cube8
     3300002: Cube8_Banner
     3300004: Cube8_Hat 003
@@ -78,25 +82,25 @@ ModelImporter:
     3300028: Cube8_Stand 01
     3300030: Cube8_Stand 02
     3300032: Cube8_Stand 03
-    3300034: Star001
+    3300034: Cube8_Star
     4300000: Cube8
-    4300002: Cube8_Head 01
-    4300004: Cube8_Head 02
-    4300006: Cube8_Head 03
-    4300008: Cube8_Hat 01
-    4300010: Cube8_Hate 03
-    4300012: Cube8_Hat 02
-    4300014: Cube8_Stand 01
-    4300016: Cube8_Stand 02
-    4300018: Cube8_Stand 03
-    4300020: Cube8_Banner
-    4300022: Star001
-    4300024: Cube8_Head 04
-    4300026: Cube8_Hat 003
-    4300028: Cube8_Head 05
-    4300030: Cube8_Hat 004
-    4300032: Cube8_Stand 004
-    4300034: Cube8_Stand 005
+    4300002: Cube8_Hat 01
+    4300004: Cube8_Hate 03
+    4300006: Cube8_Stand 01
+    4300008: Cube8_Stand 02
+    4300010: Cube8_Stand 03
+    4300012: Cube8_Banner
+    4300014: Cube8_Star
+    4300016: Cube8_Hat 003
+    4300018: Cube8_Hat 004
+    4300020: Cube8_Stand 004
+    4300022: Cube8_Stand 005
+    4300024: Cube8_Head 01
+    4300026: Cube8_Head 02
+    4300028: Cube8_Head 03
+    4300030: Cube8_Head 04
+    4300032: Cube8_Head 05
+    4300034: Cube8_Hat 02
   materials:
     importMaterials: 1
     materialName: 0
