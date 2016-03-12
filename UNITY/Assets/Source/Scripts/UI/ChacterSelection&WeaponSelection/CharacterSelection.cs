@@ -18,8 +18,8 @@ public class CharacterSelection : MonoBehaviour {
     WeaponRotating weaponRotating;
 
     public GameObject weaponPanel;
-
-    
+    private bool pressDownLeft = false;
+    private bool pressDownRight = false;
 
 	void Update () 
     {
@@ -27,24 +27,39 @@ public class CharacterSelection : MonoBehaviour {
         if (characterIndex < 0) characterIndex = characters.Length - 1;
         selectedCharacter = characters[characterIndex];
 
-        if(!isRotatingLeft && !isRotating)
+        if (!isRotatingLeft && !isRotating)
         {
             //Rotate right TODO change input to xbox axis
-            if (Input.GetKeyDown(KeyCode.E))
+            float horizontal = InputManager.GetAxies(ControllerAxies.LeftStickX);
+
+            if (horizontal < -0.1f)
             {
-                isRotating = true;
-                sign = 1;
-                characterIndex++;
-                currentRot = angleValue + 90;
+                if (!pressDownLeft)
+                {
+                    isRotating = true;
+                    sign = 1;
+                    characterIndex++;
+                    currentRot = angleValue + 90;
+                    pressDownLeft = true;
+                }
             }
+            else
+                pressDownLeft = false;
+
 
             //Rotate Left TODO change input to xbox axis
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (horizontal > 0.1f)
             {
-                sign = -1;
-                isRotatingLeft = true;
-                characterIndex--;
-                currentRot = angleValue - 90;
+                if (!pressDownRight)
+                {
+                    sign = -1;
+                    isRotatingLeft = true;
+                    characterIndex--;
+                    currentRot = angleValue - 90;
+                    pressDownRight = true;
+                }
+                else
+                    pressDownRight = false;
             }
 
             if (Input.GetKey(KeyCode.O))
@@ -58,7 +73,7 @@ public class CharacterSelection : MonoBehaviour {
             }
 
             //Select the character
-            if(InputManager.GetButton(ControllerButtons.A)) //TODO change the logs to the appropriate characters once they are set on the Settings class
+            if (InputManager.GetButton(ControllerButtons.A)) //TODO change the logs to the appropriate characters once they are set on the Settings class
             {
                 if (characterIndex == 0)
                 {
@@ -112,7 +127,7 @@ public class CharacterSelection : MonoBehaviour {
 
     void Start()
     {
-        StartCoroutine(displayWeaponPanel());
+        //StartCoroutine(displayWeaponPanel());
     }
 
     IEnumerator displayWeaponPanel()

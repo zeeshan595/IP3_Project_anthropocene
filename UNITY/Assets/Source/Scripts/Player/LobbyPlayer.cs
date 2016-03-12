@@ -4,7 +4,17 @@ using UnityEngine.Networking;
 public class LobbyPlayer : NetworkLobbyPlayer
 {
     [SyncVar]
+    public string username;
+    [SyncVar]
     public TeamType team = TeamType.Blue;
+
+    private void Start()
+    {
+        if (isLocalPlayer)
+        {
+            CmdChangeUsername(username);
+        }
+    }
 
     public void Ready()
     {
@@ -42,5 +52,11 @@ public class LobbyPlayer : NetworkLobbyPlayer
     private void CmdChangeTeam(TeamType team)
     {
         this.team = team;
+    }
+
+    [Command]
+    private void CmdChangeUsername(string username)
+    {
+        this.username = username;
     }
 }

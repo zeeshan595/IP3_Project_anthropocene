@@ -4,8 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuPlayButton : MonoBehaviour {
 
-    public void PlayButton()
+    public void PlayButton(string scene)
     {
-        SceneManager.LoadScene("Lobby");
+        SceneManager.LoadScene(scene);
     }
 }

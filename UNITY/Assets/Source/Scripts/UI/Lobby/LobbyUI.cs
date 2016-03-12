@@ -1,84 +1,66 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Networking;
 
 public class LobbyUI : MonoBehaviour
 {
-    public GameObject offlineUI;
-    public GameObject onlineUI;
+    private LobbyManager manager;
+    private bool isMatchFound = false;
 
-    private LobbyManager lobby;
-    private bool isRed = false;
-
-    private void Start()
+    private IEnumerator Start()
     {
-        //Get Lobby manager at the start
-        lobby = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
-        //Tell lobby manager what method to call when connected to server
-        lobby.ClientConnected += new OnConnectedToServer(OnConnected);
-        //Tell lobby manager what method to call when disconnected from server
-        lobby.ClientDisconnected += new OnConntionLostFromServer(OnDisconnected);
-        //Enable offline UI so user can connect to server
-        offlineUI.SetActive(true);
-        onlineUI.SetActive(false);
-    }
-
-    private void OnDisconnected(NetworkConnection conn)
-    {
-        //When disconnected from server enable offline UI
-        offlineUI.SetActive(true);
-        onlineUI.SetActive(false);
-    }
-
-    private void OnConnected(NetworkConnection conn)
-    {
-        //When connected enable online UI
-        offlineUI.SetActive(false);
-        onlineUI.SetActive(true);
-
-        for (int i = 0; i < lobby.lobbySlots.Length; i++)
+        FindLobbyManager();
+        Debug.Log("<color=red>Muahaha</color>");
+        yield return new WaitForSeconds(0.5f);
+        manager.SearchForMatch();
+        manager.ClientConnected += WeFoundAMatch;
+        yield return new WaitForSeconds(5.0f);
+        manager.StopSearchForMatch();
+        if (isMatchFound)
         {
-            if (lobby.lobbySlots[i] != null)
+            manager.CreateHost();
+            isMatchFound = true;
+        }
+    }
+
+    private void WeFoundAMatch(NetworkConnection conn)
+    {
+        isMatchFound = true;
+        Debug.Log("Just testing");
+    }
+
+    private void Update()
+    {
+        if (manager == null)
+            FindLobbyManager();
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            for (int i = 0; i < manager.lobbySlots.Length; i++)
             {
-                LobbyPlayer player = lobby.lobbySlots[i].GetComponent<LobbyPlayer>();
-                if (player != null)
+                LobbyPlayer player = manager.lobbySlots[i].GetComponent<LobbyPlayer>();
+                if (player.username == Settings.username)
                 {
-                    //When player joins what needs to happen
-
-                    //Ready the player
-                    //player.Ready();
-
-                    //Unready the player
-                    //player.UnReady();
+                    player.ChangeTeam(TeamType.Red);
+                    player.Ready();
+                    
                 }
             }
         }
     }
 
-
-    //Button Methods
-    public void CreateMatch()
+    private void FindLobbyManager()
     {
-        lobby.CreateHost();
-    }
-
-    public void FindMatch()
-    {
-        lobby.SearchForMatch();
-    }
-
-    //Simple username textbox
-    private void OnGUI()
-    {
-        Settings.username = GUILayout.TextField(Settings.username, GUILayout.Width(200));
-        isRed = GUILayout.Toggle(isRed, "Is Red");
-        if (isRed)
-        {
-            Settings.team = TeamType.Red;
-        }
+        GameObject obj = GameObject.Find("LobbyManager");
+        if (obj != null)
+            manager = obj.GetComponent<LobbyManager>();
         else
+            Debug.LogWarning("Couldn't Find Lobby Manager");
+
+        if (manager == null)
         {
-            Settings.team = TeamType.Blue;
+            Debug.LogError("<h2>I hate my life</h2>");
         }
     }
 }

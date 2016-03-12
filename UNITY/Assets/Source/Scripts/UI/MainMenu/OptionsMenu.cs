@@ -66,6 +66,7 @@ public class OptionsMenu : MonoBehaviour {
 
     public void ApplyOptions()
     {
+        Debug.Log(currentOptions.resolution[0] + "|" + currentOptions.resolution[0]);
         Screen.SetResolution(currentOptions.resolution[0], currentOptions.resolution[1], currentOptions.isFullScreen);
     }
 }
