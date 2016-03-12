@@ -13,6 +13,8 @@ public class LobbyUI : MonoBehaviour
     //Loading Animation
     public GameObject[] animationSprites = new GameObject[3];
     private bool isAnimationPlaying = false;
+    public GameObject searchingForMatchScreen;
+    public GameObject matchFoundScreen;
 
     //Ready players
     public GameObject[] players = new GameObject[8]; 
@@ -39,6 +41,7 @@ public class LobbyUI : MonoBehaviour
         {
             manager.CreateHost();
             isMatchFound = true;
+            ChangeScreen();
         }
         InvokeRepeating("UpdateTeams", 3.0f, 3.0f);
     }
@@ -199,6 +202,12 @@ public class LobbyUI : MonoBehaviour
             gj.SetActive(false);
         yield return new WaitForSeconds(0.35f);
         isAnimationPlaying = false;
+    }
+
+    private void ChangeScreen()
+    {
+        searchingForMatchScreen.SetActive(false);
+        matchFoundScreen.SetActive(true);
     }
 
     #endregion
