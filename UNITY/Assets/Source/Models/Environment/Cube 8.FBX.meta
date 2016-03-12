@@ -1,0 +1,163 @@
+fileFormatVersion: 2
+guid: e187379df13b32249a1d9b52da183b20
+timeCreated: 1457737199
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Cube8
+    100004: Cube8_Banner
+    100006: Cube8_Hat 003
+    100008: Cube8_Hat 004
+    100010: Cube8_Hat 01
+    100012: Cube8_Hat 02
+    100014: Cube8_Hate 03
+    100016: Cube8_Head 01
+    100018: Cube8_Head 02
+    100020: Cube8_Head 03
+    100022: Cube8_Head 04
+    100024: Cube8_Head 05
+    100026: Cube8_Stand 004
+    100028: Cube8_Stand 005
+    100030: Cube8_Stand 01
+    100032: Cube8_Stand 02
+    100034: Cube8_Stand 03
+    100036: Star001
+    400000: //RootNode
+    400002: Cube8
+    400004: Cube8_Banner
+    400006: Cube8_Hat 003
+    400008: Cube8_Hat 004
+    400010: Cube8_Hat 01
+    400012: Cube8_Hat 02
+    400014: Cube8_Hate 03
+    400016: Cube8_Head 01
+    400018: Cube8_Head 02
+    400020: Cube8_Head 03
+    400022: Cube8_Head 04
+    400024: Cube8_Head 05
+    400026: Cube8_Stand 004
+    400028: Cube8_Stand 005
+    400030: Cube8_Stand 01
+    400032: Cube8_Stand 02
+    400034: Cube8_Stand 03
+    400036: Star001
+    2300000: Cube8
+    2300002: Cube8_Banner
+    2300004: Cube8_Hat 003
+    2300006: Cube8_Hat 004
+    2300008: Cube8_Hat 01
+    2300010: Cube8_Hat 02
+    2300012: Cube8_Hate 03
+    2300014: Cube8_Head 01
+    2300016: Cube8_Head 02
+    2300018: Cube8_Head 03
+    2300020: Cube8_Head 04
+    2300022: Cube8_Head 05
+    2300024: Cube8_Stand 004
+    2300026: Cube8_Stand 005
+    2300028: Cube8_Stand 01
+    2300030: Cube8_Stand 02
+    2300032: Cube8_Stand 03
+    2300034: Star001
+    3300000: Cube8
+    3300002: Cube8_Banner
+    3300004: Cube8_Hat 003
+    3300006: Cube8_Hat 004
+    3300008: Cube8_Hat 01
+    3300010: Cube8_Hat 02
+    3300012: Cube8_Hate 03
+    3300014: Cube8_Head 01
+    3300016: Cube8_Head 02
+    3300018: Cube8_Head 03
+    3300020: Cube8_Head 04
+    3300022: Cube8_Head 05
+    3300024: Cube8_Stand 004
+    3300026: Cube8_Stand 005
+    3300028: Cube8_Stand 01
+    3300030: Cube8_Stand 02
+    3300032: Cube8_Stand 03
+    3300034: Star001
+    4300000: Cube8
+    4300002: Cube8_Head 01
+    4300004: Cube8_Head 02
+    4300006: Cube8_Head 03
+    4300008: Cube8_Hat 01
+    4300010: Cube8_Hate 03
+    4300012: Cube8_Hat 02
+    4300014: Cube8_Stand 01
+    4300016: Cube8_Stand 02
+    4300018: Cube8_Stand 03
+    4300020: Cube8_Banner
+    4300022: Star001
+    4300024: Cube8_Head 04
+    4300026: Cube8_Hat 003
+    4300028: Cube8_Head 05
+    4300030: Cube8_Hat 004
+    4300032: Cube8_Stand 004
+    4300034: Cube8_Stand 005
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
