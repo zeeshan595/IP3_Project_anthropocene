@@ -15,7 +15,7 @@ public class WeaponEditor : EditorWindow
     private float spray;
     private float tankLimit;
     private bool explode;
-    private bool automatic;
+    private float rateOfFire;
 
     private string path = "Assets/Source/Prefabs/Weapons/";
 
@@ -40,7 +40,7 @@ public class WeaponEditor : EditorWindow
         acuracy = script.acuracy;
         spray = script.spray;
         explode = script.explode;
-        automatic = script.automatic;
+        rateOfFire = script.rateOfFire;
         tankLimit = script.waterTank;
     }
 
@@ -55,8 +55,8 @@ public class WeaponEditor : EditorWindow
         script.acuracy = acuracy;
         script.spray = spray;
         script.explode = explode;
-        script.automatic = automatic;
         script.waterTank = tankLimit;
+        script.rateOfFire = rateOfFire;
     }
 
     private void OnGUI()
@@ -135,10 +135,11 @@ public class WeaponEditor : EditorWindow
         EditorGUILayout.EndHorizontal();
 
         //Automatic
+        GUILayout.Label("0=Manual, WARNING: Don't go above 100");
         EditorGUILayout.BeginHorizontal();
 
-        GUILayout.Label("Automatic", GUILayout.Width(150));
-        automatic = EditorGUILayout.Toggle(automatic);
+        GUILayout.Label("Rate Of Fire", GUILayout.Width(150));
+        rateOfFire = EditorGUILayout.FloatField(rateOfFire);
 
         EditorGUILayout.EndHorizontal();
 

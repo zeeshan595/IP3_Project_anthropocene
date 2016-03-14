@@ -11,6 +11,6 @@ public class Weapon : MonoBehaviour
     public float acuracy = 0.0f;
     public float spray = 0.0f;
     public bool explode = false;
-    public bool automatic = false;
+    public float rateOfFire = 0;
     public Transform barrel;
 }
