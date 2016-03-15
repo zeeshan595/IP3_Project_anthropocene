@@ -73,7 +73,8 @@ public class PlayerWeapon : NetworkBehaviour
             else if (!firePressed)
                 fireButtonReleased = true;
 
-            yield return new WaitForSeconds(1 / currentWeapon.rateOfFire);
+            if (currentWeapon.rateOfFire > 0)
+                yield return new WaitForSeconds(1 / currentWeapon.rateOfFire);
         }
 
         yield return new WaitForEndOfFrame();
