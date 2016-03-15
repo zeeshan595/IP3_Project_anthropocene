@@ -18,6 +18,7 @@ public class LobbyManager : NetworkLobbyManager
 
     public void CreateHost()
     {
+        StartMatchMaker();
         CreateMatchRequest request = new CreateMatchRequest();
         request.name = "";
         request.size = (uint)maxConnections;
@@ -29,23 +30,20 @@ public class LobbyManager : NetworkLobbyManager
 
     public void SearchForMatch()
     {
+        StartMatchMaker();
         isSearchingForMatch = true;
         matchMaker.ListMatches(0, 50, string.Empty, MatchList);
     }
 
     public void StopSearchForMatch()
     {
+        StopMatchMaker();
         isSearchingForMatch = false;
     }
 
     #endregion
 
     #region Private Methods
-
-    private void Start()
-    {
-        StartMatchMaker();
-    }
 
     private void MatchList(ListMatchResponse matchList)
     {
@@ -130,7 +128,7 @@ public class LobbyManager : NetworkLobbyManager
     {
         if (matchInfo.success)
         {
-            singleton.StartHost(new MatchInfo(matchInfo));
+            StartHost(new MatchInfo(matchInfo));
         }
     }
 
