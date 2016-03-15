@@ -10,9 +10,11 @@ public class LobbyPlayer : NetworkLobbyPlayer
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         if (isLocalPlayer)
         {
-            CmdChangeUsername(username);
+            username = Settings.username;
+            CmdChangeUsername(Settings.username);
         }
     }
 
