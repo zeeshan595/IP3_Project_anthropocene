@@ -19,11 +19,13 @@ public class PlayerWeapon : NetworkBehaviour
     private int currentWeaponID = 0;
     private bool firePressed = false;
 
-    private void Start()
+    private IEnumerator Start()
     {
         player = GetComponent<PlayerStats>();
         if (isLocalPlayer)
         {
+            playerCamera = Camera.main.gameObject.transform;
+            yield return new WaitForEndOfFrame();
             for (int i = 0; i < weapons.Length; i++)
             {
                 if (weapons[i].type == Settings.weaponType)
@@ -33,13 +35,13 @@ public class PlayerWeapon : NetworkBehaviour
                     break;
                 }
             }
-            playerCamera = Camera.main.gameObject.transform;
+            StartCoroutine(Shoot());
         }
         else
         {
             enabled = false;
         }
-        StartCoroutine(Shoot());
+        
     }
 
     private void Update()
@@ -50,7 +52,9 @@ public class PlayerWeapon : NetworkBehaviour
         {
             firePressed = true;
         }
+#if UNITY_EDITOR
         ChangeWeapon();
+#endif
     }
 
     private IEnumerator Shoot()
