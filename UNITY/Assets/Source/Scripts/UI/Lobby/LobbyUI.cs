@@ -7,77 +7,69 @@ using System.Collections.Generic;
 
 public class LobbyUI : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject[] animationSprites = new GameObject[3];
+    [SerializeField]
+    private GameObject searchingForMatchScreen;
+    [SerializeField]
+    private GameObject matchFoundScreen;
+    [SerializeField]
+    private GameObject[] redTeam;
+    [SerializeField]
+    private GameObject[] blueTeam;
+
+    private Dictionary<int, int> redTeamPlayers = new Dictionary<int, int>();
+    private Dictionary<int, int> blueTeamPlayers = new Dictionary<int, int>();
     private LobbyManager manager;
-    private bool isMatchFound = false;
-
-    //Loading Animation
-    public GameObject[] animationSprites = new GameObject[3];
+    private bool isConnected = false;
     private bool isAnimationPlaying = false;
-    public GameObject searchingForMatchScreen;
-    public GameObject matchFoundScreen;
-
-    //Ready players
-    public GameObject[] players = new GameObject[8]; 
-    private List<Image> imageList = new List<Image>();
-
-    //Change Teams
-    private Dictionary<LobbyPlayer, GameObject> redDictionary = new Dictionary<LobbyPlayer,GameObject>();
-    private Dictionary<LobbyPlayer, GameObject> blueDictionary = new Dictionary<LobbyPlayer, GameObject>();
-    public GameObject[] redObjects = new GameObject[4];
-    public GameObject[] blueObjects = new GameObject[4];
 
     private IEnumerator Start()
     {
         FindLobbyManager();
-        Debug.Log(Settings.username);
-        FindPlayerObjects();
-        yield return new WaitForSeconds(0.5f);
-        manager.SearchForMatch();
-        manager.ClientConnected += WeFoundAMatch;
-        Debug.Log(manager.IsClientConnected());
-        yield return new WaitForSeconds(5.0f);
-        manager.StopSearchForMatch();
-        if (!isMatchFound)
-        {
-            manager.CreateHost();
-            isMatchFound = true;
-            ChangeScreen();
-        }
-        InvokeRepeating("UpdateTeams", 3.0f, 3.0f);
-    }
 
-    private void WeFoundAMatch(NetworkConnection conn)
-    {
-        isMatchFound = true;
-        Debug.Log("Just testing");
+        yield return manager;
+
+        manager.ClientConnected += OnConnected;
+        manager.ClientDisconnected += OnDisconnect;
+        StartCoroutine(FindAGame());
     }
 
     private void Update()
     {
-        if (!isMatchFound && !isAnimationPlaying)
+        if (!isConnected && !isAnimationPlaying)
         {
             StartCoroutine(loadingAnimation());
         }
 
-        if (manager == null)
-            FindLobbyManager();
+        UpdateTeams();
 
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            ChangeTeam(TeamType.Red);
+        }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            ChangePlayerTeam(TeamType.Blue);
+            ChangeTeam(TeamType.Blue);
         }
-        if(Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            ChangePlayerTeam(TeamType.Red);
+            ReadyPlayer(true);
         }
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            ReadyPlayer();
-        }
-
     }
 
-    #region Find Objects
+    #region Network Stuff
+
+    private IEnumerator FindAGame()
+    {
+        manager.SearchForMatch();
+
+        yield return new WaitForSeconds(3);
+
+        manager.StopSearchForMatch();
+        manager.CreateHost();
+    }
+
     private void FindLobbyManager()
     {
         GameObject obj = GameObject.Find("LobbyManager");
@@ -88,108 +80,110 @@ public class LobbyUI : MonoBehaviour
 
         if (manager == null)
         {
-            Debug.LogError("<h2>I hate my life</h2>");
+            Debug.LogError("<h2>Couldn't Locate Lobby Manager Component</h2>");
+            FindLobbyManager();
         }
     }
 
-    private void FindPlayerObjects()
+    private void OnConnected(NetworkConnection conn)
     {
-        for(int i = 0; i < manager.lobbySlots.Length; i++)
-        {
-            imageList.Add(players[i].GetComponent<Image>());
-            ChangePlayerName(players[i]);
-        }
+        searchingForMatchScreen.SetActive(false);
+        matchFoundScreen.SetActive(true);
+        isConnected = true;
+    }
+
+    private void OnDisconnect(NetworkConnection conn)
+    {
+        searchingForMatchScreen.SetActive(false);
+        matchFoundScreen.SetActive(true);
+        isConnected = false;
+        StartCoroutine(FindAGame());
+        Debug.LogWarning("Client Was Disconnected. Attempting to Reconnect To A Match");
     }
 
     #endregion
 
-    #region network updates
-
-    private void ChangePlayerTeam(TeamType team)
-    {
-        for (int i = 0; i < manager.lobbySlots.Length; i++)
-        {
-            LobbyPlayer player = manager.lobbySlots[i].GetComponent<LobbyPlayer>();
-            if (player.username == Settings.username)
-            {
-                player.ChangeTeam(team);
-            }
-        }
-        UpdateTeams();
-    }
-
-    private void ReadyPlayer()
-    {
-        for (int i = 0; i < manager.lobbySlots.Length; i++)
-        {
-            LobbyPlayer player = manager.lobbySlots[i].GetComponent<LobbyPlayer>();
-            if (player.username == Settings.username)
-            {
-                player.Ready();
-            }
-        }
-        ReadyPlayerUI();
-    }
+    #region Update UI
 
     private void UpdateTeams()
     {
         for (int i = 0; i < manager.lobbySlots.Length; i++)
         {
-            LobbyPlayer player = manager.lobbySlots[i].GetComponent<LobbyPlayer>();
-            if (player.team == TeamType.Red)
+            if (manager.lobbySlots[i])
             {
-                if (!redDictionary.ContainsKey(player))
+                LobbyPlayer player = manager.lobbySlots[i].GetComponent<LobbyPlayer>();
+                if (!redTeamPlayers.ContainsKey(i) && player.team == TeamType.Red)
                 {
-                    redDictionary.Add(player, redObjects[i]);
+                    //Tie red team with that player
+                    redTeamPlayers.Add(i, redTeamPlayers.Count);
+                    ChangePlayerName(redTeam[redTeamPlayers[i]], player.username);
                 }
-            }
-            else if(player.team == TeamType.Blue)
-            {
-                if(!blueDictionary.ContainsKey(player))
+                else if (!blueTeamPlayers.ContainsKey(i) && player.team == TeamType.Blue)
                 {
-                    blueDictionary.Add(player, blueObjects[i]);
+                    //Tie blue team with that player
+                    blueTeamPlayers.Add(i, blueTeamPlayers.Count);
+                    ChangePlayerName(blueTeam[blueTeamPlayers[i]], player.username);
                 }
             }
         }
-        ChangePlayerTeamUI();
     }
 
-    #endregion
-
-    #region UI changes
-    private void ChangePlayerTeamUI()
-    {
-        foreach(KeyValuePair<LobbyPlayer, GameObject> entry in redDictionary)
-        {
-            ChangePlayerName(entry.Value);
-        }
-    }
-
-    private void ReadyPlayerUI()
+    private void ChangeTeam(TeamType team)
     {
         for (int i = 0; i < manager.lobbySlots.Length; i++)
         {
-            LobbyPlayer player = manager.lobbySlots[i].GetComponent<LobbyPlayer>();
-            if(player.readyToBegin)
+            if (manager.lobbySlots[i])
             {
-                imageList[i].color = new Color(imageList[i].color.r, imageList[i].color.g, imageList[i].color.b, 0.5f);
+                LobbyPlayer player = manager.lobbySlots[i].GetComponent<LobbyPlayer>();
+                if (manager.lobbySlots[i])
+                {
+                    if (Settings.username == player.username)
+                    {
+                        if (player.team == TeamType.Red)
+                        {
+                            ChangePlayerName(redTeam[redTeamPlayers[i]], "Waiting for user");
+                            redTeamPlayers.Remove(i);
+                        }
+                        else
+                        {
+                            ChangePlayerName(blueTeam[blueTeamPlayers[i]], "Waiting for user");
+                            blueTeamPlayers.Remove(i);
+                        }
+                        player.team = team;
+                    }
+                }
             }
         }
     }
 
-    //Not yet tested, didnt have a lobby
-    private void ChangePlayerName(GameObject playerObject)
+    private void ReadyPlayer(bool ready)
     {
-        Text child = playerObject.transform.GetChild(0).GetComponent<Text>();
-        for (int j = 0; j < manager.lobbySlots.Length; j++)
+        for (int i = 0; i < manager.lobbySlots.Length; i++)
         {
-            LobbyPlayer player = manager.lobbySlots[j].GetComponent<LobbyPlayer>();
-            Debug.Log(player.name);
-            child.text = player.name;
+            if (manager.lobbySlots[i])
+            {
+                LobbyPlayer player = manager.lobbySlots[i].GetComponent<LobbyPlayer>();
+                if (manager.lobbySlots[i])
+                {
+                    if (Settings.username == player.username)
+                    {
+                        if (ready)
+                            player.Ready();
+                        else
+                            player.UnReady();
+                    }
+                }
+            }
         }
     }
 
-    IEnumerator loadingAnimation()
+    private void ChangePlayerName(GameObject obj, string username)
+    {
+        Text child = obj.transform.GetChild(0).GetComponent<Text>();
+        child.text = username;
+    }
+
+    private IEnumerator loadingAnimation()
     {
         isAnimationPlaying = true;
         animationSprites[0].SetActive(true);
@@ -202,12 +196,6 @@ public class LobbyUI : MonoBehaviour
             gj.SetActive(false);
         yield return new WaitForSeconds(0.35f);
         isAnimationPlaying = false;
-    }
-
-    private void ChangeScreen()
-    {
-        searchingForMatchScreen.SetActive(false);
-        matchFoundScreen.SetActive(true);
     }
 
     #endregion
