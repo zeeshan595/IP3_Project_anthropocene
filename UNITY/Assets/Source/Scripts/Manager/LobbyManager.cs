@@ -112,7 +112,7 @@ public class LobbyManager : NetworkLobbyManager
                     }
                     else
                     {
-                        spawnPosition.position = new Vector3(-70, 8, 4);
+                        spawnPosition.position = new Vector3(-70, 8, 10);
                         spawnPosition.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
                     }
                     break;

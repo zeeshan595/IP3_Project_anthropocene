@@ -64,10 +64,13 @@ public class LobbyUI : MonoBehaviour
     {
         manager.SearchForMatch();
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(10);
 
-        manager.StopSearchForMatch();
-        manager.CreateHost();
+        if (!isConnected)
+        {
+            manager.StopSearchForMatch();
+            manager.CreateHost();
+        }
     }
 
     private void FindLobbyManager()
