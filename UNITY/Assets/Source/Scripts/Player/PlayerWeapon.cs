@@ -12,7 +12,7 @@ public class PlayerWeapon : NetworkBehaviour
     [SerializeField]
     private GameObject bullet;
 
-    private Weapon currentWeapon;
+    public Weapon currentWeapon;
     private bool fireButtonReleased = false;
     private Transform playerCamera;
     private PlayerStats player;
