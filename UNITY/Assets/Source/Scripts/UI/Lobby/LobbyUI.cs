@@ -140,7 +140,7 @@ public class LobbyUI : MonoBehaviour
                 LobbyPlayer player = manager.lobbySlots[i].GetComponent<LobbyPlayer>();
                 if (manager.lobbySlots[i])
                 {
-                    if (Settings.username == player.username)
+                    if (player.isLocalPlayer)
                     {
                         if (player.team == TeamType.Red)
                         {
