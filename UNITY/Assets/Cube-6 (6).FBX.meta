@@ -1,0 +1,375 @@
+fileFormatVersion: 2
+guid: d66db2bad4cb74548adcdf703c443a66
+timeCreated: 1459007470
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Box007
+    100002: //RootNode
+    100004: Cube6
+    100006: Cube6_
+    100008: Cube6_ 1
+    100010: Cube6_ 2
+    100012: Cube6_ 3
+    100014: Cube6_Front Extrusion
+    100016: Cube6_HorBar
+    100018: Cube6_HorBar 01
+    100020: Cube6_HorBar 02
+    100022: Cube6_HorBar 03
+    100024: Cube6_HorBar 04
+    100026: Cube6_HorBar 05
+    100028: Cube6_HorBar 06
+    100030: Cube6_HorBar 07
+    100032: Cube6_HorBar 08
+    100034: Cube6_HorBar 09
+    100036: Cube6_HorBar 1
+    100038: Cube6_HorBar 10
+    100040: Cube6_HorBar 11
+    100042: Cube6_HorBar 12
+    100044: Cube6_HorBar 13
+    100046: Cube6_HorBar 14
+    100048: Cube6_IntSign 01
+    100050: Cube6_IntSign 01 1
+    100052: Cube6_IntSign 02
+    100054: Cube6_IntSign 03
+    100056: Cube6_IntSign 04
+    100058: Cube6_Pillar
+    100060: Cube6_Sign Stand 01
+    100062: Cube6_Sign Stand 02
+    100064: Cube6_Sign Stand 03
+    100066: Cube6_Sign Stand 04
+    100068: Cube6_Sign Stand 05
+    100070: Cube6_Sign Stand 06
+    100072: Cube6_Sign Stand 07
+    100074: Cube6_Sign Stand 08
+    100076: Cube6_Sign Stand 09
+    100078: Cube6_Sign Stand 10
+    100080: Cube6_Sign Stand 11
+    100082: Cube6_Sign Stand 12
+    100084: Cube6_Sign Stand 13
+    100086: Cube6_Sign Stand 14
+    100088: Cube6_Sign Stand 15
+    100090: Cube6_Sign Stand 16
+    100092: Cube6_Sign Stand 17
+    100094: Cube6_Sign Stand 18
+    100096: Cube6_Top Sign
+    100098: Cube6_VerBar 01
+    100100: Cube6_VerBar 02
+    100102: Cube6_VerBar 03
+    100104: Cube6_VerBar 04
+    100106: Cube6_VerBar 05
+    100108: Cube6_VerBar 06
+    100110: Cube6_VerBar 07
+    100112: Cube6_VerBar 08
+    100114: Cube6_VerBar 09
+    100116: Cube6_VerBar 10
+    100118: Cube6_VerBar 11
+    100120: Cube6_VerBar 12
+    100122: Cube6_Wall
+    400000: Box007
+    400002: //RootNode
+    400004: Cube6
+    400006: Cube6_
+    400008: Cube6_ 1
+    400010: Cube6_ 2
+    400012: Cube6_ 3
+    400014: Cube6_Front Extrusion
+    400016: Cube6_HorBar
+    400018: Cube6_HorBar 01
+    400020: Cube6_HorBar 02
+    400022: Cube6_HorBar 03
+    400024: Cube6_HorBar 04
+    400026: Cube6_HorBar 05
+    400028: Cube6_HorBar 06
+    400030: Cube6_HorBar 07
+    400032: Cube6_HorBar 08
+    400034: Cube6_HorBar 09
+    400036: Cube6_HorBar 1
+    400038: Cube6_HorBar 10
+    400040: Cube6_HorBar 11
+    400042: Cube6_HorBar 12
+    400044: Cube6_HorBar 13
+    400046: Cube6_HorBar 14
+    400048: Cube6_IntSign 01
+    400050: Cube6_IntSign 01 1
+    400052: Cube6_IntSign 02
+    400054: Cube6_IntSign 03
+    400056: Cube6_IntSign 04
+    400058: Cube6_Pillar
+    400060: Cube6_Sign Stand 01
+    400062: Cube6_Sign Stand 02
+    400064: Cube6_Sign Stand 03
+    400066: Cube6_Sign Stand 04
+    400068: Cube6_Sign Stand 05
+    400070: Cube6_Sign Stand 06
+    400072: Cube6_Sign Stand 07
+    400074: Cube6_Sign Stand 08
+    400076: Cube6_Sign Stand 09
+    400078: Cube6_Sign Stand 10
+    400080: Cube6_Sign Stand 11
+    400082: Cube6_Sign Stand 12
+    400084: Cube6_Sign Stand 13
+    400086: Cube6_Sign Stand 14
+    400088: Cube6_Sign Stand 15
+    400090: Cube6_Sign Stand 16
+    400092: Cube6_Sign Stand 17
+    400094: Cube6_Sign Stand 18
+    400096: Cube6_Top Sign
+    400098: Cube6_VerBar 01
+    400100: Cube6_VerBar 02
+    400102: Cube6_VerBar 03
+    400104: Cube6_VerBar 04
+    400106: Cube6_VerBar 05
+    400108: Cube6_VerBar 06
+    400110: Cube6_VerBar 07
+    400112: Cube6_VerBar 08
+    400114: Cube6_VerBar 09
+    400116: Cube6_VerBar 10
+    400118: Cube6_VerBar 11
+    400120: Cube6_VerBar 12
+    400122: Cube6_Wall
+    2300000: Cube6
+    2300002: Cube6_
+    2300004: Cube6_ 1
+    2300006: Cube6_ 2
+    2300008: Cube6_ 3
+    2300010: Cube6_Front Extrusion
+    2300012: Cube6_HorBar
+    2300014: Cube6_HorBar 01
+    2300016: Cube6_HorBar 02
+    2300018: Cube6_HorBar 03
+    2300020: Cube6_HorBar 04
+    2300022: Cube6_HorBar 05
+    2300024: Cube6_HorBar 06
+    2300026: Cube6_HorBar 07
+    2300028: Cube6_HorBar 08
+    2300030: Cube6_HorBar 09
+    2300032: Cube6_HorBar 1
+    2300034: Cube6_HorBar 10
+    2300036: Cube6_HorBar 11
+    2300038: Cube6_HorBar 12
+    2300040: Cube6_HorBar 13
+    2300042: Cube6_HorBar 14
+    2300044: Cube6_IntSign 01
+    2300046: Cube6_IntSign 01 1
+    2300048: Cube6_IntSign 02
+    2300050: Cube6_IntSign 03
+    2300052: Cube6_IntSign 04
+    2300054: Cube6_Pillar
+    2300056: Cube6_Sign Stand 01
+    2300058: Cube6_Sign Stand 02
+    2300060: Cube6_Sign Stand 03
+    2300062: Cube6_Sign Stand 04
+    2300064: Cube6_Sign Stand 05
+    2300066: Cube6_Sign Stand 06
+    2300068: Cube6_Sign Stand 07
+    2300070: Cube6_Sign Stand 08
+    2300072: Cube6_Sign Stand 09
+    2300074: Cube6_Sign Stand 10
+    2300076: Cube6_Sign Stand 11
+    2300078: Cube6_Sign Stand 12
+    2300080: Cube6_Sign Stand 13
+    2300082: Cube6_Sign Stand 14
+    2300084: Cube6_Sign Stand 15
+    2300086: Cube6_Sign Stand 16
+    2300088: Cube6_Sign Stand 17
+    2300090: Cube6_Sign Stand 18
+    2300092: Cube6_Top Sign
+    2300094: Cube6_VerBar 01
+    2300096: Cube6_VerBar 02
+    2300098: Cube6_VerBar 03
+    2300100: Cube6_VerBar 04
+    2300102: Cube6_VerBar 05
+    2300104: Cube6_VerBar 06
+    2300106: Cube6_VerBar 07
+    2300108: Cube6_VerBar 08
+    2300110: Cube6_VerBar 09
+    2300112: Cube6_VerBar 10
+    2300114: Cube6_VerBar 11
+    2300116: Cube6_VerBar 12
+    2300118: Cube6_Wall
+    3300000: Cube6
+    3300002: Cube6_
+    3300004: Cube6_ 1
+    3300006: Cube6_ 2
+    3300008: Cube6_ 3
+    3300010: Cube6_Front Extrusion
+    3300012: Cube6_HorBar
+    3300014: Cube6_HorBar 01
+    3300016: Cube6_HorBar 02
+    3300018: Cube6_HorBar 03
+    3300020: Cube6_HorBar 04
+    3300022: Cube6_HorBar 05
+    3300024: Cube6_HorBar 06
+    3300026: Cube6_HorBar 07
+    3300028: Cube6_HorBar 08
+    3300030: Cube6_HorBar 09
+    3300032: Cube6_HorBar 1
+    3300034: Cube6_HorBar 10
+    3300036: Cube6_HorBar 11
+    3300038: Cube6_HorBar 12
+    3300040: Cube6_HorBar 13
+    3300042: Cube6_HorBar 14
+    3300044: Cube6_IntSign 01
+    3300046: Cube6_IntSign 01 1
+    3300048: Cube6_IntSign 02
+    3300050: Cube6_IntSign 03
+    3300052: Cube6_IntSign 04
+    3300054: Cube6_Pillar
+    3300056: Cube6_Sign Stand 01
+    3300058: Cube6_Sign Stand 02
+    3300060: Cube6_Sign Stand 03
+    3300062: Cube6_Sign Stand 04
+    3300064: Cube6_Sign Stand 05
+    3300066: Cube6_Sign Stand 06
+    3300068: Cube6_Sign Stand 07
+    3300070: Cube6_Sign Stand 08
+    3300072: Cube6_Sign Stand 09
+    3300074: Cube6_Sign Stand 10
+    3300076: Cube6_Sign Stand 11
+    3300078: Cube6_Sign Stand 12
+    3300080: Cube6_Sign Stand 13
+    3300082: Cube6_Sign Stand 14
+    3300084: Cube6_Sign Stand 15
+    3300086: Cube6_Sign Stand 16
+    3300088: Cube6_Sign Stand 17
+    3300090: Cube6_Sign Stand 18
+    3300092: Cube6_Top Sign
+    3300094: Cube6_VerBar 01
+    3300096: Cube6_VerBar 02
+    3300098: Cube6_VerBar 03
+    3300100: Cube6_VerBar 04
+    3300102: Cube6_VerBar 05
+    3300104: Cube6_VerBar 06
+    3300106: Cube6_VerBar 07
+    3300108: Cube6_VerBar 08
+    3300110: Cube6_VerBar 09
+    3300112: Cube6_VerBar 10
+    3300114: Cube6_VerBar 11
+    3300116: Cube6_VerBar 12
+    3300118: Cube6_Wall
+    4300000: Cube6
+    4300002: Cube6_Front Extrusion
+    4300004: Cube6_Pillar
+    4300006: Cube6_Wall
+    4300008: Cube6_IntSign 02
+    4300010: Cube6_Top Sign
+    4300012: Cube6_Sign Stand 05
+    4300014: Cube6_Sign Stand 06
+    4300016: Cube6_Sign Stand 07
+    4300018: Cube6_Sign Stand 09
+    4300020: Cube6_Sign Stand 11
+    4300022: Cube6_Sign Stand 13
+    4300024: Cube6_Sign Stand 08
+    4300026: Cube6_Sign Stand 10
+    4300028: Cube6_Sign Stand 03
+    4300030: Cube6_Sign Stand 12
+    4300032: Cube6_Sign Stand 01
+    4300034: Cube6_Sign Stand 02
+    4300036: Cube6_Sign Stand 04
+    4300038: Cube6_Sign Stand 14
+    4300040: Cube6_Sign Stand 15
+    4300042: Cube6_Sign Stand 16
+    4300044: Cube6_Sign Stand 17
+    4300046: Cube6_Sign Stand 18
+    4300048: Cube6_IntSign 01
+    4300050: Cube6_IntSign 03
+    4300052: Cube6_IntSign 01
+    4300054: Cube6_VerBar 01
+    4300056: Cube6_VerBar 02
+    4300058: Cube6_VerBar 03
+    4300060: Cube6_VerBar 04
+    4300062: Cube6_VerBar 05
+    4300064: Cube6_VerBar 06
+    4300066: Cube6_VerBar 07
+    4300068: Cube6_VerBar 08
+    4300070: Cube6_VerBar 09
+    4300072: Cube6_VerBar 10
+    4300074: Cube6_VerBar 11
+    4300076: Cube6_VerBar 12
+    4300078: Cube6_HorBar 01
+    4300080: Cube6_HorBar 02
+    4300082: Cube6_HorBar 03
+    4300084: Cube6_HorBar 04
+    4300086: Cube6_HorBar 05
+    4300088: Cube6_HorBar 06
+    4300090: Cube6_HorBar 07
+    4300092: Cube6_HorBar 08
+    4300094: Cube6_HorBar 09
+    4300096: Cube6_HorBar 10
+    4300098: Cube6_HorBar 11
+    4300100: Cube6_HorBar 12
+    4300102: Cube6_HorBar 13
+    4300104: Cube6_HorBar 14
+    4300106: Cube6_HorBar
+    4300108: Cube6_
+    4300110: Cube6_
+    4300112: Cube6_
+    4300114: Cube6_
+    4300116: Cube6_HorBar
+    4300118: Cube6_IntSign 04
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
