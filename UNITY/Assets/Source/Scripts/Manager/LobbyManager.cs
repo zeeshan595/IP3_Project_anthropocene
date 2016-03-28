@@ -114,6 +114,7 @@ public class LobbyManager : NetworkLobbyManager
 
     public override GameObject OnLobbyServerCreateGamePlayer(NetworkConnection conn, short playerControllerId)
     {
+        Character ch = Character.Potatree;
         Transform spawnPosition = transform;
         for (int i = 0; i < connectedPlayers; i++)
         {
@@ -122,6 +123,7 @@ public class LobbyManager : NetworkLobbyManager
             {
                 if (player)
                 {
+                    ch = player.character;
                     if (player.team == TeamType.Blue)
                     {
                         spawnPosition.position = new Vector3(10, 8, 10);
@@ -138,7 +140,9 @@ public class LobbyManager : NetworkLobbyManager
             }
         }
 
-        return (GameObject)Instantiate(gamePlayerPrefab, spawnPosition.position, spawnPosition.rotation);
+        GameObject obj = (GameObject)Instantiate(gamePlayerPrefab, spawnPosition.position, spawnPosition.rotation);
+        obj.GetComponent<PlayerStats>().character = ch;
+        return obj;
     }
 
     public override void OnMatchCreate(CreateMatchResponse matchInfo)

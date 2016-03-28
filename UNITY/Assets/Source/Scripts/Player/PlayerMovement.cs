@@ -50,6 +50,7 @@ public class PlayerMovement : NetworkBehaviour
     private Vector3 lastPos = Vector3.zero;
     private float lastRot = 0;
     private float lerpRate;
+    private Animator animator;
 
     #endregion
 
@@ -77,6 +78,21 @@ public class PlayerMovement : NetworkBehaviour
                 horizontal = InputManager.ButtonToAxies(KeyCode.D, KeyCode.A);
 
             Vector3 targetDirection = new Vector3(horizontal, 0, vertical);
+            if (animator == null)
+            {
+                animator = GetComponent<PlayerMeshUpdator>().mesh.GetComponent<Animator>();
+            }
+            else
+            {
+                if (targetDirection != Vector3.zero)
+                {
+                    animator.SetFloat("Speed", 1.0f);
+                }
+                else
+                {
+                    animator.SetFloat("Speed", 0.0f);
+                }
+            }
             if (!controller.isGrounded && !isJumping)
             {
                 targetDirection.y -= player.gravity;

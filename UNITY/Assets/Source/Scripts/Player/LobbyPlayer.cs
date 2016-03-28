@@ -9,6 +9,8 @@ public class LobbyPlayer : NetworkLobbyPlayer
     public TeamType team = TeamType.Red;
     [SyncVar]
     private int playerAmount = 0;
+    [SyncVar]
+    public Character character;
 
     private LobbyManager manager;
 
@@ -18,6 +20,7 @@ public class LobbyPlayer : NetworkLobbyPlayer
         if (isLocalPlayer)
         {
             CmdChangeUsername(Settings.username);
+            CmdChangeCharacter(Settings.character);
         }
         manager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
     }
@@ -73,5 +76,11 @@ public class LobbyPlayer : NetworkLobbyPlayer
     private void CmdChangeUsername(string user)
     {
         username = user;
+    }
+
+    [Command]
+    private void CmdChangeCharacter(Character ch)
+    {
+        character = ch;
     }
 }

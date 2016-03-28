@@ -12,6 +12,8 @@ public enum TeamType
 public class PlayerStats : NetworkBehaviour
 {
     [SyncVar]
+    public Character character;
+    [SyncVar]
     public TeamType team;
     [SyncVar]
     public float playerSpeed = 10;

@@ -21,6 +21,24 @@ public class CharacterSelection : MonoBehaviour {
     private bool pressDownLeft = false;
     private bool pressDownRight = false;
 
+    void MoveLeft()
+    {
+        sign = -1;
+        isRotatingLeft = true;
+        characterIndex--;
+        currentRot = angleValue - 90;
+        Settings.character = (Character)characterIndex;
+    }
+
+    void MoveRight()
+    {
+        isRotating = true;
+        sign = 1;
+        characterIndex++;
+        Settings.character = (Character)characterIndex;
+        currentRot = angleValue + 90;
+    }
+
 	void Update () 
     {
         if (characterIndex >= characters.Length) characterIndex = 0;
@@ -36,10 +54,7 @@ public class CharacterSelection : MonoBehaviour {
             {
                 if (!pressDownLeft)
                 {
-                    isRotating = true;
-                    sign = 1;
-                    characterIndex++;
-                    currentRot = angleValue + 90;
+                    MoveRight();
                     pressDownLeft = true;
                 }
             }
@@ -52,10 +67,7 @@ public class CharacterSelection : MonoBehaviour {
             {
                 if (!pressDownRight)
                 {
-                    sign = -1;
-                    isRotatingLeft = true;
-                    characterIndex--;
-                    currentRot = angleValue - 90;
+                    MoveLeft();
                     pressDownRight = true;
                 }
                 else
@@ -72,6 +84,16 @@ public class CharacterSelection : MonoBehaviour {
                 selectedCharacter.transform.Rotate(new Vector3(0, -90 * Time.deltaTime, 0));
             }
 
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                MoveLeft();
+            }
+
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                MoveRight();
+            }
+
             //Select the character
             if (InputManager.GetButton(ControllerButtons.A)) //TODO change the logs to the appropriate characters once they are set on the Settings class
             {
@@ -81,7 +103,10 @@ public class CharacterSelection : MonoBehaviour {
                     weaponRotating.EnableRendererButton(1);
                 }
                 else if (characterIndex == 1)
-                    Debug.Log("other character");
+                {
+                    Settings.character = Character.RakTheFish;
+                    weaponRotating.EnableRendererButton(1);
+                }
                 else if (characterIndex == 2)
                     Debug.Log("another other character");
                 else if (characterIndex == 3)

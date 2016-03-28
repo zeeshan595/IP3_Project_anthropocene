@@ -18,5 +18,8 @@ public enum WeaponType
 
 public enum Character
 {
-    Potatree
+    Potatree,
+    RakTheFish,
+    bobTheBuilder,
+    JackieChan
 }
