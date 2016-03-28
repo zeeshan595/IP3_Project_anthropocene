@@ -15,6 +15,12 @@ public class PlayerBullet : MonoBehaviour
     private GameObject blueFlower;
 
     private bool touchedFlower = false;
+    private Transform flowerParent;
+
+    private void Start()
+    {
+        flowerParent = GameObject.Find("Flowers").transform;
+    }
 
     private void OnCollisionEnter(Collision collider)
     {
@@ -32,14 +38,16 @@ public class PlayerBullet : MonoBehaviour
         {
             if (team == TeamType.Blue)
             {
-                Instantiate(blueFlower, pos, rot);
+                GameObject obj = (GameObject)Instantiate(blueFlower, pos, rot);
+                obj.transform.SetParent(flowerParent);
+                GameManager.flowers.Add(obj);
             }
             else
             {
-                Instantiate(redFlower, pos, rot);
+                GameObject obj = (GameObject)Instantiate(redFlower, pos, rot);
+                obj.transform.SetParent(flowerParent);
+                GameManager.flowers.Add(obj);
             }
-
-            GameManager.singleton.CmdCreateFlower(pos, rot, team);
         }
 
         if (explode)
@@ -65,23 +73,7 @@ public class PlayerBullet : MonoBehaviour
     {
         if (other.tag == "Flower")
         {
-            PlayerFlower plFlower = other.GetComponent<PlayerFlower>();
-            if (plFlower.team != team && !touchedFlower)
-            {
-                int f = -1;
-
-                for (int i = 0; i < GameManager.singleton.flowers.Count; i++)
-                {
-                    if (GameManager.singleton.flowers[f] == plFlower)
-                    {
-                        f = i;
-                        break;
-                    }
-                }
-
-                if (f != -1)
-                   GameManager.singleton.CmdFlowerChange(f, team);
-            }
+            Replace(other.gameObject);
             touchedFlower = true;
             Destroy(gameObject);
         }
@@ -91,26 +83,28 @@ public class PlayerBullet : MonoBehaviour
     {
         if (other.tag == "Flower")
         {
-            PlayerFlower plFlower = other.GetComponent<PlayerFlower>();
-            if (plFlower.team != team && !touchedFlower)
-            {
-                int f = -1;
-
-                for (int i = 0; i < GameManager.singleton.flowers.Count; i++)
-                {
-                    if (GameManager.singleton.flowers[f] == plFlower)
-                    {
-                        f = i;
-                        break;
-                    }
-                }
-
-                if (f != -1)
-                    GameManager.singleton.CmdFlowerChange(f, team);
-            }
+            Replace(other.gameObject);
             touchedFlower = true;
             Destroy(gameObject);
         }
+    }
+
+    private void Replace(GameObject other)
+    {
+        if (team == TeamType.Blue)
+        {
+            GameObject obj = (GameObject)Instantiate(blueFlower, other.transform.position, other.transform.rotation);
+            obj.transform.SetParent(flowerParent);
+            GameManager.flowers.Add(obj);
+        }
+        else
+        {
+            GameObject obj = (GameObject)Instantiate(redFlower, other.transform.position, other.transform.rotation);
+            obj.transform.SetParent(flowerParent);
+            GameManager.flowers.Add(obj);
+        }
+        GameManager.flowers.Remove(other.gameObject);
+        Destroy(other.gameObject);
     }
 
     private void Update()
