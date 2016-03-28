@@ -21,7 +21,16 @@ public class GameManager : NetworkBehaviour
 
     private void OnGUI()
     {
-        GUILayout.Box(flowers.Count.ToString());
+        int red = 0;
+        int blue = 0;
+        for (int i = 0; i < flowers.Count; i++)
+        {
+            if (flowers[i].team == TeamType.Red)
+                red++;
+            else
+                blue++;
+        }
+        GUILayout.Box(red + "|" + blue);
     }
 
     [Command]
@@ -49,7 +58,7 @@ public class GameManager : NetworkBehaviour
 
         PlayerFlower f = obj.GetComponent<PlayerFlower>();
         f.team = team;
-        //flowers.Add(f);
+        flowers.Add(f);
     }
 
     [ClientRpc]

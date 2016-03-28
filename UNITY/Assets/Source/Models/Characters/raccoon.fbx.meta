@@ -294,8 +294,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Idle
       takeName: Take 001
-      firstFrame: 1
-      lastFrame: 114
+      firstFrame: 6
+      lastFrame: 115
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -308,9 +308,9 @@ ModelImporter:
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
-      heightFromFeet: 0
+      heightFromFeet: 1
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
@@ -554,8 +554,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Jump
       takeName: Take 001
-      firstFrame: 114
-      lastFrame: 219
+      firstFrame: 116
+      lastFrame: 229
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -814,7 +814,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Walk Forward
       takeName: Take 001
-      firstFrame: 230
+      firstFrame: 231
       lastFrame: 275
       wrapMode: 0
       orientationOffsetY: 0

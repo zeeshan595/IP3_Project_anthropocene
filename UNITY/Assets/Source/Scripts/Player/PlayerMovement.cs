@@ -90,6 +90,7 @@ public class PlayerMovement : NetworkBehaviour
                 }
                 else
                 {
+                    GetComponent<PlayerMeshUpdator>().mesh.transform.localPosition = Vector3.zero;
                     animator.SetFloat("Speed", 0.0f);
                 }
             }
