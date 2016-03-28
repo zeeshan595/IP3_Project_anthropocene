@@ -3,8 +3,11 @@ using UnityEngine.Networking;
 
 public class WaterTank : NetworkBehaviour
 {
+    [SyncVar]
     public float water = 5600;
+    [SyncVar]
     public TeamType team = TeamType.Red;
+    public GameObject particleEffect;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -25,9 +28,13 @@ public class WaterTank : NetworkBehaviour
 
     private void Start()
     {
-        if (Settings.team != team)
-        {
-            transform.GetChild(0).gameObject.SetActive(false);
-        }
+        RpcCreateEffect();
+    }
+
+    [ClientRpc]
+    private void RpcCreateEffect()
+    {
+        if (team == Settings.team)
+            particleEffect.SetActive(true);
     }
 }
