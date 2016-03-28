@@ -102,7 +102,7 @@ ModelImporter:
     4300032: Cube8_Head 05
     4300034: Cube8_Hat 02
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:

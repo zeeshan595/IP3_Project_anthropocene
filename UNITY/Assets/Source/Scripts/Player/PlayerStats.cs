@@ -20,6 +20,20 @@ public class PlayerStats : NetworkBehaviour
     [SyncVar]
     public float water = 100.0f;
 
+    private void Start()
+    {
+        if (isLocalPlayer)
+        {
+            CmdSetup(Settings.team);
+        }
+    }
+
+    [Command]
+    private void CmdSetup(TeamType team)
+    {
+        this.team = team;
+    }
+
     [Command]
     public void CmdDoDamage(float amount)
     {

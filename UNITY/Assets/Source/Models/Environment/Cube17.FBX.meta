@@ -1,24 +1,24 @@
 fileFormatVersion: 2
-guid: 33dbf9f4fc8d994419136ac9abc52941
-timeCreated: 1459021816
+guid: f62fa110c23972049b9cc21be449a497
+timeCreated: 1459026921
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Box001
-    100002: Line001
-    100004: //RootNode
-    400000: Box001
-    400002: Line001
-    400004: //RootNode
-    2300000: Box001
-    2300002: Line001
-    3300000: Box001
-    3300002: Line001
-    4300000: Box001
-    4300002: Line001
+    100000: //RootNode
+    100002: CubeE17(Part1)
+    100004: CubeE17(Part2)
+    400000: //RootNode
+    400002: CubeE17(Part1)
+    400004: CubeE17(Part2)
+    2300000: CubeE17(Part1)
+    2300002: CubeE17(Part2)
+    3300000: CubeE17(Part1)
+    3300002: CubeE17(Part2)
+    4300000: CubeE17(Part1)
+    4300002: CubeE17(Part2)
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:

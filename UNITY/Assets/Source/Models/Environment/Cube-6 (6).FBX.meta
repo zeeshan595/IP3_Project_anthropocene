@@ -310,7 +310,7 @@ ModelImporter:
     4300116: Cube6_HorBar
     4300118: Cube6_IntSign 04
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:

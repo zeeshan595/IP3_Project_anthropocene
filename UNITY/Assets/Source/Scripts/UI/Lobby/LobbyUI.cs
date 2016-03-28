@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -18,14 +17,15 @@ public class LobbyUI : MonoBehaviour
     [SerializeField]
     private GameObject[] blueTeam;
 
-    private Dictionary<int, int> redTeamPlayers = new Dictionary<int, int>();
-    private Dictionary<int, int> blueTeamPlayers = new Dictionary<int, int>();
+    private List<int> redTeamPlayers = new List<int>();
+    private List<int> blueTeamPlayers = new List<int>();
     private LobbyManager manager;
     private bool isConnected = false;
     private bool isAnimationPlaying = false;
 
     private IEnumerator Start()
     {
+        Settings.username = "user " + Random.Range(0, 99);
         FindLobbyManager();
 
         yield return manager;
@@ -42,19 +42,44 @@ public class LobbyUI : MonoBehaviour
             StartCoroutine(loadingAnimation());
         }
 
-        UpdateTeams();
+        CheckForNewUser();
+        ChangeTeam();
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            ChangeTeam(TeamType.Red);
+            for (int i = 0; i < manager.connectedPlayers; i++)
+            {
+                if (manager.lobbySlots[i].GetComponent<LobbyPlayer>().isLocalPlayer)
+                {
+                    manager.lobbySlots[i].GetComponent<LobbyPlayer>().ChangeTeam(TeamType.Red);
+                }
+            }
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            ChangeTeam(TeamType.Blue);
+            for (int i = 0; i < manager.connectedPlayers; i++)
+            {
+                if (manager.lobbySlots[i].GetComponent<LobbyPlayer>().isLocalPlayer)
+                {
+                    manager.lobbySlots[i].GetComponent<LobbyPlayer>().ChangeTeam(TeamType.Blue);
+                }
+            }
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             ReadyPlayer(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            manager.networkAddress = "213.107.103.102";
+            manager.networkPort = 7777;
+            manager.StartClient();
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            manager.StartHost();
         }
     }
 
@@ -62,14 +87,22 @@ public class LobbyUI : MonoBehaviour
 
     private IEnumerator FindAGame()
     {
-        manager.SearchForMatch();
+        //manager.SearchForMatch();
+        Debug.Log("Starting client");
+        //manager.networkAddress = "213.107.103.102";
+        //manager.networkPort = 7777;
+        //manager.StartClient();
 
         yield return new WaitForSeconds(10);
 
         if (!isConnected)
         {
-            manager.StopSearchForMatch();
-            manager.CreateHost();
+            //manager.StopSearchForMatch();
+            //manager.CreateHost();
+            //manager.StopClient();
+            yield return new WaitForSeconds(1);
+            //manager.StartHost();
+            //Debug.Log("Starting Host");
         }
     }
 
@@ -108,54 +141,70 @@ public class LobbyUI : MonoBehaviour
 
     #region Update UI
 
-    private void UpdateTeams()
+    private void CheckForNewUser()
     {
-        for (int i = 0; i < manager.lobbySlots.Length; i++)
+        for (int i = 0; i < manager.connectedPlayers; i++)
         {
             if (manager.lobbySlots[i])
             {
-                LobbyPlayer player = manager.lobbySlots[i].GetComponent<LobbyPlayer>();
-                if (!redTeamPlayers.ContainsKey(i) && player.team == TeamType.Red)
+                if (redTeamPlayers.IndexOf(i) == -1 && blueTeamPlayers.IndexOf(i) == -1)
                 {
-                    //Tie red team with that player
-                    redTeamPlayers.Add(i, redTeamPlayers.Count);
-                    ChangePlayerName(redTeam[redTeamPlayers[i]], player.username);
-                }
-                else if (!blueTeamPlayers.ContainsKey(i) && player.team == TeamType.Blue)
-                {
-                    //Tie blue team with that player
-                    blueTeamPlayers.Add(i, blueTeamPlayers.Count);
-                    ChangePlayerName(blueTeam[blueTeamPlayers[i]], player.username);
+                    if (manager.lobbySlots[i].GetComponent<LobbyPlayer>().team == TeamType.Red)
+                    {
+                        redTeamPlayers.Add(i);
+                    }
+                    else
+                    {
+                        blueTeamPlayers.Add(i);
+                    }
                 }
             }
         }
     }
 
-    private void ChangeTeam(TeamType team)
+    private void ChangeTeam()
     {
-        for (int i = 0; i < manager.lobbySlots.Length; i++)
+        //Change team
+        for (int i = 0; i < manager.connectedPlayers; i++)
         {
             if (manager.lobbySlots[i])
             {
                 LobbyPlayer player = manager.lobbySlots[i].GetComponent<LobbyPlayer>();
-                if (manager.lobbySlots[i])
+                if (redTeamPlayers.IndexOf(i) != -1 && player.team == TeamType.Blue)
                 {
-                    if (player.isLocalPlayer)
-                    {
-                        if (player.team == TeamType.Red)
-                        {
-                            ChangePlayerName(redTeam[redTeamPlayers[i]], "Waiting for user");
-                            redTeamPlayers.Remove(i);
-                        }
-                        else
-                        {
-                            ChangePlayerName(blueTeam[blueTeamPlayers[i]], "Waiting for user");
-                            blueTeamPlayers.Remove(i);
-                        }
-                        player.team = team;
-                    }
+                    redTeamPlayers.Remove(i);
+                    blueTeamPlayers.Add(i);                    
+                }
+                else if (blueTeamPlayers.IndexOf(i) != -1 && player.team == TeamType.Red)
+                {
+                    blueTeamPlayers.Remove(i);
+                    redTeamPlayers.Add(i);
                 }
             }
+        }
+
+        //Reset All feilds
+        for (int i = 0; i < redTeam.Length; i++)
+        {
+            ChangePlayerName(redTeam[i], "Waiting for user...");
+        }
+
+        for (int i = 0; i < blueTeam.Length; i++)
+        {
+            ChangePlayerName(blueTeam[i], "Waiting for user...");
+        }
+
+        //Put user names in correct position
+        for (int i = 0; i < redTeamPlayers.Count; i++)
+        {
+            LobbyPlayer player = manager.lobbySlots[redTeamPlayers[i]].GetComponent<LobbyPlayer>();
+            ChangePlayerName(redTeam[i], player.username);
+        }
+
+        for (int i = 0; i < blueTeamPlayers.Count; i++)
+        {
+            LobbyPlayer player = manager.lobbySlots[blueTeamPlayers[i]].GetComponent<LobbyPlayer>();
+            ChangePlayerName(blueTeam[i], player.username);
         }
     }
 

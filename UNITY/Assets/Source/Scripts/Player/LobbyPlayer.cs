@@ -6,15 +6,28 @@ public class LobbyPlayer : NetworkLobbyPlayer
     [SyncVar]
     public string username;
     [SyncVar]
-    public TeamType team = TeamType.Blue;
+    public TeamType team = TeamType.Red;
+    [SyncVar]
+    private int playerAmount = 0;
+
+    private LobbyManager manager;
 
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
         if (isLocalPlayer)
         {
-            username = Settings.username;
             CmdChangeUsername(Settings.username);
+        }
+        manager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+    }
+
+    private void Update()
+    {
+        manager.connectedPlayers = playerAmount;
+        if (isServer)
+        {
+            playerAmount = manager.numPlayers;
         }
     }
 
@@ -57,8 +70,8 @@ public class LobbyPlayer : NetworkLobbyPlayer
     }
 
     [Command]
-    private void CmdChangeUsername(string username)
+    private void CmdChangeUsername(string user)
     {
-        this.username = username;
+        username = user;
     }
 }

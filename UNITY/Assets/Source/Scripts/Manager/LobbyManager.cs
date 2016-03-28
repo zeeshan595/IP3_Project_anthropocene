@@ -1,26 +1,36 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Networking.Match;
+using System.Collections;
 
 public delegate void OnConnectedToServer(NetworkConnection conn);
 public delegate void OnConntionLostFromServer(NetworkConnection conn);
+public delegate void OnClientConnectedToServer(NetworkConnection conn);
 
 public class LobbyManager : NetworkLobbyManager
 {
     //Event Handlers
     public OnConnectedToServer ClientConnected = null;
     public OnConntionLostFromServer ClientDisconnected = null;
+    public int connectedPlayers = 0;
 
     private bool isSearchingForMatch = false;
     private bool isMatchFound = false;
 
     #region Public Methods
 
+    public static void Connect(string ip, int port)
+    {
+        LobbyManager.singleton.networkAddress = ip;
+        LobbyManager.singleton.networkPort = port;
+        LobbyManager.singleton.StartClient();
+    }
+
     public void CreateHost()
     {
         StartMatchMaker();
         CreateMatchRequest request = new CreateMatchRequest();
-        request.name = "";
+        request.name = "Dev" + Random.Range(0, 99);
         request.size = (uint)maxConnections;
         request.advertise = true;
         request.password = string.Empty;
@@ -54,18 +64,25 @@ public class LobbyManager : NetworkLobbyManager
         isMatchFound = false;
         for (int i = 0; i < matches.Count; i++)
         {
-            if (matches[i].currentSize < matches[i].maxSize)
+            if (matches[i].currentSize < matches[i].maxSize && matches[i].name == "Dev")
             {
                 isMatchFound = true;
                 matchMaker.JoinMatch(matches[i].networkId, string.Empty, MatchJoined);
-                Debug.Log("Match Found");
+                Debug.Log("Match Found: " + matches[i].name + "|" + matches[i].currentSize);
                 break;
             }
         }
         if (!isMatchFound)
         {
-            matchMaker.ListMatches(0, 100, string.Empty, MatchList);
+            //matchMaker.ListMatches(0, 100, string.Empty, MatchList);
+            StartCoroutine(waitBeforeFind());
         }
+    }
+
+    private IEnumerator waitBeforeFind()
+    {
+        yield return new WaitForSeconds(1);
+        matchMaker.ListMatches(0, 100, string.Empty, MatchList);
     }
 
     private void MatchJoined(JoinMatchResponse matchInfo)
@@ -98,10 +115,10 @@ public class LobbyManager : NetworkLobbyManager
     public override GameObject OnLobbyServerCreateGamePlayer(NetworkConnection conn, short playerControllerId)
     {
         Transform spawnPosition = transform;
-        for (int i = 0; i < lobbySlots.Length; i++)
+        for (int i = 0; i < connectedPlayers; i++)
         {
             LobbyPlayer player = lobbySlots[i].GetComponent<LobbyPlayer>();
-            if (player.playerControllerId == playerControllerId)
+            if (player.connectionToClient == conn)
             {
                 if (player)
                 {
@@ -130,6 +147,11 @@ public class LobbyManager : NetworkLobbyManager
         {
             StartHost(new MatchInfo(matchInfo));
         }
+    }
+
+    private void Update()
+    {
+        minPlayers = connectedPlayers;
     }
 
     #endregion
