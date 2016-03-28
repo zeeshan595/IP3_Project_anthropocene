@@ -22,4 +22,12 @@ public class WaterTank : NetworkBehaviour
             }
         }
     }
+
+    private void Start()
+    {
+        if (Settings.team != team)
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+        }
+    }
 }

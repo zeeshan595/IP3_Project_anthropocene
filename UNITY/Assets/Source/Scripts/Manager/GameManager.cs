@@ -15,12 +15,6 @@ public class GameManager : NetworkBehaviour
 
     private void Start()
     {
-        RpcStart();
-    }
-
-    [ClientRpc]
-    private void RpcStart()
-    {
         flowers = new List<PlayerFlower>();
         singleton = this;
     }
@@ -33,6 +27,7 @@ public class GameManager : NetworkBehaviour
     [Command]
     public void CmdFlowerChange(int i, TeamType team)
     {
+        Debug.Log(flowers[i].team +"|"+ team);
         if (flowers[i].team != team)
             RpcFlowerChange(i, team);
     }
@@ -54,12 +49,13 @@ public class GameManager : NetworkBehaviour
 
         PlayerFlower f = obj.GetComponent<PlayerFlower>();
         f.team = team;
-        flowers.Add(f);
+        //flowers.Add(f);
     }
 
     [ClientRpc]
     public void RpcFlowerChange(int i, TeamType team)
     {
+        Debug.Log("changing");
         Destroy(flowers[i]);
 
         GameObject obj;
