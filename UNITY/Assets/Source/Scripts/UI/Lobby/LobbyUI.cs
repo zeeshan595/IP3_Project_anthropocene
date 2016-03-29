@@ -79,7 +79,7 @@ public class LobbyUI : MonoBehaviour
         manager.SearchForMatch();
         Debug.Log("Starting client");
 
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(30);
 
         if (!isConnected)
         {
