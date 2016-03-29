@@ -64,6 +64,12 @@ public class PlayerStats : NetworkBehaviour
             {
                 wep = GetComponent<PlayerWeapon>().currentWeapon;
             }
+            if (timer <= 0)
+            {
+                GameManager.singleton.EndGame(GetComponent<PlayerNetwork>().playerCamera.gameObject);
+                GetComponent<PlayerMovement>().enabled = false;
+                GetComponent<PlayerWeapon>().enabled = false;
+            }
         }
     }
 

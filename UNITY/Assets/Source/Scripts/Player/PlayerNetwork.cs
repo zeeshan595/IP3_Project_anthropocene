@@ -19,7 +19,7 @@ public class PlayerNetwork : NetworkBehaviour
     #region Serialized Fields
 
     [SerializeField]
-    private GameObject playerCamera;
+    public GameObject playerCamera;
     [SerializeField]
     private GameObject playerNameText;
 

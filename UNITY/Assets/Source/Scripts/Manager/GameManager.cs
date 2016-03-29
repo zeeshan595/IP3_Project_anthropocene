@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
     public static GameManager singleton;
     public static List<GameObject> flowers = new List<GameObject>();
 
+    private Transform cam;
+
     private void Start()
     {
         singleton = this;
@@ -25,5 +27,20 @@ public class GameManager : MonoBehaviour
         }
 
         GUILayout.Box(red + "|" + blue);
+    }
+
+    public void EndGame(GameObject camera)
+    {
+        camera.GetComponent<PlayerCamera>().enabled = false;
+        cam = camera.transform;
+    }
+
+    private void Update()
+    {
+        if (cam != null)
+        {
+            cam.position = Vector3.Lerp(cam.position, new Vector3(-30, 60, 8), Time.deltaTime);
+            cam.rotation = Quaternion.Lerp(cam.rotation, Quaternion.Euler(new Vector3(90, 0, 0)), Time.deltaTime);
+        }
     }
 }
