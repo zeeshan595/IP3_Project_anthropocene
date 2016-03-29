@@ -9,6 +9,8 @@ public delegate void OnClientConnectedToServer(NetworkConnection conn);
 
 public class LobbyManager : NetworkLobbyManager
 {
+    public string version = "Alpha0.01";
+
     //Event Handlers
     public OnConnectedToServer ClientConnected = null;
     public OnConntionLostFromServer ClientDisconnected = null;
@@ -30,7 +32,7 @@ public class LobbyManager : NetworkLobbyManager
     {
         StartMatchMaker();
         CreateMatchRequest request = new CreateMatchRequest();
-        request.name = "Dev" + Random.Range(0, 99);
+        request.name = version;
         request.size = (uint)maxConnections;
         request.advertise = true;
         request.password = string.Empty;
@@ -64,7 +66,7 @@ public class LobbyManager : NetworkLobbyManager
         isMatchFound = false;
         for (int i = 0; i < matches.Count; i++)
         {
-            if (matches[i].currentSize < matches[i].maxSize && matches[i].name == "Dev")
+            if (matches[i].currentSize < matches[i].maxSize && matches[i].name == version)
             {
                 isMatchFound = true;
                 matchMaker.JoinMatch(matches[i].networkId, string.Empty, MatchJoined);

@@ -70,44 +70,23 @@ public class LobbyUI : MonoBehaviour
         {
             ReadyPlayer(true);
         }
-
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            TextReader read = new StreamReader("ip.txt");
-            string ip = read.ReadToEnd();
-            read.Close();
-            Debug.Log(ip);
-            manager.networkAddress = ip;
-            manager.networkPort = 7777;
-            manager.StartClient();
-        }
-
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            manager.StartHost();
-        }
     }
 
     #region Network Stuff
 
     private IEnumerator FindAGame()
     {
-        //manager.SearchForMatch();
+        manager.SearchForMatch();
         Debug.Log("Starting client");
-        //manager.networkAddress = "213.107.103.102";
-        //manager.networkPort = 7777;
-        //manager.StartClient();
 
         yield return new WaitForSeconds(10);
 
         if (!isConnected)
         {
             //manager.StopSearchForMatch();
-            //manager.CreateHost();
-            //manager.StopClient();
             yield return new WaitForSeconds(1);
-            //manager.StartHost();
-            //Debug.Log("Starting Host");
+            manager.CreateHost();
+            Debug.Log("Starting Host");
         }
     }
 
