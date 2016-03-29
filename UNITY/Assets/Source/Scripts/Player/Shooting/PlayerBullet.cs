@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class PlayerBullet : MonoBehaviour
 {
@@ -73,9 +74,8 @@ public class PlayerBullet : MonoBehaviour
     {
         if (other.tag == "Flower")
         {
-            Replace(other.gameObject);
             touchedFlower = true;
-            Destroy(gameObject);
+            Replace(other.gameObject);
         }
     }
 
@@ -83,28 +83,19 @@ public class PlayerBullet : MonoBehaviour
     {
         if (other.tag == "Flower")
         {
-            Replace(other.gameObject);
             touchedFlower = true;
-            Destroy(gameObject);
+            Replace(other.gameObject);
         }
     }
 
     private void Replace(GameObject other)
     {
-        if (team == TeamType.Blue)
+        if (other.GetComponent<PlayerFlower>().team != team)
         {
-            GameObject obj = (GameObject)Instantiate(blueFlower, other.transform.position, other.transform.rotation);
-            obj.transform.SetParent(flowerParent);
-            GameManager.flowers.Add(obj);
+            GameManager.flowers.Remove(other);
+            Destroy(other);
         }
-        else
-        {
-            GameObject obj = (GameObject)Instantiate(redFlower, other.transform.position, other.transform.rotation);
-            obj.transform.SetParent(flowerParent);
-            GameManager.flowers.Add(obj);
-        }
-        GameManager.flowers.Remove(other.gameObject);
-        Destroy(other.gameObject);
+        Destroy(gameObject);
     }
 
     private void Update()
