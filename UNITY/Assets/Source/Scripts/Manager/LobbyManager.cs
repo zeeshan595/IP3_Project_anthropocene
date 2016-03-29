@@ -9,7 +9,7 @@ public delegate void OnClientConnectedToServer(NetworkConnection conn);
 
 public class LobbyManager : NetworkLobbyManager
 {
-    public string version = "Alpha0.01";
+    public string version = "Alpha0.02";
 
     //Event Handlers
     public OnConnectedToServer ClientConnected = null;
