@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
         }
 
         GUILayout.Box(red + "|" + blue);
+        GUILayout.Box("Red: " + ((red / (red + blue)) * 100.0f));
+        GUILayout.Box("Red: " + ((blue / (red + blue)) * 100.0f));
     }
 
     public void EndGame(GameObject camera)
