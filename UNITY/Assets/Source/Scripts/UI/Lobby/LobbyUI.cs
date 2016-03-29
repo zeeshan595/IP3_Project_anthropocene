@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.IO;
 
 public class LobbyUI : MonoBehaviour
 {
@@ -72,7 +73,11 @@ public class LobbyUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            manager.networkAddress = "213.107.103.102";
+            TextReader read = new StreamReader("ip.txt");
+            string ip = read.ReadToEnd();
+            read.Close();
+            Debug.Log(ip);
+            manager.networkAddress = ip;
             manager.networkPort = 7777;
             manager.StartClient();
         }
