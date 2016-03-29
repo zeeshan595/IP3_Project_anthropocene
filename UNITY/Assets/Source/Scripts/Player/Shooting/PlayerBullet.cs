@@ -61,8 +61,8 @@ public class PlayerBullet : MonoBehaviour
                 GameObject copy = (GameObject)Instantiate(petals, pos + offset, rot);
                 copy.GetComponent<PlayerBullet>().team = team;
                 Vector3 force = collider.contacts[0].normal;
-                force += new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-0.5f, 1.0f), Random.Range(-1.0f, 1.0f));
-                copy.GetComponent<Rigidbody>().AddForce(force * 100 * Random.Range(1.0f, 2.0f));
+                force = new Vector3(Random.Range(-5.0f, 5.0f), Random.Range(-5.0f, 5.0f), Random.Range(-10.0f, 10.0f));
+                copy.GetComponent<Rigidbody>().AddForce(force * 100);
                 counter++;
             }
         }
