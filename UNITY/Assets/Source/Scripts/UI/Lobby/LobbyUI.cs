@@ -83,7 +83,7 @@ public class LobbyUI : MonoBehaviour
 
         if (!isConnected)
         {
-            //manager.StopSearchForMatch();
+            manager.StopSearchForMatch();
             yield return new WaitForSeconds(1);
             manager.CreateHost();
             Debug.Log("Starting Host");

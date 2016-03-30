@@ -2,6 +2,7 @@
 using UnityEngine.Networking;
 using UnityEngine.Networking.Match;
 using System.Collections;
+using UnityEngine.Networking.Types;
 
 public delegate void OnConnectedToServer(NetworkConnection conn);
 public delegate void OnConntionLostFromServer(NetworkConnection conn);
@@ -18,6 +19,8 @@ public class LobbyManager : NetworkLobbyManager
 
     private bool isSearchingForMatch = false;
     private bool isMatchFound = false;
+    private long networkID;
+    private long nodeID;
 
     #region Public Methods
 
@@ -66,7 +69,7 @@ public class LobbyManager : NetworkLobbyManager
         isMatchFound = false;
         for (int i = 0; i < matches.Count; i++)
         {
-            if (matches[i].currentSize < matches[i].maxSize && matches[i].name == version)
+            if (matches[i].currentSize < matches[i].maxSize && matches[i].currentSize > 0 && matches[i].name == version)
             {
                 isMatchFound = true;
                 matchMaker.JoinMatch(matches[i].networkId, string.Empty, MatchJoined);
@@ -84,20 +87,8 @@ public class LobbyManager : NetworkLobbyManager
     private IEnumerator waitBeforeFind()
     {
         yield return new WaitForSeconds(1);
-        matchMaker.ListMatches(0, 100, string.Empty, MatchList);
-    }
-
-    private void MatchJoined(JoinMatchResponse matchInfo)
-    {
-        if (matchInfo.success)
-        {
-            StartClient(new MatchInfo(matchInfo));
-        }
-        else
-        {
+        if (matchMaker)
             matchMaker.ListMatches(0, 100, string.Empty, MatchList);
-            isMatchFound = false;
-        }
     }
 
     public override void OnClientConnect(NetworkConnection conn)
@@ -149,15 +140,64 @@ public class LobbyManager : NetworkLobbyManager
 
     public override void OnMatchCreate(CreateMatchResponse matchInfo)
     {
+        networkID = (long)matchInfo.networkId;
+        nodeID = (long)matchInfo.nodeId;
         if (matchInfo.success)
         {
             StartHost(new MatchInfo(matchInfo));
         }
     }
 
+    private void MatchJoined(JoinMatchResponse matchInfo)
+    {
+        networkID = (long)matchInfo.networkId;
+        nodeID = (long)matchInfo.nodeId;
+        if (matchInfo.success)
+        {
+            StartClient(new MatchInfo(matchInfo));
+        }
+        else
+        {
+            matchMaker.ListMatches(0, 100, string.Empty, MatchList);
+            isMatchFound = false;
+        }
+    }
+
+    public override void OnLobbyClientDisconnect(NetworkConnection conn)
+    {
+        base.OnLobbyClientDisconnect(conn);
+        DropConnectionRequest dropReq = new DropConnectionRequest();
+        dropReq.networkId = (NetworkID)networkID;
+        dropReq.nodeId = (NodeID)nodeID;
+        matchMaker.DropConnection(dropReq, OnConnectionDrop);
+        Debug.Log("test");
+    }
+
+    public override void OnStopHost()
+    {
+        base.OnStopHost();
+        matchMaker.DestroyMatch((NetworkID)networkID, OnDestroyMatch);
+    }
+
+    private void OnDestroyMatch(BasicResponse response)
+    {
+        Debug.Log("Destroyed Lobby");
+    }
+
+    private void OnConnectionDrop(BasicResponse response)
+    {
+        Debug.Log("Droped Connection From Lobby");
+    }
+
     private void Update()
     {
         minPlayers = connectedPlayers;
+    }
+
+    private void OnApplicationQuit()
+    {
+        Debug.Log("Stopping Host");
+        StopHost();
     }
 
     #endregion
