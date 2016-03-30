@@ -170,25 +170,25 @@ public class LobbyUI : MonoBehaviour
         //Reset All feilds
         for (int i = 0; i < redTeam.Length; i++)
         {
-            ChangePlayerName(redTeam[i], "Waiting for user...");
+            ChangePlayerName(redTeam[i], null);
         }
 
         for (int i = 0; i < blueTeam.Length; i++)
         {
-            ChangePlayerName(blueTeam[i], "Waiting for user...");
+            ChangePlayerName(blueTeam[i], null);
         }
 
         //Put user names in correct position
         for (int i = 0; i < redTeamPlayers.Count; i++)
         {
             LobbyPlayer player = manager.lobbySlots[redTeamPlayers[i]].GetComponent<LobbyPlayer>();
-            ChangePlayerName(redTeam[i], player.username);
+            ChangePlayerName(redTeam[i], player);
         }
 
         for (int i = 0; i < blueTeamPlayers.Count; i++)
         {
             LobbyPlayer player = manager.lobbySlots[blueTeamPlayers[i]].GetComponent<LobbyPlayer>();
-            ChangePlayerName(blueTeam[i], player.username);
+            ChangePlayerName(blueTeam[i], player);
         }
     }
 
@@ -213,10 +213,19 @@ public class LobbyUI : MonoBehaviour
         }
     }
 
-    private void ChangePlayerName(GameObject obj, string username)
+    private void ChangePlayerName(GameObject obj, LobbyPlayer player)
     {
-        Text child = obj.transform.GetChild(0).GetComponent<Text>();
-        child.text = username;
+        Text child = obj.transform.FindChild("Text").GetComponent<Text>();
+        if (player != null)
+        {
+            child.text = player.username;
+            obj.transform.FindChild("Image").gameObject.SetActive(player.readyToBegin);
+        }
+        else
+        {
+            child.text = "Waiting For User...";
+            obj.transform.FindChild("Image").gameObject.SetActive(false);
+        }
     }
 
     private IEnumerator loadingAnimation()
