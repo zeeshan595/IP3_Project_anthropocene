@@ -13,7 +13,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField]
     private Transform playerTarget;
     [SerializeField]
-    private float lookOffset = 0;
+    private float lookOffset = 1;
     [SerializeField]
     private float speed = 5.0f;
 

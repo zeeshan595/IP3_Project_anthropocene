@@ -76,18 +76,19 @@ public class LobbyUI : MonoBehaviour
 
     private IEnumerator FindAGame()
     {
-        manager.SearchForMatch();
+        //manager.SearchForMatch();
         Debug.Log("Starting client");
 
-        yield return new WaitForSeconds(30);
+        yield return new WaitForSeconds(0);
 
         if (!isConnected)
         {
-            manager.StopSearchForMatch();
+            //manager.StopSearchForMatch();
             yield return new WaitForSeconds(1);
-            manager.CreateHost();
+            //manager.CreateHost();
             Debug.Log("Starting Host");
         }
+        manager.StartHost();
     }
 
     private void FindLobbyManager()

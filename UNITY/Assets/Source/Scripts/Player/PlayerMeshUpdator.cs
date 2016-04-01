@@ -7,6 +7,10 @@ public class PlayerMeshUpdator : NetworkBehaviour
     [SerializeField]
     private GameObject[] characters;
     [SerializeField]
+    private Texture2D[] blueTextures;
+    [SerializeField]
+    private Texture2D[] redTextures;
+    [SerializeField]
     private GameObject meshParent;
 
     [System.NonSerialized]

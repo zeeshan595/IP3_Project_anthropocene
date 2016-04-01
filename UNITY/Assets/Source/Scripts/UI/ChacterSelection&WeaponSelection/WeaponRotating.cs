@@ -27,7 +27,7 @@ public class WeaponRotating : MonoBehaviour {
     IEnumerator EnableRenderer(float time)
     {
         yield return new WaitForSeconds(time);
-        renderer.enabled = true;
+        //renderer.enabled = true;
         canvas.SetActive(true);
     }
 
