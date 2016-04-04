@@ -116,7 +116,7 @@ public class LobbyUI : MonoBehaviour
                 connectionInfo.GetComponent<Text>().text += "Creating Room\n";
             });
             
-            MatchMakerClient.CreateRoom("Alpha", "", 8);
+            MatchMakerClient.CreateRoom("Alpha ", "", 8);
             Host();
         }
         else
@@ -128,15 +128,19 @@ public class LobbyUI : MonoBehaviour
             bool joined = false;
             for (int i = 0; i < rooms.Count; i++)
             {
-                if (rooms[i].currentPlayers < rooms[i].maxPlayers)
-                {
+                Debug.Log(i + "/" + rooms.Count);
+                //if (rooms[i].currentPlayers < rooms[i].maxPlayers)
+                //{
                     Dispatcher.Current.BeginInvoke(() =>
                     {
                         manager.networkPort = 7777;
                         manager.networkAddress = rooms[i].hostIP;
+                        Debug.Log(rooms[i].hostIP);
                         manager.StartClient();
                     });
-                }
+                    joined = true;
+                    break;
+                //}
             }
 
             if (!joined)
