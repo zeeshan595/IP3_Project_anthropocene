@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class CharacterSelection : MonoBehaviour {
 
@@ -21,6 +22,11 @@ public class CharacterSelection : MonoBehaviour {
     private bool pressDownLeft = false;
     private bool pressDownRight = false;
 
+    public GameObject characterTextObject;
+    private Text characterText;
+    public GameObject characterSelectPanel;
+    Animation ani;
+
     void MoveLeft()
     {
         characterIndex--;
@@ -32,6 +38,7 @@ public class CharacterSelection : MonoBehaviour {
         currentRot = angleValue - 90;
         Settings.character = (Character)characterIndex;
         Debug.Log(Settings.character);
+        ChangeCharacterName(characters[characterIndex].name);
     }
 
     void MoveRight()
@@ -44,6 +51,7 @@ public class CharacterSelection : MonoBehaviour {
         sign = 1;
         Settings.character = (Character)characterIndex;
         currentRot = angleValue + 90;
+        ChangeCharacterName(characters[characterIndex].name);
     }
 
 	void Update () 
@@ -161,14 +169,42 @@ public class CharacterSelection : MonoBehaviour {
 
     void Start()
     {
-        //StartCoroutine(displayWeaponPanel());
+        characterText = characterTextObject.GetComponent<Text>();
+        ani = GetComponent<Animation>();
     }
 
-    IEnumerator displayWeaponPanel()
+    public void SelectButton()
     {
-        yield return new WaitForSeconds(1);
+        StartCoroutine(DisplayWeaponPanel());
+    }
+
+    IEnumerator DisplayWeaponPanel()
+    {
+        ani.Rewind();
+        ani.Play();
+        yield return new WaitForSeconds(0.75f);
         weaponPanel.SetActive(true);
     }
 
+    public void BackButton()
+    {
+        StartCoroutine(DisplayCharacterPanel());
+    }
+
+    IEnumerator DisplayCharacterPanel()
+    {
+        ani["Camera Zoom in"].speed = -1.0f;
+        ani["Camera Zoom in"].time = ani["Camera Zoom in"].length;
+        ani.Play();
+        yield return new WaitForSeconds(0.75f);
+        characterSelectPanel.SetActive(true);
+        ani["Camera Zoom in"].speed = 1.0f;
+        ani["Camera Zoom in"].time = ani["Camera Zoom in"].length;
+    }
+
+    private void ChangeCharacterName(string characterName)
+    {
+        characterText.text = characterName;
+    }
 
 }

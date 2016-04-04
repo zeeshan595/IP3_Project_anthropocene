@@ -18,7 +18,7 @@ public class WeaponSelection : MonoBehaviour {
         }
         else if (weaponType == "water can")
         {
-            Debug.Log("water can");
+            Settings.weaponType = WeaponType.ScatterGun;
             weaponModels[0].SetActive(false);
             weaponModels[1].SetActive(true);
             weaponModels[2].SetActive(false);
@@ -27,7 +27,7 @@ public class WeaponSelection : MonoBehaviour {
             
         else if (weaponType == "rake")
         {
-            Debug.Log("rake");
+            Settings.weaponType = WeaponType.WaterRake;
             weaponModels[0].SetActive(false);
             weaponModels[1].SetActive(false);
             weaponModels[2].SetActive(true);

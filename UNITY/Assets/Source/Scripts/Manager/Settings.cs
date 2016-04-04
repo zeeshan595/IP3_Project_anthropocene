@@ -5,6 +5,9 @@
     public static TeamType team = TeamType.Blue;
     public static WeaponType weaponType = WeaponType.ScatterGun;
     public static Character character = Character.Fishy;
+    public static float masterVolume;
+    public static float musicVolume;
+    public static float SFXVolume;
 }
 
 public enum WeaponType

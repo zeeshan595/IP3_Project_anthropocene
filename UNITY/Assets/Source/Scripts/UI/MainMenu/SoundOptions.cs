@@ -28,8 +28,8 @@ public class SoundOptions : MonoBehaviour {
         masterVolume = masterVolumeSlider.value;
         musicVolume = musicVolumeSlider.value;
         sfxVolume = sfxVolumeSlider.value;
-        PlayerPrefs.SetFloat("Master Volume", masterVolume);
-        PlayerPrefs.SetFloat("Music Volume", musicVolume);
-        PlayerPrefs.SetFloat("SFX Volume", sfxVolume);
+        Settings.masterVolume = masterVolume;
+        Settings.musicVolume = musicVolume;
+        Settings.SFXVolume = sfxVolume;
     }
 }
