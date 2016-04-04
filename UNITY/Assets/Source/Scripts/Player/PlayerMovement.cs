@@ -87,17 +87,15 @@ public class PlayerMovement : NetworkBehaviour
                 if (targetDirection != Vector3.zero)
                 {
                     animator.SetFloat("Speed", 1.0f);
-                    float blend = Mathf.Abs(horizontal) - Mathf.Abs(vertical);
-                    blend += 1.0f;
-                    blend /= 2;
-                    Debug.Log(blend);
-                    animator.SetFloat("Blend", blend);
+                    animator.SetFloat("BlendX", horizontal);
+                    animator.SetFloat("BlendY", vertical);
                 }
                 else
                 {
                     GetComponent<PlayerMeshUpdator>().mesh.transform.localPosition = Vector3.zero;
                     animator.SetFloat("Speed", 0.0f);
                 }
+                animator.SetBool("Jump", isJumping);
             }
             if (!controller.isGrounded && !isJumping)
             {

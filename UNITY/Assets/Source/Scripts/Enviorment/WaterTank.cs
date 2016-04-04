@@ -28,7 +28,7 @@ public class WaterTank : NetworkBehaviour
 
     private void Start()
     {
-        RpcCreateEffect();
+        //RpcCreateEffect();
     }
 
     [ClientRpc]

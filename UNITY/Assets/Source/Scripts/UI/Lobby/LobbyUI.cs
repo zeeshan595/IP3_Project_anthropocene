@@ -4,7 +4,6 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.IO;
 using System.Collections.Generic;
-using Battlehub.Dispatcher;
 
 public class LobbyUI : MonoBehaviour
 {
@@ -71,7 +70,6 @@ public class LobbyUI : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            MatchMakerClient.StopMatchMaker();
             ReadyPlayer(true);
         }
     }
