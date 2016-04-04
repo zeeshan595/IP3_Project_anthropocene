@@ -11,7 +11,7 @@ public delegate void ListRoomsCallback(List<Room> rooms);
 
 public class MatchMakerClient
 {
-    public static string ip = "5.9.251.204";
+    public static string ip = "213.107.103.102";
     public static int port = 7776;
     public static int bufferSize = 1024;
     public static ConnectCallback connectCallback;
