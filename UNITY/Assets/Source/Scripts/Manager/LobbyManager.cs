@@ -22,75 +22,6 @@ public class LobbyManager : NetworkLobbyManager
     private long networkID;
     private long nodeID;
 
-    #region Public Methods
-
-    public static void Connect(string ip, int port)
-    {
-        LobbyManager.singleton.networkAddress = ip;
-        LobbyManager.singleton.networkPort = port;
-        LobbyManager.singleton.StartClient();
-    }
-
-    public void CreateHost()
-    {
-        StartMatchMaker();
-        CreateMatchRequest request = new CreateMatchRequest();
-        request.name = version;
-        request.size = (uint)maxConnections;
-        request.advertise = true;
-        request.password = string.Empty;
-
-        matchMaker.CreateMatch(request, OnMatchCreate);
-    }
-
-    public void SearchForMatch()
-    {
-        StartMatchMaker();
-        isSearchingForMatch = true;
-        matchMaker.ListMatches(0, 50, string.Empty, MatchList);
-    }
-
-    public void StopSearchForMatch()
-    {
-        StopMatchMaker();
-        isSearchingForMatch = false;
-    }
-
-    #endregion
-
-    #region Private Methods
-
-    private void MatchList(ListMatchResponse matchList)
-    {
-        if (!isSearchingForMatch)
-            return;
-
-        matches = matchList.matches;
-        isMatchFound = false;
-        for (int i = 0; i < matches.Count; i++)
-        {
-            if (matches[i].currentSize < matches[i].maxSize && matches[i].currentSize > 0 && matches[i].name == version)
-            {
-                isMatchFound = true;
-                matchMaker.JoinMatch(matches[i].networkId, string.Empty, MatchJoined);
-                Debug.Log("Match Found: " + matches[i].name + "|" + matches[i].currentSize);
-                break;
-            }
-        }
-        if (!isMatchFound)
-        {
-            //matchMaker.ListMatches(0, 100, string.Empty, MatchList);
-            StartCoroutine(waitBeforeFind());
-        }
-    }
-
-    private IEnumerator waitBeforeFind()
-    {
-        yield return new WaitForSeconds(1);
-        if (matchMaker)
-            matchMaker.ListMatches(0, 100, string.Empty, MatchList);
-    }
-
     public override void OnClientConnect(NetworkConnection conn)
     {
         base.OnClientConnect(conn);
@@ -103,11 +34,6 @@ public class LobbyManager : NetworkLobbyManager
         base.OnClientDisconnect(conn);
         if (ClientDisconnected != null)
             ClientDisconnected(conn);
-    }
-
-    public override void OnLobbyServerPlayersReady()
-    {
-        base.OnLobbyServerPlayersReady();
     }
 
     public override GameObject OnLobbyServerCreateGamePlayer(NetworkConnection conn, short playerControllerId)
@@ -143,67 +69,8 @@ public class LobbyManager : NetworkLobbyManager
         return obj;
     }
 
-    public override void OnMatchCreate(CreateMatchResponse matchInfo)
-    {
-        networkID = (long)matchInfo.networkId;
-        nodeID = (long)matchInfo.nodeId;
-        if (matchInfo.success)
-        {
-            StartHost(new MatchInfo(matchInfo));
-        }
-    }
-
-    private void MatchJoined(JoinMatchResponse matchInfo)
-    {
-        networkID = (long)matchInfo.networkId;
-        nodeID = (long)matchInfo.nodeId;
-        if (matchInfo.success)
-        {
-            StartClient(new MatchInfo(matchInfo));
-        }
-        else
-        {
-            matchMaker.ListMatches(0, 100, string.Empty, MatchList);
-            isMatchFound = false;
-        }
-    }
-
-    public override void OnLobbyClientDisconnect(NetworkConnection conn)
-    {
-        base.OnLobbyClientDisconnect(conn);
-        DropConnectionRequest dropReq = new DropConnectionRequest();
-        dropReq.networkId = (NetworkID)networkID;
-        dropReq.nodeId = (NodeID)nodeID;
-        matchMaker.DropConnection(dropReq, OnConnectionDrop);
-        Debug.Log("test");
-    }
-
-    public override void OnStopHost()
-    {
-        base.OnStopHost();
-
-    }
-
-    private void OnDestroyMatch(BasicResponse response)
-    {
-        Debug.Log("Destroyed Lobby");
-    }
-
-    private void OnConnectionDrop(BasicResponse response)
-    {
-        Debug.Log("Droped Connection From Lobby");
-    }
-
     private void Update()
     {
         minPlayers = connectedPlayers;
     }
-
-    private void OnApplicationQuit()
-    {
-        Debug.Log("Stopping Host");
-        StopHost();
-    }
-
-    #endregion
 }

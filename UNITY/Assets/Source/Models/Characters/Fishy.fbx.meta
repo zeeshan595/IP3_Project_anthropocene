@@ -96,6 +96,9 @@ ModelImporter:
     100176: model01
     100178: skeleton01
     100180: WEAPONDUMMYCUBE
+    100182: dummy_bazooka
+    100184: dummy_hose
+    100186: dummy_watercan_rake
     400000: be_headlamp_f01
     400002: be_l_index_d01
     400004: be_l_middle_d01
@@ -187,14 +190,23 @@ ModelImporter:
     400176: model01
     400178: skeleton01
     400180: WEAPONDUMMYCUBE
+    400182: dummy_bazooka
+    400184: dummy_hose
+    400186: dummy_watercan_rake
     2300000: fish_bubble01
     2300002: Jetpack_Jetpack
     2300004: Jetpack_Water
     2300006: WEAPONDUMMYCUBE
+    2300008: dummy_bazooka
+    2300010: dummy_hose
+    2300012: dummy_watercan_rake
     3300000: fish_bubble01
     3300002: Jetpack_Jetpack
     3300004: Jetpack_Water
     3300006: WEAPONDUMMYCUBE
+    3300008: dummy_bazooka
+    3300010: dummy_hose
+    3300012: dummy_watercan_rake
     4300000: fish_body01
     4300002: fish_l_eye01
     4300004: fish_r_eye01
@@ -202,6 +214,9 @@ ModelImporter:
     4300008: Jetpack_Jetpack
     4300010: Jetpack_Water
     4300012: fish_bubble01
+    4300014: dummy_watercan_rake
+    4300016: dummy_hose
+    4300018: dummy_bazooka
     7400000: Idle
     7400002: Walk
     7400004: Jump
@@ -223,11 +238,7 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'bn_root01' has translation animation that will
-      be discarded.\n\t'bn_root01' is inbetween humanoid transforms and has rotation
-      animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 3

@@ -5,13 +5,9 @@ using UnityEngine.Networking;
 public class PlayerMeshUpdator : NetworkBehaviour
 {
     [SerializeField]
-    private GameObject[] characters;
+    private Chars[] characters;
     [SerializeField]
-    private Texture2D[] blueTextures;
-    [SerializeField]
-    private Texture2D[] redTextures;
-    [SerializeField]
-    private GameObject meshParent;
+    private Transform meshParent;
 
     [System.NonSerialized]
     public GameObject mesh;
@@ -19,7 +15,19 @@ public class PlayerMeshUpdator : NetworkBehaviour
     private void Start()
     {
         int i = (int)GetComponent<PlayerStats>().character;
-        mesh = (GameObject)Instantiate(characters[i], meshParent.transform.position, meshParent.transform.rotation);
+        mesh = (GameObject)Instantiate(characters[i].mesh, meshParent.transform.position, meshParent.transform.rotation);
         mesh.transform.SetParent(meshParent.transform);
+        meshParent.transform.localPosition = characters[i].offset;
+        GetComponent<CharacterController>().height = characters[i].height;
     }
+}
+
+[System.Serializable]
+public class Chars
+{
+    public GameObject mesh;
+    public Texture2D blueTexture;
+    public Texture2D redTexture;
+    public int height;
+    public Vector3 offset;
 }

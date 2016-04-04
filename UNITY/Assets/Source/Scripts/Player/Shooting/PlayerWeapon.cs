@@ -151,6 +151,22 @@ public class PlayerWeapon : NetworkBehaviour
     [ClientRpc]
     private void RpcCreateWeapon(int id)
     {
+        switch ((WeaponType)id)
+        {
+            case WeaponType.WaterRake:
+                weaponTransform.SetParent(GetComponent<PlayerMeshUpdator>().mesh.GetComponent<MeshSetup>().rake);
+                break;
+            case WeaponType.HoseGun:
+                weaponTransform.SetParent(GetComponent<PlayerMeshUpdator>().mesh.GetComponent<MeshSetup>().hose);
+                break;
+            case WeaponType.ScatterGun:
+                weaponTransform.SetParent(GetComponent<PlayerMeshUpdator>().mesh.GetComponent<MeshSetup>().scaterGun);
+                break;
+            case WeaponType.WaterBazooka:
+                weaponTransform.SetParent(GetComponent<PlayerMeshUpdator>().mesh.GetComponent<MeshSetup>().bazooka);
+                break;
+        }
+        weaponTransform.localPosition = Vector3.zero;
         GameObject w = (GameObject)Instantiate(weapons[id].gameObject, weaponTransform.position, weaponTransform.rotation);
         currentWeapon = w.GetComponent<Weapon>();
         w.transform.SetParent(weaponTransform);

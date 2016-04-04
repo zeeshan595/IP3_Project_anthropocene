@@ -87,6 +87,11 @@ public class PlayerMovement : NetworkBehaviour
                 if (targetDirection != Vector3.zero)
                 {
                     animator.SetFloat("Speed", 1.0f);
+                    float blend = Mathf.Abs(horizontal) - Mathf.Abs(vertical);
+                    blend += 1.0f;
+                    blend /= 2;
+                    Debug.Log(blend);
+                    animator.SetFloat("Blend", blend);
                 }
                 else
                 {

@@ -69,7 +69,8 @@ public class LobbyPlayer : NetworkLobbyPlayer
     [Command]
     private void CmdChangeTeam(TeamType team)
     {
-        this.team = team;
+        if (!readyToBegin)
+            this.team = team;
     }
 
     [Command]

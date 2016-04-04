@@ -10,6 +10,7 @@ public class CustomNetworkManager : NetworkManager
     {
         var player = (GameObject)GameObject.Instantiate(playerPrefab, spawnPositions[Random.Range(0, spawnPositions.Length)].position, spawnPositions[Random.Range(0, spawnPositions.Length)].rotation);
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
+        player.GetComponent<PlayerStats>().character = Settings.character;
     }
 
     private void Start()

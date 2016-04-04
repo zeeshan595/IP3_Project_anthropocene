@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System.IO;
 using System.Collections.Generic;
 using Battlehub.Dispatcher;
 
@@ -77,92 +78,21 @@ public class LobbyUI : MonoBehaviour
 
     #region Network Stuff
 
-    private void OnDisable()
-    {
-        MatchMakerClient.StopMatchMaker();
-    }
-
     private void FindAGame()
     {
-        Dispatcher.Current.BeginInvoke(() =>
+        if (File.Exists("ip.txt"))
         {
-            connectionInfo.GetComponent<Text>().text += "Attempting to connect to Match maker server...\n";
-        });
-        MatchMakerClient.connectCallback = connectCallBack;
-        MatchMakerClient.StartMatchMaker();
-    }
-
-    private void connectCallBack(System.Net.Sockets.Socket socket)
-    {
-        Dispatcher.Current.BeginInvoke(() =>
-        {
-            connectionInfo.GetComponent<Text>().text += "Connected\n";
-            connectionInfo.GetComponent<Text>().text += "Getting rooms list\n";
-        });
-        MatchMakerClient.listRoomsCallback = listRoomCallBack;
-        MatchMakerClient.ListRoom();
-    }
-
-    private void listRoomCallBack(List<MatchMakerPacket.Room> rooms)
-    {
-        Dispatcher.Current.BeginInvoke(() =>
-        {
-            connectionInfo.GetComponent<Text>().text += "Got responce.\n";
-        });
-        if (rooms.Count == 0)
-        {
-            Dispatcher.Current.BeginInvoke(() =>
-            {
-                connectionInfo.GetComponent<Text>().text += "No Rooms Found\n";
-                connectionInfo.GetComponent<Text>().text += "Creating Room\n";
-            });
-            
-            MatchMakerClient.CreateRoom("Alpha ", "", 8);
-            Host();
+            TextReader read = new StreamReader("ip.txt");
+            string ip = read.ReadToEnd();
+            read.Close();
+            manager.networkAddress = ip;
+            manager.networkPort = 7777;
+            manager.StartClient();
         }
         else
         {
-            Dispatcher.Current.BeginInvoke(() =>
-            {
-                connectionInfo.GetComponent<Text>().text += "Attempting to search through rooms\n";
-            });
-            bool joined = false;
-            for (int i = 0; i < rooms.Count; i++)
-            {
-                Debug.Log(i + "/" + rooms.Count);
-                //if (rooms[i].currentPlayers < rooms[i].maxPlayers)
-                //{
-                    Dispatcher.Current.BeginInvoke(() =>
-                    {
-                        manager.networkPort = 7777;
-                        manager.networkAddress = rooms[i].hostIP;
-                        Debug.Log(rooms[i].hostIP);
-                        manager.StartClient();
-                    });
-                    joined = true;
-                    break;
-                //}
-            }
-
-            if (!joined)
-            {
-                Dispatcher.Current.BeginInvoke(() =>
-                {
-                    connectionInfo.GetComponent<Text>().text += "No Rooms Found\n";
-                    connectionInfo.GetComponent<Text>().text += "Creating Room\n";
-                });
-                MatchMakerClient.CreateRoom("Alpha", "", 8);
-                Host();
-            }
-        }
-    }
-
-    private void Host()
-    {
-        Dispatcher.Current.BeginInvoke(() =>
-        {
             manager.StartHost();
-        });
+        }
     }
 
     private void FindLobbyManager()
