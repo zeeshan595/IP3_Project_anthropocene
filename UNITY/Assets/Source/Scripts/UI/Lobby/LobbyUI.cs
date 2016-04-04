@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System.IO;
+using Battlehub.Dispatcher;
 
 public class LobbyUI : MonoBehaviour
 {
@@ -17,6 +17,8 @@ public class LobbyUI : MonoBehaviour
     private GameObject[] redTeam;
     [SerializeField]
     private GameObject[] blueTeam;
+    [SerializeField]
+    private GameObject connectionInfo;
 
     private List<int> redTeamPlayers = new List<int>();
     private List<int> blueTeamPlayers = new List<int>();
@@ -33,7 +35,7 @@ public class LobbyUI : MonoBehaviour
 
         manager.ClientConnected += OnConnected;
         manager.ClientDisconnected += OnDisconnect;
-        StartCoroutine(FindAGame());
+        FindAGame();
     }
 
     private void Update()
@@ -74,21 +76,88 @@ public class LobbyUI : MonoBehaviour
 
     #region Network Stuff
 
-    private IEnumerator FindAGame()
+    private void OnDisable()
     {
-        //manager.SearchForMatch();
-        Debug.Log("Starting client");
+        MatchMakerClient.StopMatchMaker();
+    }
 
-        yield return new WaitForSeconds(0);
-
-        if (!isConnected)
+    private void FindAGame()
+    {
+        Dispatcher.Current.BeginInvoke(() =>
         {
-            //manager.StopSearchForMatch();
-            yield return new WaitForSeconds(1);
-            //manager.CreateHost();
-            Debug.Log("Starting Host");
+            connectionInfo.GetComponent<Text>().text += "Attempting to connect to Match maker server...\n";
+        });
+        MatchMakerClient.connectCallback = connectCallBack;
+        MatchMakerClient.StartMatchMaker();
+    }
+
+    private void connectCallBack(System.Net.Sockets.Socket socket)
+    {
+        Dispatcher.Current.BeginInvoke(() =>
+        {
+            connectionInfo.GetComponent<Text>().text += "Connected\n";
+            connectionInfo.GetComponent<Text>().text += "Getting rooms list\n";
+        });
+        MatchMakerClient.listRoomsCallback = listRoomCallBack;
+        MatchMakerClient.ListRoom();
+    }
+
+    private void listRoomCallBack(List<MatchMakerPacket.Room> rooms)
+    {
+        Dispatcher.Current.BeginInvoke(() =>
+        {
+            connectionInfo.GetComponent<Text>().text += "Got responce.\n";
+        });
+        if (rooms.Count == 0)
+        {
+            Dispatcher.Current.BeginInvoke(() =>
+            {
+                connectionInfo.GetComponent<Text>().text += "No Rooms Found\n";
+                connectionInfo.GetComponent<Text>().text += "Creating Room\n";
+            });
+            
+            MatchMakerClient.CreateRoom("Alpha", "", 8);
+            Host();
         }
-        manager.StartHost();
+        else
+        {
+            Dispatcher.Current.BeginInvoke(() =>
+            {
+                connectionInfo.GetComponent<Text>().text += "Attempting to search through rooms\n";
+            });
+            bool joined = false;
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                if (rooms[i].currentPlayers < rooms[i].maxPlayers)
+                {
+                    Dispatcher.Current.BeginInvoke(() =>
+                    {
+                        manager.networkPort = 7777;
+                        manager.networkAddress = rooms[i].hostIP;
+                        manager.StartClient();
+                    });
+                }
+            }
+
+            if (!joined)
+            {
+                Dispatcher.Current.BeginInvoke(() =>
+                {
+                    connectionInfo.GetComponent<Text>().text += "No Rooms Found\n";
+                    connectionInfo.GetComponent<Text>().text += "Creating Room\n";
+                });
+                MatchMakerClient.CreateRoom("Alpha", "", 8);
+                Host();
+            }
+        }
+    }
+
+    private void Host()
+    {
+        Dispatcher.Current.BeginInvoke(() =>
+        {
+            manager.StartHost();
+        });
     }
 
     private void FindLobbyManager()
@@ -118,7 +187,6 @@ public class LobbyUI : MonoBehaviour
         searchingForMatchScreen.SetActive(false);
         matchFoundScreen.SetActive(true);
         isConnected = false;
-        StartCoroutine(FindAGame());
         Debug.LogWarning("Client Was Disconnected. Attempting to Reconnect To A Match");
     }
 
