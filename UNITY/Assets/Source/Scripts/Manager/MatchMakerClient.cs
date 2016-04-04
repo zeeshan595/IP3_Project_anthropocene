@@ -84,11 +84,17 @@ public class MatchMakerClient
 
     public static void StopMatchMaker()
     {
-        pingpong.Abort();
-        pingpong = null;
-        socket.Disconnect(false);
-        socket.Close();
-        socket = null;
+        if (pingpong != null)
+        {
+            pingpong.Abort();
+            pingpong = null;
+        }
+
+        if (socket != null)
+        {
+            socket.Close();
+            socket = null;
+        }
     }
 
     public static void CreateRoom(string name, string password, int maxPlayers)

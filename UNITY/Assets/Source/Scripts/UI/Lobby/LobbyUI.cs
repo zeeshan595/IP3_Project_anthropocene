@@ -70,6 +70,7 @@ public class LobbyUI : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            MatchMakerClient.StopMatchMaker();
             ReadyPlayer(true);
         }
     }

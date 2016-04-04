@@ -105,6 +105,11 @@ public class LobbyManager : NetworkLobbyManager
             ClientDisconnected(conn);
     }
 
+    public override void OnLobbyServerPlayersReady()
+    {
+        base.OnLobbyServerPlayersReady();
+    }
+
     public override GameObject OnLobbyServerCreateGamePlayer(NetworkConnection conn, short playerControllerId)
     {
         Character ch = Character.Potatree;
