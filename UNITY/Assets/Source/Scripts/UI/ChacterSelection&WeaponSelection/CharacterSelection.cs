@@ -23,28 +23,31 @@ public class CharacterSelection : MonoBehaviour {
 
     void MoveLeft()
     {
+        characterIndex--;
+        if (characterIndex >= characters.Length) characterIndex = 0;
+        if (characterIndex < 0) characterIndex = characters.Length - 1;
+        selectedCharacter = characters[characterIndex];
         sign = -1;
         isRotatingLeft = true;
-        characterIndex--;
         currentRot = angleValue - 90;
         Settings.character = (Character)characterIndex;
+        Debug.Log(Settings.character);
     }
 
     void MoveRight()
     {
+        characterIndex++;
+        if (characterIndex >= characters.Length) characterIndex = 0;
+        if (characterIndex < 0) characterIndex = characters.Length - 1;
+        selectedCharacter = characters[characterIndex];
         isRotating = true;
         sign = 1;
-        characterIndex++;
         Settings.character = (Character)characterIndex;
         currentRot = angleValue + 90;
     }
 
 	void Update () 
     {
-        if (characterIndex >= characters.Length) characterIndex = 0;
-        if (characterIndex < 0) characterIndex = characters.Length - 1;
-        selectedCharacter = characters[characterIndex];
-
         if (!isRotatingLeft && !isRotating)
         {
             //Rotate right TODO change input to xbox axis
@@ -104,13 +107,19 @@ public class CharacterSelection : MonoBehaviour {
                 }
                 else if (characterIndex == 1)
                 {
-                    Settings.character = Character.RakTheFish;
+                    Settings.character = Character.Rak;
                     weaponRotating.EnableRendererButton(1);
                 }
                 else if (characterIndex == 2)
-                    Debug.Log("another other character");
+                {
+                    Settings.character = Character.Fishy;
+                    weaponRotating.EnableRendererButton(1);
+                }
                 else if (characterIndex == 3)
-                    Debug.Log("Last other character");
+                {
+                    Settings.character = Character.JackieChan;
+                    weaponRotating.EnableRendererButton(1);
+                }
             }
         }
 

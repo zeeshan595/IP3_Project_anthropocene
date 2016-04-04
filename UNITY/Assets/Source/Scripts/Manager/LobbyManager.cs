@@ -176,7 +176,7 @@ public class LobbyManager : NetworkLobbyManager
     public override void OnStopHost()
     {
         base.OnStopHost();
-        matchMaker.DestroyMatch((NetworkID)networkID, OnDestroyMatch);
+
     }
 
     private void OnDestroyMatch(BasicResponse response)
