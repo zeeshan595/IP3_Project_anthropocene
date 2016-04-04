@@ -240,7 +240,11 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
+      improve retargeting quality.\n\t'bn_root01' has translation animation that will
+      be discarded.\n\t'bn_root01' is inbetween humanoid transforms and has rotation
+      animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 3
@@ -381,7 +385,11 @@ ModelImporter:
         weight: 1
       - path: skeleton01/bn_root01/bn_head01/bn_r_shoulder01/bn_r_forearm01/bn_r_hand01/bn_r_thumb_a01/bn_r_thumb_b01/be_r_thumb_c01
         weight: 0
-      - path: skeleton01/bn_root01/bn_head01/bn_r_shoulder01/bn_r_forearm01/bn_r_hand01/WEAPONDUMMYCUBE
+      - path: skeleton01/bn_root01/bn_head01/bn_r_shoulder01/bn_r_forearm01/bn_r_hand01/dummy_bazooka
+        weight: 0
+      - path: skeleton01/bn_root01/bn_head01/bn_r_shoulder01/bn_r_forearm01/bn_r_hand01/dummy_hose
+        weight: 0
+      - path: skeleton01/bn_root01/bn_head01/bn_r_shoulder01/bn_r_forearm01/bn_r_hand01/dummy_watercan_rake
         weight: 0
       - path: skeleton01/bn_root01/bn_head01/bn_upperJaw01
         weight: 0

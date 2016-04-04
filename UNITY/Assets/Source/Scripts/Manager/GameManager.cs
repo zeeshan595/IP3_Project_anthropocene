@@ -5,6 +5,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
     public static List<GameObject> flowers = new List<GameObject>();
+    public static int blueWater = 7600;
+    public static int redWater = 7600;
 
     private Transform cam;
 
@@ -12,6 +14,8 @@ public class GameManager : MonoBehaviour
     {
         singleton = this;
         flowers = new List<GameObject>();
+        blueWater = 7600;
+        redWater = 7600;
     }
 
     private void OnGUI()
