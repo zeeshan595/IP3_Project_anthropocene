@@ -50,12 +50,12 @@ public class LobbyManager : NetworkLobbyManager
                     ch = player.character;
                     if (player.team == TeamType.Blue)
                     {
-                        spawnPosition.position = new Vector3(10, 8, 10);
+                        spawnPosition.position = new Vector3(20, 10, 12);
                         spawnPosition.rotation = Quaternion.Euler(new Vector3(0, -90, 0));
                     }
                     else
                     {
-                        spawnPosition.position = new Vector3(-70, 8, 10);
+                        spawnPosition.position = new Vector3(-71, 10, 10);
                         spawnPosition.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
                     }
                     break;
