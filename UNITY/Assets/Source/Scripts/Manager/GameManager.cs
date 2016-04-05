@@ -5,17 +5,19 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
     public static List<GameObject> flowers = new List<GameObject>();
-    public static int blueWater = 7600;
-    public static int redWater = 7600;
+    public static List<WaterTank> teamWater = new List<WaterTank>();
+    public static float blueWater = 0;
+    public static float redWater = 0;
+    public static float maxBlueWater = 7600;
+    public static float maxRedWater = 7600;
 
     private Transform cam;
 
-    private void Start()
+    private void Awake()
     {
         singleton = this;
         flowers = new List<GameObject>();
-        blueWater = 7600;
-        redWater = 7600;
+        teamWater = new List<WaterTank>();
     }
 
     private void OnGUI()
@@ -48,5 +50,28 @@ public class GameManager : MonoBehaviour
             cam.position = Vector3.Lerp(cam.position, new Vector3(-30, 60, 8), Time.deltaTime);
             cam.rotation = Quaternion.Lerp(cam.rotation, Quaternion.Euler(new Vector3(90, 0, 0)), Time.deltaTime);
         }
+        float tempBlue = 0, tempRed = 0;
+        for (int i = 0; i < teamWater.Count; i++)
+        {
+            if (teamWater[i].team == TeamType.Blue)
+            {
+                tempBlue += teamWater[i].water;
+            }
+            else
+            {
+                tempRed += teamWater[i].water;
+            }
+        }
+
+        if (tempBlue > blueWater)
+        {
+            maxBlueWater = tempBlue;
+        }
+        if (tempRed > redWater)
+        {
+            maxRedWater = tempRed;
+        }
+        blueWater = tempBlue;
+        redWater = tempRed;
     }
 }

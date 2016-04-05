@@ -29,7 +29,6 @@ public class PlayerStats : NetworkBehaviour
     private RectTransform waterUI;
     private RectTransform healthUI;
     private Text timerUI;
-    private Weapon wep;
 
     private void Start()
     {
@@ -50,20 +49,25 @@ public class PlayerStats : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-            if (wep != null)
+            float currentTeamWater, maxTeamWater;
+            if (team == TeamType.Blue)
             {
-                waterUI.anchoredPosition = new Vector2(0, (water / wep.waterTank) * 110);
-                waterUI.sizeDelta = new Vector2(100, (water / wep.waterTank) * 220);
-
-                healthUI.anchoredPosition = new Vector2(0, (health / 100) * 50);
-                healthUI.sizeDelta = new Vector2(100, (health / 100) * 100);
-
-                timerUI.text = timer.ToString();
+                currentTeamWater = GameManager.blueWater;
+                maxTeamWater = GameManager.maxBlueWater;
             }
             else
             {
-                wep = GetComponent<PlayerWeapon>().currentWeapon;
+                currentTeamWater = GameManager.redWater;
+                maxTeamWater = GameManager.maxRedWater;
             }
+            waterUI.anchoredPosition = new Vector2(0, (currentTeamWater / maxTeamWater) * 110);
+            waterUI.sizeDelta = new Vector2(100, (currentTeamWater / maxTeamWater) * 220);
+
+            healthUI.anchoredPosition = new Vector2(0, (health / 100) * 50);
+            healthUI.sizeDelta = new Vector2(100, (health / 100) * 100);
+
+            timerUI.text = timer.ToString();
+            
             if (timer <= 0)
             {
                 GameManager.singleton.EndGame(GetComponent<PlayerNetwork>().playerCamera.gameObject);
@@ -71,6 +75,11 @@ public class PlayerStats : NetworkBehaviour
                 GetComponent<PlayerWeapon>().enabled = false;
             }
         }
+    }
+
+    private void OnGUI()
+    {
+        //Debug.Log(GameManager.blueWater + "/" + GameManager.maxBlueWater);
     }
 
     private IEnumerator tickTimer()
