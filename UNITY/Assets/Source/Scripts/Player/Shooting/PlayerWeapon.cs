@@ -70,7 +70,7 @@ public class PlayerWeapon : NetworkBehaviour
                     acc = currentWeapon.barrel.TransformDirection(acc) * currentWeapon.acuracy;
                     Quaternion rot = Quaternion.LookRotation(currentWeapon.barrel.transform.forward + acc);
                     CmdCreateBullet(pos, rot, currentWeaponID);
-                    player.water -= currentWeapon.waterUsage;
+                    player.CmdUpdateWater(player.water - currentWeapon.waterUsage);
                 }
                 fireButtonReleased = false;
             }

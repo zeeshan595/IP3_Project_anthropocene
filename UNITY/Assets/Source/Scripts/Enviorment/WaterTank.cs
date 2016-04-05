@@ -22,7 +22,6 @@ public class WaterTank : NetworkBehaviour
             Weapon weapon = other.gameObject.GetComponent<PlayerWeapon>().currentWeapon;
             if (player.team == team)
             {
-                Debug.Log("test");
                 while (player.water < weapon.waterTank && water > 0)
                 {
                     player.water++;
