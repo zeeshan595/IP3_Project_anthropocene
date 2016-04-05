@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 
-[NetworkSettings(channel = 0, sendInterval = 0.01f)]
+[NetworkSettings(channel = 0, sendInterval = 0.1f)]
 public class PlayerWeapon : NetworkBehaviour
 {
     [SerializeField]
@@ -36,12 +36,19 @@ public class PlayerWeapon : NetworkBehaviour
                 }
             }
             StartCoroutine(Shoot());
+            StartCoroutine(UpdateWater());
         }
         else
         {
             enabled = false;
         }
-        
+    }
+
+    private IEnumerator UpdateWater()
+    {
+        yield return new WaitForSeconds(1);
+        player.CmdUpdateWater(player.water);
+        StartCoroutine(UpdateWater());
     }
 
     private void Update()
@@ -70,7 +77,7 @@ public class PlayerWeapon : NetworkBehaviour
                     acc = currentWeapon.barrel.TransformDirection(acc) * currentWeapon.acuracy;
                     Quaternion rot = Quaternion.LookRotation(currentWeapon.barrel.transform.forward + acc);
                     CmdCreateBullet(pos, rot, currentWeaponID);
-                    player.CmdUpdateWater(player.water - currentWeapon.waterUsage);
+                    player.water -= currentWeapon.waterUsage;
                 }
                 fireButtonReleased = false;
             }
