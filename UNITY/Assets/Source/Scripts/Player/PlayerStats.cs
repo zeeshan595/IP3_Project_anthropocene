@@ -102,4 +102,10 @@ public class PlayerStats : NetworkBehaviour
     {
         health -= amount;
     }
+
+    [Command]
+    public void CmdUpdateWater(float water)
+    {
+        this.water = water;
+    }
 }

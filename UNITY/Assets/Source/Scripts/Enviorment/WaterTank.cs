@@ -16,17 +16,21 @@ public class WaterTank : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isServer && other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             PlayerStats player = other.gameObject.GetComponent<PlayerStats>();
             Weapon weapon = other.gameObject.GetComponent<PlayerWeapon>().currentWeapon;
             if (player.team == team)
             {
-                while (player.water < weapon.waterTank && water > 0)
+                float tempPlWater = player.water;
+                float tankWater = water;
+                while (tempPlWater < weapon.waterTank && tankWater > 0)
                 {
-                    player.water++;
-                    water--;
+                    tempPlWater++;
+                    tankWater--;
                 }
+                CmdUpdateWater(tankWater);
+                player.CmdUpdateWater(tempPlWater);
             }
         }
     }
@@ -47,5 +51,11 @@ public class WaterTank : NetworkBehaviour
         float ratio = water / maxWater;
         waterMesh.transform.localPosition = new Vector3(0, (ratio / 2) - 0.2f, 0);
         waterMesh.transform.localScale = new Vector3(2.1f, ratio, 2.1f);
+    }
+
+    [Command]
+    private void CmdUpdateWater(float tankWater)
+    {
+        water = tankWater;
     }
 }
