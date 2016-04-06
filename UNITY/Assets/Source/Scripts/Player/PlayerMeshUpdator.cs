@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
 
-[NetworkSettings(channel = 0, sendInterval = 0.1f)]
-public class PlayerMeshUpdator : NetworkBehaviour
+public class PlayerMeshUpdator : MonoBehaviour
 {
     [SerializeField]
     private Chars[] characters;
