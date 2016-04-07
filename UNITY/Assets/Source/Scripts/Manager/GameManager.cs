@@ -59,12 +59,12 @@ public class GameManager : MonoBehaviour
             cam.rotation = Quaternion.Lerp(cam.rotation, Quaternion.Euler(new Vector3(90, 0, 0)), Time.deltaTime);
             float redRatio = (float)redFlowers / ((float)redFlowers + (float)blueFlowers);
             float blueRatio = (float)blueFlowers / ((float)redFlowers + (float)blueFlowers);
-            redRatio *= 600;
-            blueRatio *= 600;
-            //redRatio += ((float)redWater / (float)(redWater + blueWater)) * 300;
-            //blueRatio += ((float)blueWater / (float)(redWater + blueWater)) * 300;
-            redPlant.anchoredPosition = Vector2.Lerp(redPlant.anchoredPosition, new Vector2(0, redRatio - 600), Time.deltaTime * 0.1f);
-            bluePlant.anchoredPosition = Vector2.Lerp(bluePlant.anchoredPosition, new Vector2(0, blueRatio - 600), Time.deltaTime * 0.1f);
+            redRatio *= 300;
+            blueRatio *= 300;
+            redRatio += ((float)redWater / (float)(redWater + blueWater)) * 300;
+            blueRatio += ((float)blueWater / (float)(redWater + blueWater)) * 300;
+            redPlant.anchoredPosition = Vector2.Lerp(redPlant.anchoredPosition, new Vector2(0, redRatio - 600), Time.deltaTime);
+            bluePlant.anchoredPosition = Vector2.Lerp(bluePlant.anchoredPosition, new Vector2(0, blueRatio - 600), Time.deltaTime);
         }
         float tempBlue = 0, tempRed = 0;
         for (int i = 0; i < teamWater.Count; i++)
