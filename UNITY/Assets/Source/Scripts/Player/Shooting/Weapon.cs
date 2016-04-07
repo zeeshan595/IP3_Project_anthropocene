@@ -10,7 +10,7 @@ public class Weapon : MonoBehaviour
     public float waterTank = 100.0f;
     public float acuracy = 0.0f;
     public float spray = 0.0f;
-    public bool explode = false;
+    public int explode = 0;
     public float rateOfFire = 0;
     public Transform barrel;
 }

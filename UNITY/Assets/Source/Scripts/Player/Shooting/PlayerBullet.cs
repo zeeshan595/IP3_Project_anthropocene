@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerBullet : MonoBehaviour
 {
     public TeamType team;
-    public bool explode = false;
+    public int explode = 0;
 
     [SerializeField]
     private bool isParticle = false;
@@ -51,9 +51,9 @@ public class PlayerBullet : MonoBehaviour
             }
         }
 
-        if (explode)
+        if (explode > 0)
         {
-            int len = Random.Range(10, 20);
+            int len = explode;
             int counter = 0;
             for (int i = 0; i < len; i++)
             {

@@ -14,7 +14,7 @@ public class WeaponEditor : EditorWindow
     private float acuracy;
     private float spray;
     private float tankLimit;
-    private bool explode;
+    private int explode;
     private float rateOfFire;
 
     private string path = "Assets/Source/Prefabs/Weapons/";
@@ -129,8 +129,8 @@ public class WeaponEditor : EditorWindow
         //Explode
         EditorGUILayout.BeginHorizontal();
 
-        GUILayout.Label("explode", GUILayout.Width(150));
-        explode = EditorGUILayout.Toggle(explode);
+        GUILayout.Label("Explode", GUILayout.Width(150));
+        explode = EditorGUILayout.IntField(explode);
 
         EditorGUILayout.EndHorizontal();
 
