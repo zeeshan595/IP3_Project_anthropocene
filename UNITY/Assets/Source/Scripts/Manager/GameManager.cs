@@ -80,18 +80,21 @@ public class GameManager : MonoBehaviour
                 bluePercent = blueRatio * 50;
                 redRatio *= 300;
                 blueRatio *= 300;
-                redPlant.anchoredPosition = new Vector2(0, redRatio - 600);
-                bluePlant.anchoredPosition = new Vector2(0, blueRatio - 600);
+                redPlant.anchoredPosition = Vector2.Lerp(redPlant.anchoredPosition, new Vector2(0, redRatio - 600), Time.deltaTime);
+                bluePlant.anchoredPosition = Vector2.Lerp(bluePlant.anchoredPosition, new Vector2(0, blueRatio - 600), Time.deltaTime);
             }
             else
             {
-                redPercent = Mathf.Lerp(redPercent, redRatio * 50, Time.deltaTime * 0.1f);
-                bluePercent = Mathf.Lerp(bluePercent, blueRatio * 50, Time.deltaTime * 0.1f);
-                redPlant.anchoredPosition += Vector2.up * Time.deltaTime * 10 * redPercent;
-                bluePlant.anchoredPosition += Vector2.up * Time.deltaTime * 10 * bluePercent;
+                redPercent = Mathf.Lerp(redPercent, redRatio * 50, Time.deltaTime);
+                bluePercent = Mathf.Lerp(bluePercent, blueRatio * 50, Time.deltaTime);
                 if (redPlant.anchoredPosition.y >= (redRatio * 300) - 600 && bluePlant.anchoredPosition.y >= (blueRatio * 300) - 600)
                 {
-                    waterStuff = true;
+                    Invoke("Splash", 0.3f);
+                }
+                else
+                {
+                    redPlant.anchoredPosition += Vector2.up * Time.deltaTime * 10 * redPercent;
+                    bluePlant.anchoredPosition += Vector2.up * Time.deltaTime * 10 * bluePercent;
                 }
             }
         }
@@ -118,5 +121,10 @@ public class GameManager : MonoBehaviour
         }
         blueWater = tempBlue;
         redWater = tempRed;
+    }
+
+    private void Splash()
+    {
+        waterStuff = true;
     }
 }
