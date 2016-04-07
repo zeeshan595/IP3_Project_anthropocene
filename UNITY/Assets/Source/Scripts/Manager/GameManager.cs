@@ -87,9 +87,9 @@ public class GameManager : MonoBehaviour
             {
                 redPercent = redRatio * 50;
                 bluePercent = blueRatio * 50;
-                redPlant.anchoredPosition -= Vector2.up * Time.deltaTime * 0.01f * redRatio;
-                bluePlant.anchoredPosition -= Vector2.up * Time.deltaTime * 0.01f * blueRatio;
-                if (redPlant.anchoredPosition.y >= redRatio - 600 && bluePlant.anchoredPosition.y >= blueRatio - 600)
+                redPlant.anchoredPosition -= Vector2.up * Time.deltaTime * 0.01f;
+                bluePlant.anchoredPosition -= Vector2.up * Time.deltaTime * 0.01f;
+                if (redPlant.anchoredPosition.y >= (redRatio * 300) - 600 && bluePlant.anchoredPosition.y >= (blueRatio * 300) - 600)
                 {
                     waterStuff = true;
                 }
