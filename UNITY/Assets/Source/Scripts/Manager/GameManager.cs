@@ -28,6 +28,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Text redText;
 
+    [SerializeField]
+    private Image winImage;
+
+    [SerializeField]
+    public Sprite[] blueVictoryDefeat;
+    [SerializeField]
+    private Sprite[] redVictoryDefeat;
+
     private float bluePercent = 0;
     private float redPercent = 0;
 
@@ -86,6 +94,29 @@ public class GameManager : MonoBehaviour
                     blueRatio *= 300;
                     redPlant.anchoredPosition = Vector2.Lerp(redPlant.anchoredPosition, new Vector2(0, redRatio - 600), Time.deltaTime);
                     bluePlant.anchoredPosition = Vector2.Lerp(bluePlant.anchoredPosition, new Vector2(0, blueRatio - 600), Time.deltaTime);
+                    winImage.gameObject.SetActive(true);
+                    if (redPercent > bluePercent)
+                    {
+                        if (Settings.team == TeamType.Red)
+                        {
+                            winImage.sprite = redVictoryDefeat[0];
+                        }
+                        else
+                        {
+                            winImage.sprite = blueVictoryDefeat[1];
+                        }
+                    }
+                    else
+                    {
+                        if (Settings.team == TeamType.Blue)
+                        {
+                            winImage.sprite = blueVictoryDefeat[0];
+                        }
+                        else
+                        {
+                            winImage.sprite = redVictoryDefeat[1];
+                        }
+                    }
                 }
                 else
                 {
