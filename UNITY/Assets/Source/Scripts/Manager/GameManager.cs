@@ -89,9 +89,9 @@ public class GameManager : MonoBehaviour
                 bluePercent = blueRatio * 50;
                 redRatio *= 300;
                 blueRatio *= 300;
-                redPlant.anchoredPosition = Vector2.Lerp(redPlant.anchoredPosition, new Vector2(0, redRatio - 600), Time.deltaTime * 0.5f);
-                bluePlant.anchoredPosition = Vector2.Lerp(bluePlant.anchoredPosition, new Vector2(0, blueRatio - 600), Time.deltaTime * 0.5f);
-                if (Mathf.Abs(redPlant.anchoredPosition.y - (redRatio - 600)) < 1 && Mathf.Abs(bluePlant.anchoredPosition.y - (blueRatio - 600)) < 1)
+                redPlant.anchoredPosition += new Vector2(0, redRatio - 600) * Time.deltaTime * 0.5f;
+                bluePlant.anchoredPosition += new Vector2(0, blueRatio - 600) * Time.deltaTime * 0.5f;
+                if (redPlant.anchoredPosition.y >= redRatio - 600 && bluePlant.anchoredPosition.y >= blueRatio - 600)
                 {
                     waterStuff = true;
                 }
