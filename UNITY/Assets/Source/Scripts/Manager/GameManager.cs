@@ -39,6 +39,12 @@ public class GameManager : MonoBehaviour
         endScreen.SetActive(true);
     }
 
+    private void OnGUI()
+    {
+        GUILayout.Box("RED { Water: "+ ((float)redWater / (float)(redWater + blueWater)) + "/ Flower: " + ((float)redFlowers / ((float)redFlowers + (float)blueFlowers)) + "}");
+        GUILayout.Box("BLUE { Water: " + ((float)blueWater / (float)(redWater + blueWater)) + "/ Flower: " + ((float)blueFlowers / ((float)redFlowers + (float)blueFlowers)) + "}");
+    }
+
     private void Update()
     {
         int red = 0;
