@@ -91,14 +91,14 @@ public class GameManager : MonoBehaviour
                 {
                     redPercent = Mathf.Lerp(redPercent, redRatio * 50, Time.deltaTime * 0.5f);
                     bluePercent = Mathf.Lerp(bluePercent, blueRatio * 50, Time.deltaTime * 0.5f);
-                    if (redPlant.anchoredPosition.y >= (redRatio * 300) - 600 && bluePlant.anchoredPosition.y >= (blueRatio * 300) - 600)
+                    if (redPlant.anchoredPosition.y >= (redRatio * 300) - 600 || bluePlant.anchoredPosition.y >= (blueRatio * 300) - 600)
                     {
                         Invoke("Splash", 1.5f);
                     }
                     else
                     {
-                        redPlant.anchoredPosition += Vector2.up * Time.deltaTime * 10 * redPercent;
-                        bluePlant.anchoredPosition += Vector2.up * Time.deltaTime * 10 * bluePercent;
+                        redPlant.anchoredPosition += Vector2.up * Time.deltaTime * 5 * redPercent;
+                        bluePlant.anchoredPosition += Vector2.up * Time.deltaTime * 5 * bluePercent;
                     }
                 }
             }
