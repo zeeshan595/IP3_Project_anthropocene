@@ -69,8 +69,8 @@ public class GameManager : MonoBehaviour
         {
             cam.position = Vector3.Lerp(cam.position, new Vector3(-30, 60, 8), Time.deltaTime);
             cam.rotation = Quaternion.Lerp(cam.rotation, Quaternion.Euler(new Vector3(90, 0, 0)), Time.deltaTime);
-            redText.text = redPercent + "%";
-            blueText.text = bluePercent + "%";
+            redText.text = Mathf.RoundToInt(redPercent) + "%";
+            blueText.text = Mathf.RoundToInt(bluePercent) + "%";
 
             if (startAnimation)
             {
@@ -89,8 +89,8 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    redPercent = Mathf.Lerp(redPercent, redRatio * 50, Time.deltaTime);
-                    bluePercent = Mathf.Lerp(bluePercent, blueRatio * 50, Time.deltaTime);
+                    redPercent = Mathf.Lerp(redPercent, redRatio * 50, Time.deltaTime * 0.5f);
+                    bluePercent = Mathf.Lerp(bluePercent, blueRatio * 50, Time.deltaTime * 0.5f);
                     if (redPlant.anchoredPosition.y >= (redRatio * 300) - 600 && bluePlant.anchoredPosition.y >= (blueRatio * 300) - 600)
                     {
                         Invoke("Splash", 1.5f);
