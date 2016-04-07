@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     private Transform cam;
     private bool waterStuff = false;
+    private bool startAnimation = false;
 
     private void Awake()
     {
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
         cam = camera.transform;
         inGameUI.SetActive(false);
         endScreen.SetActive(true);
+        Invoke("StartAnim", 2);
     }
 
     private void Update()
@@ -70,31 +72,34 @@ public class GameManager : MonoBehaviour
             redText.text = redPercent + "%";
             blueText.text = bluePercent + "%";
 
-            float redRatio = (float)redFlowers / ((float)redFlowers + (float)blueFlowers);
-            float blueRatio = (float)blueFlowers / ((float)redFlowers + (float)blueFlowers);
-            if (waterStuff)
+            if (startAnimation)
             {
-                redRatio += ((float)redWater / (float)(redWater + blueWater));
-                blueRatio += ((float)blueWater / (float)(redWater + blueWater));
-                redPercent = redRatio * 50;
-                bluePercent = blueRatio * 50;
-                redRatio *= 300;
-                blueRatio *= 300;
-                redPlant.anchoredPosition = Vector2.Lerp(redPlant.anchoredPosition, new Vector2(0, redRatio - 600), Time.deltaTime);
-                bluePlant.anchoredPosition = Vector2.Lerp(bluePlant.anchoredPosition, new Vector2(0, blueRatio - 600), Time.deltaTime);
-            }
-            else
-            {
-                redPercent = Mathf.Lerp(redPercent, redRatio * 50, Time.deltaTime);
-                bluePercent = Mathf.Lerp(bluePercent, blueRatio * 50, Time.deltaTime);
-                if (redPlant.anchoredPosition.y >= (redRatio * 300) - 600 && bluePlant.anchoredPosition.y >= (blueRatio * 300) - 600)
+                float redRatio = (float)redFlowers / ((float)redFlowers + (float)blueFlowers);
+                float blueRatio = (float)blueFlowers / ((float)redFlowers + (float)blueFlowers);
+                if (waterStuff)
                 {
-                    Invoke("Splash", 0.3f);
+                    redRatio += ((float)redWater / (float)(redWater + blueWater));
+                    blueRatio += ((float)blueWater / (float)(redWater + blueWater));
+                    redPercent = redRatio * 50;
+                    bluePercent = blueRatio * 50;
+                    redRatio *= 300;
+                    blueRatio *= 300;
+                    redPlant.anchoredPosition = Vector2.Lerp(redPlant.anchoredPosition, new Vector2(0, redRatio - 600), Time.deltaTime);
+                    bluePlant.anchoredPosition = Vector2.Lerp(bluePlant.anchoredPosition, new Vector2(0, blueRatio - 600), Time.deltaTime);
                 }
                 else
                 {
-                    redPlant.anchoredPosition += Vector2.up * Time.deltaTime * 10 * redPercent;
-                    bluePlant.anchoredPosition += Vector2.up * Time.deltaTime * 10 * bluePercent;
+                    redPercent = Mathf.Lerp(redPercent, redRatio * 50, Time.deltaTime);
+                    bluePercent = Mathf.Lerp(bluePercent, blueRatio * 50, Time.deltaTime);
+                    if (redPlant.anchoredPosition.y >= (redRatio * 300) - 600 && bluePlant.anchoredPosition.y >= (blueRatio * 300) - 600)
+                    {
+                        Invoke("Splash", 1.5f);
+                    }
+                    else
+                    {
+                        redPlant.anchoredPosition += Vector2.up * Time.deltaTime * 10 * redPercent;
+                        bluePlant.anchoredPosition += Vector2.up * Time.deltaTime * 10 * bluePercent;
+                    }
                 }
             }
         }
@@ -121,6 +126,11 @@ public class GameManager : MonoBehaviour
         }
         blueWater = tempBlue;
         redWater = tempRed;
+    }
+
+    private void StartAnim()
+    {
+        startAnimation = true;
     }
 
     private void Splash()
