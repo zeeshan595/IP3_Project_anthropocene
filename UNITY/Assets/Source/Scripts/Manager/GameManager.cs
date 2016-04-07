@@ -63,9 +63,8 @@ public class GameManager : MonoBehaviour
             blueRatio *= 600;
             //redRatio += ((float)redWater / (float)(redWater + blueWater)) * 300;
             //blueRatio += ((float)blueWater / (float)(redWater + blueWater)) * 300;
-
             redPlant.anchoredPosition = Vector2.Lerp(redPlant.anchoredPosition, new Vector2(0, redRatio - 600), Time.deltaTime * 0.1f);
-            bluePlant.anchoredPosition = Vector2.Lerp(redPlant.anchoredPosition, new Vector2(0, blueRatio - 600), Time.deltaTime * 0.1f);
+            bluePlant.anchoredPosition = Vector2.Lerp(bluePlant.anchoredPosition, new Vector2(0, blueRatio - 600), Time.deltaTime * 0.1f);
         }
         float tempBlue = 0, tempRed = 0;
         for (int i = 0; i < teamWater.Count; i++)
