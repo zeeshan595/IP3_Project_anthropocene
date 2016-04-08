@@ -12,11 +12,10 @@
 
 public enum WeaponType
 {
-    ScatterGun,
-    WaterRake,
-    WaterBazooka,
-    HoseGun,
-    WaterGarnade
+    ScatterGun = 0,
+    HoseGun = 1,
+    WaterRake = 2,
+    WaterBazooka = 3
 }
 
 public enum Character

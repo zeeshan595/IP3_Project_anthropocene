@@ -3,8 +3,6 @@
 public class WeaponStats : MonoBehaviour
 {
     [SerializeField]
-    private WeaponType type;
-    [SerializeField]
     private Weapon[] weapons;
 
     private RectTransform waterMask;
@@ -15,6 +13,11 @@ public class WeaponStats : MonoBehaviour
     private RectTransform damage;
 
     private void Start()
+    {
+        WeaponChanged(0);
+    }
+
+    public void WeaponChanged(int type)
     {
         Transform w = transform.FindChild("Water");
         w.FindChild("Bars").SetAsLastSibling();
@@ -32,16 +35,16 @@ public class WeaponStats : MonoBehaviour
         damage = (RectTransform)d.FindChild("Mask").GetChild(0);
 
 
-        Weapon wep = weapons[(int)type];
-        float waterFloat = (-140 * (wep.waterUsage / 2)) + 140;
+        Weapon wep = weapons[type];
+        float waterFloat = (-140 * Mathf.Clamp(wep.waterUsage / 5, 0.0f, 1.0f)) + 140;
         water.anchoredPosition = new Vector2(waterFloat, 0);
         waterMask.anchoredPosition = new Vector2(-waterFloat, 0);
 
-        float plantFloat = (-140 * ((wep.explode * wep.spray) / 40)) + 140;
+        float plantFloat = (-140 * Mathf.Clamp((wep.explode * wep.spray) / 80, 0.0f, 1.0f)) + 140;
         planting.anchoredPosition = new Vector2(plantFloat, 0);
         plantingMask.anchoredPosition = new Vector2(-plantFloat, 0);
 
-        float damageFloat = (-140 * (wep.damage / 50)) + 140;
+        float damageFloat = (-140 * Mathf.Clamp(wep.damage / 50, 0.0f, 1.0f)) + 140;
         damage.anchoredPosition = new Vector2(damageFloat, 0);
         damageMask.anchoredPosition = new Vector2(-damageFloat, 0);
     }
