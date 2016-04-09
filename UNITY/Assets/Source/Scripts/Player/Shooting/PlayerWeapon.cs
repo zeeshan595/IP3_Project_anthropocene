@@ -18,6 +18,7 @@ public class PlayerWeapon : NetworkBehaviour
     private PlayerStats player;
     private int currentWeaponID = 0;
     private bool firePressed = false;
+    private PlayerMeshUpdator meshUpdator;
 
     private IEnumerator Start()
     {
@@ -25,6 +26,7 @@ public class PlayerWeapon : NetworkBehaviour
         if (isLocalPlayer)
         {
             playerCamera = Camera.main.gameObject.transform;
+            meshUpdator = gameObject.GetComponent<PlayerMeshUpdator>();
             yield return new WaitForEndOfFrame();
             for (int i = 0; i < weapons.Length; i++)
             {
@@ -59,6 +61,13 @@ public class PlayerWeapon : NetworkBehaviour
         {
             firePressed = true;
         }
+        if (meshUpdator.guns != null && meshUpdator.guns.Length > 0)
+        {
+            weaponTransform.SetParent(meshUpdator.guns[currentWeaponID]);
+            weaponTransform.localPosition = Vector3.zero;
+            weaponTransform.localRotation = Quaternion.identity;
+        }
+
 #if UNITY_EDITOR
         ChangeWeapon();
 #endif

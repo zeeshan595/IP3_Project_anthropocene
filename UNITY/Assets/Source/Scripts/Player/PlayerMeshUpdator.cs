@@ -3,6 +3,8 @@
 public class PlayerMeshUpdator : MonoBehaviour
 {
     [SerializeField]
+    public Transform[] guns;
+    [SerializeField]
     private Chars[] characters;
     [SerializeField]
     private Transform meshParent;
@@ -12,11 +14,42 @@ public class PlayerMeshUpdator : MonoBehaviour
 
     private void Start()
     {
-        int i = (int)GetComponent<PlayerStats>().character;
-        mesh = (GameObject)Instantiate(characters[i].mesh, meshParent.transform.position, meshParent.transform.rotation);
+        int c = (int)GetComponent<PlayerStats>().character;
+        mesh = (GameObject)Instantiate(characters[c].mesh, meshParent.transform.position, meshParent.transform.rotation);
         mesh.transform.SetParent(meshParent.transform);
-        meshParent.transform.localPosition = characters[i].offset;
-        GetComponent<CharacterController>().height = characters[i].height;
+        meshParent.transform.localPosition = characters[c].offset;
+        GetComponent<CharacterController>().height = characters[c].height;
+        MeshRenderer[] renders = mesh.GetComponentsInChildren<MeshRenderer>();
+        for (int i = 0; i < renders.Length; i++)
+        {
+            if (Settings.team == TeamType.Blue)
+            {
+                if (characters[c].blueTexture)
+                    renders[i].material.mainTexture = characters[c].blueTexture;
+            }
+            else
+            {
+                if (characters[c].redTexture)
+                    renders[i].material.mainTexture = characters[c].redTexture;
+            }
+        }
+
+        guns = new Transform[4];
+        WeaponMesh[] wMeshes = mesh.GetComponentsInChildren<WeaponMesh>();
+        if (wMeshes.Length == 4)
+        {
+            for (int k = 0; k < wMeshes.Length; k++)
+            {
+                if (wMeshes[k].type == WeaponType.ScatterGun)
+                    guns[0] = wMeshes[k].transform;
+                else if (wMeshes[k].type == WeaponType.HoseGun)
+                    guns[1] = wMeshes[k].transform;
+                else if (wMeshes[k].type == WeaponType.WaterRake)
+                    guns[2] = wMeshes[k].transform;
+                else
+                    guns[3] = wMeshes[k].transform;
+            }
+        }
     }
 }
 
