@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public static int redFlowers = 0, blueFlowers = 0;
     public static float blueWater = 0;
     public static float redWater = 0;
+    public static float bluePercent = 0;
+    public static float redPercent = 0;
     public static float maxBlueWater = 7600;
     public static float maxRedWater = 7600;
 
@@ -35,9 +37,6 @@ public class GameManager : MonoBehaviour
     public Sprite[] blueVictoryDefeat;
     [SerializeField]
     private Sprite[] redVictoryDefeat;
-
-    private float bluePercent = 0;
-    private float redPercent = 0;
 
     private Transform cam;
     private bool waterStuff = false;
