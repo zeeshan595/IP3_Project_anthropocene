@@ -123,6 +123,10 @@ ModelImporter:
     100230: skeleton01
     100232: Jetpack_Jetpack
     100234: Jetpack_Water
+    100236: dummy_bazooka
+    100238: dummy_hose
+    100240: dummy_rake
+    100242: dummy_watercan
     400000: anim_eyebrow_l_inner01
     400002: anim_eyebrow_l_middle01
     400004: anim_eyebrow_l_outer01
@@ -241,6 +245,10 @@ ModelImporter:
     400230: skeleton01
     400232: Jetpack_Jetpack
     400234: Jetpack_Water
+    400236: dummy_bazooka
+    400238: dummy_hose
+    400240: dummy_rake
+    400242: dummy_watercan
     2300000: mech_arm01
     2300002: mech_index_a01
     2300004: mech_index_b01
@@ -249,6 +257,10 @@ ModelImporter:
     2300010: mech_thumb01
     2300012: Jetpack_Jetpack
     2300014: Jetpack_Water
+    2300016: dummy_bazooka
+    2300018: dummy_hose
+    2300020: dummy_rake
+    2300022: dummy_watercan
     3300000: mech_arm01
     3300002: mech_index_a01
     3300004: mech_index_b01
@@ -257,6 +269,10 @@ ModelImporter:
     3300010: mech_thumb01
     3300012: Jetpack_Jetpack
     3300014: Jetpack_Water
+    3300016: dummy_bazooka
+    3300018: dummy_hose
+    3300020: dummy_rake
+    3300022: dummy_watercan
     4300000: mech_index_b01
     4300002: mech_index_a01
     4300004: mech_pinky_b01
@@ -268,6 +284,10 @@ ModelImporter:
     4300016: BODY02
     4300018: Jetpack_Jetpack
     4300020: Jetpack_Water
+    4300022: dummy_rake
+    4300024: dummy_bazooka
+    4300026: dummy_watercan
+    4300028: dummy_hose
     7400000: Idle
     7400002: Jump
     7400004: In Air
@@ -290,13 +310,13 @@ ModelImporter:
     resampleRotations: 1
     optimizeGameObjects: 0
     motionNodeName: <Root Transform>
-    animationImportErrors: '
-
-      Imported file ''Rak'' conversion failed: Required human bone ''Hips'' not found
-
-
-'
-    animationImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
+      improve retargeting quality.\n\t'bn_spine_a01' has translation animation that
+      will be discarded.\n\t'bn_spine_b01' has translation animation that will be
+      discarded.\n\t'bn_spine_c01' has translation animation that will be discarded.\n\t'bn_chest01'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 0
