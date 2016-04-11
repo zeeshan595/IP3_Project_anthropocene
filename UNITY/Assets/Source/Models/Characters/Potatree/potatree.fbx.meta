@@ -1,0 +1,468 @@
+fileFormatVersion: 2
+guid: 4dae87271984cc4418f0d896d8f84981
+timeCreated: 1459110319
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: eyes01
+    100002: //RootNode
+    100004: potatree01
+    100006: Eye_L
+    100008: Eye_R
+    100010: anim_back01
+    100012: anim_branches01
+    100014: anim_chest01
+    100016: anim_COG01
+    100018: anim_eyebrow_l_inner01
+    100020: anim_eyebrow_l_outer01
+    100022: anim_eyebrow_r_inner01
+    100024: anim_eyebrow_r_outer01
+    100026: anim_eyes01
+    100028: anim_eyes_grp01
+    100030: anim_global01
+    100032: anim_l_arm_PV01
+    100034: anim_l_eye01
+    100036: anim_l_foot01
+    100038: anim_l_hand01
+    100040: anim_l_knee_PV01
+    100042: anim_l_leg01
+    100044: anim_l_thumb01
+    100046: anim_l_toe01
+    100048: anim_l_wrist01
+    100050: anim_mouth01
+    100052: anim_neck01
+    100054: anim_pelvis01
+    100056: anim_r_arm_PV01
+    100058: anim_r_eye01
+    100060: anim_r_foot01
+    100062: anim_r_hand01
+    100064: anim_r_knee_PV01
+    100066: anim_r_leg01
+    100068: anim_r_thumb01
+    100070: anim_r_toe01
+    100072: anim_r_wrist01
+    100074: be_head_twigs_a01
+    100076: be_head_twigs_b01
+    100078: be_head_twigs_c01
+    100080: be_head_twigs_d01
+    100082: be_head_twigs_e01
+    100084: be_head_twigs_f01
+    100086: be_l_eye01
+    100088: be_l_index_d01
+    100090: be_l_middle_d01
+    100092: be_l_pinky_d01
+    100094: be_l_ring_d01
+    100096: be_l_thumb_c01
+    100098: be_l_toe01
+    100100: be_r_eye01
+    100102: be_r_index_d01
+    100104: be_r_middle_d01
+    100106: be_r_pinky_d01
+    100108: be_r_ring_d01
+    100110: be_r_thumb_c01
+    100112: be_r_toe01
+    100114: bn_chest01
+    100116: bn_head01
+    100118: bn_head_twigs_a01
+    100120: bn_head_twigs_b01
+    100122: bn_head_twigs_c01
+    100124: bn_head_twigs_d01
+    100126: bn_head_twigs_e01
+    100128: bn_head_twigs_f01
+    100130: bn_l_ankle01
+    100132: bn_l_elbow01
+    100134: bn_l_eye01
+    100136: bn_l_eyelid_lower01
+    100138: bn_l_eyelid_upper01
+    100140: bn_l_hip01
+    100142: bn_l_index_a01
+    100144: bn_l_index_b01
+    100146: bn_l_index_c01
+    100148: bn_l_knee01
+    100150: bn_l_middle_a01
+    100152: bn_l_middle_b01
+    100154: bn_l_middle_c01
+    100156: bn_l_pinky_a01
+    100158: bn_l_pinky_b01
+    100160: bn_l_pinky_c01
+    100162: bn_l_ring_a01
+    100164: bn_l_ring_b01
+    100166: bn_l_ring_c01
+    100168: bn_l_shoulder01
+    100170: bn_l_thumb_a01
+    100172: bn_l_thumb_b01
+    100174: bn_l_toe01
+    100176: bn_l_wrist01
+    100178: bn_neck01
+    100180: bn_pelvis01
+    100182: bn_r_ankle01
+    100184: bn_r_elbow01
+    100186: bn_r_eye01
+    100188: bn_r_eyelid_lower01
+    100190: bn_r_eyelid_upper01
+    100192: bn_r_hip01
+    100194: bn_r_index_a01
+    100196: bn_r_index_b01
+    100198: bn_r_index_c01
+    100200: bn_r_knee01
+    100202: bn_r_middle_a01
+    100204: bn_r_middle_b01
+    100206: bn_r_middle_c01
+    100208: bn_r_pinky_a01
+    100210: bn_r_pinky_b01
+    100212: bn_r_pinky_c01
+    100214: bn_r_ring_a01
+    100216: bn_r_ring_b01
+    100218: bn_r_ring_c01
+    100220: bn_r_shoulder01
+    100222: bn_r_thumb_a01
+    100224: bn_r_thumb_b01
+    100226: bn_r_toe01
+    100228: bn_r_wrist01
+    100230: bn_root01
+    100232: bn_spine_a01
+    100234: bn_spine_b01
+    100236: bn_spine_c01
+    100238: controls01
+    100240: cSpl_spline01
+    100242: extras01
+    100244: eyebrows_cl_grp01
+    100246: eyebrows_l_cl_inner01
+    100248: eyebrows_l_cl_outer01
+    100250: eyebrows_lattice01
+    100252: eyebrows_lattice_grp01
+    100254: eyebrows_r_cl_inner01
+    100256: eyebrows_r_cl_outer01
+    100258: ik_l_arm01
+    100260: ik_l_leg01
+    100262: ik_r_arm01
+    100264: ik_r_leg01
+    100266: IKs01
+    100268: jDrv_chest01
+    100270: jDrv_l_eyelid_lower01
+    100272: jDrv_l_eyelid_upper01
+    100274: jDrv_r_eyelid_lower01
+    100276: jDrv_r_eyelid_upper01
+    100278: jDrv_root01
+    100280: jDrv_splineIK_spine_root01
+    100282: Jetpack
+    100284: locDrv_l_ankle01
+    100286: locDrv_l_foot01
+    100288: locDrv_l_toe01
+    100290: locDrv_r_ankle01
+    100292: locDrv_r_foot01
+    100294: locDrv_r_toe01
+    100296: model01
+    100298: model_potatreeanimation_3:jDrv_splineIK_spine_a01
+    100300: model_potatreeanimation_3:jDrv_splineIK_spine_b01
+    100302: model_potatreeanimation_3:jDrv_splineIK_spine_c01
+    100304: model_potatreeanimation_3:jDrv_splineIK_spine_chest01
+    100306: potatree_body01
+    100308: potatree_body02
+    100310: potatree_l_eye01
+    100312: potatree_r_eye01
+    100314: rp_l_eye01
+    100316: rp_r_eye01
+    100318: skeleton01
+    100320: splineIK_spine01
+    100322: Water
+    400000: eyes01
+    400002: //RootNode
+    400004: potatree01
+    400006: Eye_L
+    400008: Eye_R
+    400010: anim_back01
+    400012: anim_branches01
+    400014: anim_chest01
+    400016: anim_COG01
+    400018: anim_eyebrow_l_inner01
+    400020: anim_eyebrow_l_outer01
+    400022: anim_eyebrow_r_inner01
+    400024: anim_eyebrow_r_outer01
+    400026: anim_eyes01
+    400028: anim_eyes_grp01
+    400030: anim_global01
+    400032: anim_l_arm_PV01
+    400034: anim_l_eye01
+    400036: anim_l_foot01
+    400038: anim_l_hand01
+    400040: anim_l_knee_PV01
+    400042: anim_l_leg01
+    400044: anim_l_thumb01
+    400046: anim_l_toe01
+    400048: anim_l_wrist01
+    400050: anim_mouth01
+    400052: anim_neck01
+    400054: anim_pelvis01
+    400056: anim_r_arm_PV01
+    400058: anim_r_eye01
+    400060: anim_r_foot01
+    400062: anim_r_hand01
+    400064: anim_r_knee_PV01
+    400066: anim_r_leg01
+    400068: anim_r_thumb01
+    400070: anim_r_toe01
+    400072: anim_r_wrist01
+    400074: be_head_twigs_a01
+    400076: be_head_twigs_b01
+    400078: be_head_twigs_c01
+    400080: be_head_twigs_d01
+    400082: be_head_twigs_e01
+    400084: be_head_twigs_f01
+    400086: be_l_eye01
+    400088: be_l_index_d01
+    400090: be_l_middle_d01
+    400092: be_l_pinky_d01
+    400094: be_l_ring_d01
+    400096: be_l_thumb_c01
+    400098: be_l_toe01
+    400100: be_r_eye01
+    400102: be_r_index_d01
+    400104: be_r_middle_d01
+    400106: be_r_pinky_d01
+    400108: be_r_ring_d01
+    400110: be_r_thumb_c01
+    400112: be_r_toe01
+    400114: bn_chest01
+    400116: bn_head01
+    400118: bn_head_twigs_a01
+    400120: bn_head_twigs_b01
+    400122: bn_head_twigs_c01
+    400124: bn_head_twigs_d01
+    400126: bn_head_twigs_e01
+    400128: bn_head_twigs_f01
+    400130: bn_l_ankle01
+    400132: bn_l_elbow01
+    400134: bn_l_eye01
+    400136: bn_l_eyelid_lower01
+    400138: bn_l_eyelid_upper01
+    400140: bn_l_hip01
+    400142: bn_l_index_a01
+    400144: bn_l_index_b01
+    400146: bn_l_index_c01
+    400148: bn_l_knee01
+    400150: bn_l_middle_a01
+    400152: bn_l_middle_b01
+    400154: bn_l_middle_c01
+    400156: bn_l_pinky_a01
+    400158: bn_l_pinky_b01
+    400160: bn_l_pinky_c01
+    400162: bn_l_ring_a01
+    400164: bn_l_ring_b01
+    400166: bn_l_ring_c01
+    400168: bn_l_shoulder01
+    400170: bn_l_thumb_a01
+    400172: bn_l_thumb_b01
+    400174: bn_l_toe01
+    400176: bn_l_wrist01
+    400178: bn_neck01
+    400180: bn_pelvis01
+    400182: bn_r_ankle01
+    400184: bn_r_elbow01
+    400186: bn_r_eye01
+    400188: bn_r_eyelid_lower01
+    400190: bn_r_eyelid_upper01
+    400192: bn_r_hip01
+    400194: bn_r_index_a01
+    400196: bn_r_index_b01
+    400198: bn_r_index_c01
+    400200: bn_r_knee01
+    400202: bn_r_middle_a01
+    400204: bn_r_middle_b01
+    400206: bn_r_middle_c01
+    400208: bn_r_pinky_a01
+    400210: bn_r_pinky_b01
+    400212: bn_r_pinky_c01
+    400214: bn_r_ring_a01
+    400216: bn_r_ring_b01
+    400218: bn_r_ring_c01
+    400220: bn_r_shoulder01
+    400222: bn_r_thumb_a01
+    400224: bn_r_thumb_b01
+    400226: bn_r_toe01
+    400228: bn_r_wrist01
+    400230: bn_root01
+    400232: bn_spine_a01
+    400234: bn_spine_b01
+    400236: bn_spine_c01
+    400238: controls01
+    400240: cSpl_spline01
+    400242: extras01
+    400244: eyebrows_cl_grp01
+    400246: eyebrows_l_cl_inner01
+    400248: eyebrows_l_cl_outer01
+    400250: eyebrows_lattice01
+    400252: eyebrows_lattice_grp01
+    400254: eyebrows_r_cl_inner01
+    400256: eyebrows_r_cl_outer01
+    400258: ik_l_arm01
+    400260: ik_l_leg01
+    400262: ik_r_arm01
+    400264: ik_r_leg01
+    400266: IKs01
+    400268: jDrv_chest01
+    400270: jDrv_l_eyelid_lower01
+    400272: jDrv_l_eyelid_upper01
+    400274: jDrv_r_eyelid_lower01
+    400276: jDrv_r_eyelid_upper01
+    400278: jDrv_root01
+    400280: jDrv_splineIK_spine_root01
+    400282: Jetpack
+    400284: locDrv_l_ankle01
+    400286: locDrv_l_foot01
+    400288: locDrv_l_toe01
+    400290: locDrv_r_ankle01
+    400292: locDrv_r_foot01
+    400294: locDrv_r_toe01
+    400296: model01
+    400298: model_potatreeanimation_3:jDrv_splineIK_spine_a01
+    400300: model_potatreeanimation_3:jDrv_splineIK_spine_b01
+    400302: model_potatreeanimation_3:jDrv_splineIK_spine_c01
+    400304: model_potatreeanimation_3:jDrv_splineIK_spine_chest01
+    400306: potatree_body01
+    400308: potatree_body02
+    400310: potatree_l_eye01
+    400312: potatree_r_eye01
+    400314: rp_l_eye01
+    400316: rp_r_eye01
+    400318: skeleton01
+    400320: splineIK_spine01
+    400322: Water
+    2300000: eyes01
+    2300002: potatree01
+    2300004: Eye_L
+    2300006: Eye_R
+    2300008: Jetpack
+    2300010: Water
+    3300000: eyes01
+    3300002: potatree01
+    3300004: Eye_L
+    3300006: Eye_R
+    3300008: Jetpack
+    3300010: Water
+    4300000: potatree01
+    4300002: eyes01
+    4300004: Eye_R
+    4300006: Eye_L
+    4300008: potatree_r_eye01
+    4300010: potatree_l_eye01
+    4300012: potatree_body01
+    4300014: Jetpack
+    4300016: Water
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: potatree_body01
+    13700002: potatree_l_eye01
+    13700004: potatree_r_eye01
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: '
+
+      Imported file ''potatree'' conversion failed: Required human bone ''RightUpperLeg''
+      not found
+
+
+'
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human:
+    - boneName: eyes01
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Eye_L
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: potatree(Clone)
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: eyes01
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Eye_L
+      position: {x: -0.12552738, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Eye_R
+      position: {x: 0.0000000042291544, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: potatree01
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 3
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

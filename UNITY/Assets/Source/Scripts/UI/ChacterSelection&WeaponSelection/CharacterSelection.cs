@@ -37,7 +37,6 @@ public class CharacterSelection : MonoBehaviour {
         isRotatingLeft = true;
         currentRot = angleValue - 90;
         Settings.character = (Character)characterIndex;
-        Debug.Log(Settings.character);
         ChangeCharacterName(characters[characterIndex].name);
     }
 
