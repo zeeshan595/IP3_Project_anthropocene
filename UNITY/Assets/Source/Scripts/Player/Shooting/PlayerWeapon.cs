@@ -19,10 +19,12 @@ public class PlayerWeapon : NetworkBehaviour
     private int currentWeaponID = 0;
     private bool firePressed = false;
     private PlayerMeshUpdator meshUpdator;
+	private Animator animator;
 
     private IEnumerator Start()
     {
         player = GetComponent<PlayerStats>();
+		animator = GetComponent<PlayerMeshUpdator>().mesh.GetComponent<Animator>();
         if (isLocalPlayer)
         {
             playerCamera = Camera.main.gameObject.transform;
@@ -39,6 +41,7 @@ public class PlayerWeapon : NetworkBehaviour
             }
             StartCoroutine(Shoot());
             StartCoroutine(UpdateWater());
+			animator.SetFloat("Weapon", currentWeaponID);
         }
         else
         {
@@ -77,21 +80,21 @@ public class PlayerWeapon : NetworkBehaviour
     {
         if (currentWeapon != null)
         {
-            if (firePressed && (fireButtonReleased || currentWeapon.rateOfFire > 0) && player.water > 0)
-            {
-                for (int i = 0; i < currentWeapon.spray; i++)
-                {
-                    Vector3 pos = currentWeapon.barrel.transform.position;
-                    Vector3 acc = new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), 0);
-                    acc = currentWeapon.barrel.TransformDirection(acc) * currentWeapon.acuracy;
-                    Quaternion rot = Quaternion.LookRotation(currentWeapon.barrel.transform.forward + acc);
-                    CmdCreateBullet(pos, rot, currentWeaponID);
-                    player.water -= currentWeapon.waterUsage;
-                }
-                fireButtonReleased = false;
-            }
-            else if (!firePressed)
-                fireButtonReleased = true;
+			if (firePressed && (fireButtonReleased || currentWeapon.rateOfFire > 0) && player.water > 0) {
+				for (int i = 0; i < currentWeapon.spray; i++) {
+					Vector3 pos = currentWeapon.barrel.transform.position;
+					Vector3 acc = new Vector3 (UnityEngine.Random.Range (-0.1f, 0.1f), UnityEngine.Random.Range (-0.1f, 0.1f), 0);
+					acc = currentWeapon.barrel.TransformDirection (acc) * currentWeapon.acuracy;
+					Quaternion rot = Quaternion.LookRotation (currentWeapon.barrel.transform.forward + acc);
+					CmdCreateBullet (pos, rot, currentWeaponID);
+					player.water -= currentWeapon.waterUsage;
+					animator.SetBool ("Shooting", true);
+				}
+				fireButtonReleased = false;
+			} else if (!firePressed) {
+				animator.SetBool ("Shooting", false);
+				fireButtonReleased = true;
+			}
 
             if (currentWeapon.rateOfFire > 0)
                 yield return new WaitForSeconds(1 / currentWeapon.rateOfFire);
@@ -160,6 +163,7 @@ public class PlayerWeapon : NetworkBehaviour
         Destroy(currentWeapon.gameObject);
         GameObject w = (GameObject)Instantiate(weapons[id].gameObject, weaponTransform.position, weaponTransform.rotation);
         currentWeapon = w.GetComponent<Weapon>();
+		currentWeaponID = id;
         Debug.Log(currentWeapon.type.ToString());
         w.transform.SetParent(weaponTransform);
     }
@@ -167,26 +171,9 @@ public class PlayerWeapon : NetworkBehaviour
     [ClientRpc]
     private void RpcCreateWeapon(int id)
     {
-        /*
-        switch ((WeaponType)id)
-        {
-            case WeaponType.WaterRake:
- 
-                break;
-            case WeaponType.HoseGun:
-                weaponTransform.SetParent(GetComponent<PlayerMeshUpdator>().mesh.GetComponent<MeshSetup>().hose);
-                break;
-            case WeaponType.ScatterGun:
-                weaponTransform.SetParent(GetComponent<PlayerMeshUpdator>().mesh.GetComponent<MeshSetup>().scaterGun);
-                break;
-            case WeaponType.WaterBazooka:
-                weaponTransform.SetParent(GetComponent<PlayerMeshUpdator>().mesh.GetComponent<MeshSetup>().bazooka);
-                break;
-        }
-        */
-        //weaponTransform.localPosition = Vector3.zero;
-        GameObject w = (GameObject)Instantiate(weapons[id].gameObject, weaponTransform.position, weaponTransform.rotation);
+		GameObject w = (GameObject)Instantiate(weapons[id].gameObject, weaponTransform.position, weaponTransform.rotation);
         currentWeapon = w.GetComponent<Weapon>();
+		currentWeaponID = id;
         w.transform.SetParent(weaponTransform);
     }
 

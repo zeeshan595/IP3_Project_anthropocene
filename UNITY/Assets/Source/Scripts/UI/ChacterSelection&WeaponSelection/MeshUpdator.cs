@@ -36,7 +36,9 @@ public class MeshUpdator : MonoBehaviour
         if (currentGun != null)
             Destroy(currentGun);
 
-        currentGun = (GameObject)Instantiate(guns[(int)Settings.weaponType], gundummys[(int)Settings.weaponType].position, gundummys[(int)Settings.weaponType].rotation);
+		currentGun = (GameObject)Instantiate(guns[(int)Settings.weaponType], gundummys[(int)Settings.weaponType].position, gundummys[(int)Settings.weaponType].rotation);
         currentGun.transform.SetParent(gundummys[(int)Settings.weaponType].transform);
+		GetComponent<Animator> ().SetFloat ("Weapon", (int)Settings.weaponType);
+		Debug.Log ("test");
     }
 }
