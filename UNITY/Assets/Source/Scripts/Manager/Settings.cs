@@ -22,6 +22,5 @@ public enum Character
 {
     Potatree,
     Rak,
-    Fishy,
-    JackieChan
+    Fishy
 }

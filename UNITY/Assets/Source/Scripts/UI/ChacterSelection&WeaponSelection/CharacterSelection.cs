@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class CharacterSelection : MonoBehaviour {
 
     public GameObject[] characters; // 0 Potatree, 1 other, 2 another other, 3 the last other
+    public Button[] weaponButtons;
     public GameObject platform;
     public GameObject selectedCharacter;
     private int characterIndex = 0;
@@ -26,22 +27,30 @@ public class CharacterSelection : MonoBehaviour {
     private Text characterText;
     public GameObject characterSelectPanel;
     Animation ani;
+    bool inWeaponSelection = false;
+    int currentSeleectedWeapon = 0;
 
-    void MoveLeft()
+    public void MoveLeft()
     {
+        if (isRotatingLeft)
+            return;
+
         characterIndex--;
         if (characterIndex >= characters.Length) characterIndex = 0;
         if (characterIndex < 0) characterIndex = characters.Length - 1;
         selectedCharacter = characters[characterIndex];
         sign = -1;
         isRotatingLeft = true;
-        currentRot = angleValue - 90;
+        currentRot = angleValue - 120;
         Settings.character = (Character)characterIndex;
         ChangeCharacterName(characters[characterIndex].name);
     }
 
-    void MoveRight()
+    public void MoveRight()
     {
+        if (isRotating)
+            return;
+
         characterIndex++;
         if (characterIndex >= characters.Length) characterIndex = 0;
         if (characterIndex < 0) characterIndex = characters.Length - 1;
@@ -49,7 +58,7 @@ public class CharacterSelection : MonoBehaviour {
         isRotating = true;
         sign = 1;
         Settings.character = (Character)characterIndex;
-        currentRot = angleValue + 90;
+        currentRot = angleValue + 120;
         ChangeCharacterName(characters[characterIndex].name);
     }
 
@@ -60,77 +69,99 @@ public class CharacterSelection : MonoBehaviour {
             //Rotate right TODO change input to xbox axis
             float horizontal = InputManager.GetAxies(ControllerAxies.LeftStickX);
 
-            if (horizontal < -0.1f)
+            if (!inWeaponSelection)
             {
-                if (!pressDownLeft)
+                if (horizontal < -0.1f)
+                {
+                    if (!pressDownLeft)
+                    {
+                        MoveLeft();
+                        pressDownLeft = true;
+                    }
+                }
+                else
+                    pressDownLeft = false;
+
+
+                //Rotate Left TODO change input to xbox axis
+                if (horizontal > 0.1f)
+                {
+                    if (!pressDownRight)
+                    {
+                        MoveRight();
+                        pressDownRight = true;
+                    }
+                }
+                else
+                    pressDownRight = false;
+
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    MoveLeft();
+                }
+
+                if (Input.GetKeyDown(KeyCode.D))
                 {
                     MoveRight();
-                    pressDownLeft = true;
+                }
+
+                if (InputManager.GetButtonDown(ControllerButtons.A)) //TODO change the logs to the appropriate characters once they are set on the Settings class
+                {
+                    characterSelectPanel.SetActive(false);
+                    SelectButton();
+                }
+                selectedCharacter.transform.localRotation = Quaternion.Lerp(selectedCharacter.transform.localRotation, Quaternion.identity, Time.deltaTime * 2);
+                if (InputManager.GetButtonDown(ControllerButtons.B)) //TODO change the logs to the appropriate characters once they are set on the Settings class
+                {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
                 }
             }
             else
-                pressDownLeft = false;
-
-
-            //Rotate Left TODO change input to xbox axis
-            if (horizontal > 0.1f)
             {
-                if (!pressDownRight)
+                selectedCharacter.transform.localRotation = Quaternion.Lerp(selectedCharacter.transform.localRotation, Quaternion.Euler(new Vector3(0, -50, 0)), Time.deltaTime * 2);
+                if (InputManager.GetButtonDown(ControllerButtons.B)) //TODO change the logs to the appropriate characters once they are set on the Settings class
                 {
-                    MoveLeft();
-                    pressDownRight = true;
+                    weaponPanel.SetActive(false);
+                    BackButton();
+                }
+                if (InputManager.GetButtonDown(ControllerButtons.A))
+                {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Lobby");
+                }
+
+                if (horizontal < -0.1f)
+                {
+                    if (!pressDownLeft)
+                    {
+                        if (currentSeleectedWeapon > 0)
+                        {
+                            currentSeleectedWeapon--;
+                            weaponButtons[currentSeleectedWeapon].onClick.Invoke();
+                        }
+                        pressDownLeft = true;
+                    }
+                }
+                else
+                    pressDownLeft = false;
+
+
+                //Rotate Left TODO change input to xbox axis
+                if (horizontal > 0.1f)
+                {
+                    if (!pressDownRight)
+                    {
+                        if (currentSeleectedWeapon < weaponButtons.Length - 1)
+                        {
+                            currentSeleectedWeapon++;
+                            weaponButtons[currentSeleectedWeapon].onClick.Invoke();
+                        }
+                        pressDownRight = true;
+                    }
                 }
                 else
                     pressDownRight = false;
             }
-
-            if (Input.GetKey(KeyCode.O))
-            {
-                selectedCharacter.transform.Rotate(new Vector3(0, 90 * Time.deltaTime, 0));
-            }
-
-            if (Input.GetKey(KeyCode.P))
-            {
-                selectedCharacter.transform.Rotate(new Vector3(0, -90 * Time.deltaTime, 0));
-            }
-
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                MoveLeft();
-            }
-
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                MoveRight();
-            }
-
-            //Select the character
-            if (InputManager.GetButton(ControllerButtons.A)) //TODO change the logs to the appropriate characters once they are set on the Settings class
-            {
-                if (characterIndex == 0)
-                {
-                    Settings.character = Character.Potatree;
-                    weaponRotating.EnableRendererButton(1);
-                }
-                else if (characterIndex == 1)
-                {
-                    Settings.character = Character.Rak;
-                    weaponRotating.EnableRendererButton(1);
-                }
-                else if (characterIndex == 2)
-                {
-                    Settings.character = Character.Fishy;
-                    weaponRotating.EnableRendererButton(1);
-                }
-                else if (characterIndex == 3)
-                {
-                    Settings.character = Character.JackieChan;
-                    weaponRotating.EnableRendererButton(1);
-                }
-            }
         }
-
-        
 
         if(isRotatingLeft)
         {
@@ -160,20 +191,20 @@ public class CharacterSelection : MonoBehaviour {
                 angleValue = currentRot;
                 isRotating = false;
             }
-
         }
-
-
-	}
+    }
 
     void Start()
     {
         characterText = characterTextObject.GetComponent<Text>();
         ani = GetComponent<Animation>();
+        Settings.character = Character.Potatree;
+        selectedCharacter = characters[0];
     }
 
     public void SelectButton()
     {
+        inWeaponSelection = true;
         StartCoroutine(DisplayWeaponPanel());
     }
 
@@ -187,6 +218,7 @@ public class CharacterSelection : MonoBehaviour {
 
     public void BackButton()
     {
+        inWeaponSelection = false;
         StartCoroutine(DisplayCharacterPanel());
     }
 
@@ -196,6 +228,7 @@ public class CharacterSelection : MonoBehaviour {
         ani["Camera Zoom in"].time = ani["Camera Zoom in"].length;
         ani.Play();
         yield return new WaitForSeconds(0.75f);
+        ani.Stop();
         characterSelectPanel.SetActive(true);
         ani["Camera Zoom in"].speed = 1.0f;
         ani["Camera Zoom in"].time = ani["Camera Zoom in"].length;
@@ -205,5 +238,4 @@ public class CharacterSelection : MonoBehaviour {
     {
         characterText.text = characterName;
     }
-
 }
