@@ -72,5 +72,6 @@ public class LobbyManager : NetworkLobbyManager
     private void Update()
     {
         minPlayers = connectedPlayers;
+        //minPlayers = 8;
     }
 }

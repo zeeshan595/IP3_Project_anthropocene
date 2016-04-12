@@ -690,10 +690,6 @@ ModelImporter:
         weight: 0
       - path: anim_global01/skeleton01/bn_root01/bn_spine_a01/bn_spine_b01/bn_spine_c01/bn_chest01/bn_r_shoulder01/bn_r_elbow01/bn_r_wrist01/bn_r_thumb_a01/bn_r_thumb_b01/be_r_thumb_c01
         weight: 0
-      - path: anim_global01/skeleton01/bn_root01/bn_spine_a01/bn_spine_b01/bn_spine_c01/bn_chest01/Jetpack
-        weight: 0
-      - path: anim_global01/skeleton01/bn_root01/bn_spine_a01/bn_spine_b01/bn_spine_c01/bn_chest01/Jetpack/Water
-        weight: 0
       - path: anim_global01/skeleton01/jDrv_splineIK_spine_root01
         weight: 0
       - path: anim_global01/skeleton01/jDrv_splineIK_spine_root01/model_potatreeanimation_3:jDrv_splineIK_spine_a01
@@ -744,7 +740,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -1088,7 +1084,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -1432,7 +1428,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -1776,7 +1772,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -2065,10 +2061,6 @@ ModelImporter:
       - path: anim_global01/skeleton01/bn_root01/bn_spine_a01/bn_spine_b01/bn_spine_c01/bn_chest01/bn_r_shoulder01/bn_r_elbow01/bn_r_wrist01/bn_r_thumb_a01/bn_r_thumb_b01
         weight: 0
       - path: anim_global01/skeleton01/bn_root01/bn_spine_a01/bn_spine_b01/bn_spine_c01/bn_chest01/bn_r_shoulder01/bn_r_elbow01/bn_r_wrist01/bn_r_thumb_a01/bn_r_thumb_b01/be_r_thumb_c01
-        weight: 0
-      - path: anim_global01/skeleton01/bn_root01/bn_spine_a01/bn_spine_b01/bn_spine_c01/bn_chest01/Jetpack
-        weight: 0
-      - path: anim_global01/skeleton01/bn_root01/bn_spine_a01/bn_spine_b01/bn_spine_c01/bn_chest01/Jetpack/Water
         weight: 0
       - path: anim_global01/skeleton01/jDrv_splineIK_spine_root01
         weight: 0

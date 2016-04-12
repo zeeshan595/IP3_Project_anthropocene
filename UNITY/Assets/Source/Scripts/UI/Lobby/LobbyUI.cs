@@ -48,7 +48,7 @@ public class LobbyUI : MonoBehaviour
         CheckForNewUser();
         ChangeTeam();
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) || InputManager.GetButtonDown(ControllerButtons.LB))
         {
             for (int i = 0; i < manager.connectedPlayers; i++)
             {
@@ -58,7 +58,7 @@ public class LobbyUI : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) || InputManager.GetButtonDown(ControllerButtons.RB))
         {
             for (int i = 0; i < manager.connectedPlayers; i++)
             {
@@ -68,9 +68,9 @@ public class LobbyUI : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || InputManager.GetButtonDown(ControllerButtons.A))
         {
-            ReadyPlayer(true);
+            ReadyPlayer();
         }
     }
 
@@ -194,7 +194,7 @@ public class LobbyUI : MonoBehaviour
         }
     }
 
-    private void ReadyPlayer(bool ready)
+    private void ReadyPlayer()
     {
         for (int i = 0; i < manager.lobbySlots.Length; i++)
         {
@@ -205,7 +205,7 @@ public class LobbyUI : MonoBehaviour
                 {
                     if (Settings.username == player.username)
                     {
-                        if (ready)
+                        if (!player.readyToBegin)
                             player.Ready();
                         else
                             player.UnReady();
