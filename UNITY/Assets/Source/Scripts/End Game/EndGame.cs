@@ -21,6 +21,7 @@ public class EndGame : MonoBehaviour
     public GameObject[] winningDeaths;
     public GameObject[] loserDeaths;
     public Sprite[] characterIcons; // 0 = Potaetree 1 = Rak 2 = Fishy 3 = JackieChan
+    public Sprite[] redIcons;
     public GameObject[] winningCharacterIconsObjects;
     public GameObject[] loserCharacterIconsObjects;
 
@@ -109,31 +110,31 @@ public class EndGame : MonoBehaviour
                 if (redTeam[i].character == Character.Potatree)
                 {
                     Image im = winningCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = characterIcons[0];
+                    im.sprite = redIcons[0];
                 }
                 else if (redTeam[i].character == Character.Rak)
                 {
                     Image im = winningCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = characterIcons[1];
+                    im.sprite = redIcons[1];
                 }
                 else if (redTeam[i].character == Character.Fishy)
                 {
                     Image im = winningCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = characterIcons[2];
+                    im.sprite = redIcons[2];
                 }
 
                 //Assign Icon
-                if (redTeam[i].character == Character.Potatree)
+                if (blueTeam[i].character == Character.Potatree)
                 {
                     Image im = loserCharacterIconsObjects[i].GetComponent<Image>();
                     im.sprite = characterIcons[0];
                 }
-                else if (redTeam[i].character == Character.Rak)
+                else if (blueTeam[i].character == Character.Rak)
                 {
                     Image im = loserCharacterIconsObjects[i].GetComponent<Image>();
                     im.sprite = characterIcons[1];
                 }
-                else if (redTeam[i].character == Character.Fishy)
+                else if (blueTeam[i].character == Character.Fishy)
                 {
                     Image im = loserCharacterIconsObjects[i].GetComponent<Image>();
                     im.sprite = characterIcons[2];
@@ -195,17 +196,17 @@ public class EndGame : MonoBehaviour
                 loserTeamDeaths.text = redTeam[i].deaths.ToString();
 
                 //Assign Icon
-                if (redTeam[i].character == Character.Potatree)
+                if (blueTeam[i].character == Character.Potatree)
                 {
                     Image im = winningCharacterIconsObjects[i].GetComponent<Image>();
                     im.sprite = characterIcons[0];
                 }
-                else if (redTeam[i].character == Character.Rak)
+                else if (blueTeam[i].character == Character.Rak)
                 {
                     Image im = winningCharacterIconsObjects[i].GetComponent<Image>();
                     im.sprite = characterIcons[1];
                 }
-                else if (redTeam[i].character == Character.Fishy)
+                else if (blueTeam[i].character == Character.Fishy)
                 {
                     Image im = winningCharacterIconsObjects[i].GetComponent<Image>();
                     im.sprite = characterIcons[2];
@@ -215,17 +216,17 @@ public class EndGame : MonoBehaviour
                 if (redTeam[i].character == Character.Potatree)
                 {
                     Image im = loserCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = characterIcons[0];
+                    im.sprite = redIcons[0];
                 }
                 else if (redTeam[i].character == Character.Rak)
                 {
                     Image im = loserCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = characterIcons[1];
+                    im.sprite = redIcons[1];
                 }
                 else if (redTeam[i].character == Character.Fishy)
                 {
                     Image im = loserCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = characterIcons[2];
+                    im.sprite = redIcons[2];
                 }
 
 
