@@ -19,7 +19,7 @@ public class PlayerMeshUpdator : MonoBehaviour
         mesh.transform.SetParent(meshParent.transform);
         meshParent.transform.localPosition = characters[c].offset;
         GetComponent<CharacterController>().height = characters[c].height;
-        MeshRenderer[] renders = mesh.GetComponentsInChildren<MeshRenderer>();
+        Renderer[] renders = mesh.GetComponentsInChildren<Renderer>();
         for (int i = 0; i < renders.Length; i++)
         {
             if (Settings.team == TeamType.Blue)
