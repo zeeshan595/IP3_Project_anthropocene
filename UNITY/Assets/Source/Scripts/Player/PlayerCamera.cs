@@ -28,9 +28,9 @@ public class PlayerCamera : MonoBehaviour
 	private void Update () 
     {        
         if (!inverted)
-            rightVertical += (InputManager.GetAxies(ControllerAxies.RightStickY) + InputManager.GetAxies(ControllerAxies.MouseY)) * Time.deltaTime * speed;
+            rightVertical += (InputManager.GetAxies(ControllerAxies.RightStickY) - InputManager.GetAxies(ControllerAxies.MouseY)) * Time.deltaTime * speed;
         else
-            rightVertical -= (InputManager.GetAxies(ControllerAxies.RightStickY) + InputManager.GetAxies(ControllerAxies.MouseY)) * Time.deltaTime * speed;
+            rightVertical -= (InputManager.GetAxies(ControllerAxies.RightStickY) - InputManager.GetAxies(ControllerAxies.MouseY)) * Time.deltaTime * speed;
 
         ///Change Position
         rightVertical = Mathf.Clamp(rightVertical, -minViewRange, maxViewRange);
