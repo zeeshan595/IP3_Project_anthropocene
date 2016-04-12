@@ -174,6 +174,7 @@ public class Player
 {
     public string username;
     public TeamType team;
+    public Character character;
     public float score;
     public float waterUsage;
 }
