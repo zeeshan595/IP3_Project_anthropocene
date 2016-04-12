@@ -172,9 +172,11 @@ public class GameManager : MonoBehaviour
 
 public class Player
 {
-    public string username;
-    public TeamType team;
     public Character character;
-    public float score;
-    public float waterUsage;
+    public TeamType team;
+    public int score { get; set; }
+    public int kills { get; set; }
+    public int deaths { get; set; }
+    public int waterUsage { get; set; }
+    public string username { get; set; }
 }
