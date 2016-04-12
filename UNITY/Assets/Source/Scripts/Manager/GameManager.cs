@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
+    public static List<Player> Players = new List<Player>();
     public static List<GameObject> flowers = new List<GameObject>();
     public static List<WaterTank> teamWater = new List<WaterTank>();
     public static int redFlowers = 0, blueFlowers = 0;
@@ -167,4 +168,12 @@ public class GameManager : MonoBehaviour
     {
         waterStuff = true;
     }
+}
+
+public class Player
+{
+    public string username;
+    public TeamType team;
+    public float score;
+    public float waterUsage;
 }
