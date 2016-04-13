@@ -6,10 +6,29 @@ ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
+    100002: endjoint_dontmoveme
+    100004: Hose01
+    100006: hose_joint_a
+    100008: hose_joint_b
+    100010: hose_joint_c
+    100012: hose_joint_d
+    100014: hose_joint_end
     400000: //RootNode
+    400002: endjoint_dontmoveme
+    400004: Hose01
+    400006: hose_joint_a
+    400008: hose_joint_b
+    400010: hose_joint_c
+    400012: hose_joint_d
+    400014: hose_joint_end
     2300000: //RootNode
+    2300002: Hose01
     3300000: //RootNode
+    3300002: Hose01
     4300000: Hose01
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: Hose01
   materials:
     importMaterials: 0
     materialName: 0
@@ -68,7 +87,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 1
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
