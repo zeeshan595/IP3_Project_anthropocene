@@ -24,7 +24,9 @@ public class PlayerStats : NetworkBehaviour
     [SyncVar]
     public float water = 100.0f;
     [SyncVar]
-    private int timer = 120;
+    private int timer = 5;
+    [SyncVar]
+    public int TotalWaterUsage = 0;
 
     private RectTransform waterUI;
     private RectTransform healthUI;
@@ -68,18 +70,13 @@ public class PlayerStats : NetworkBehaviour
 
             timerUI.text = timer.ToString();
             
-            if (timer <= 0)
+            if (timer <= 0 && !GameManager.ended)
             {
                 GameManager.singleton.EndGame(GetComponent<PlayerNetwork>().playerCamera.gameObject);
                 GetComponent<PlayerMovement>().enabled = false;
                 GetComponent<PlayerWeapon>().enabled = false;
             }
         }
-    }
-
-    private void OnGUI()
-    {
-        //Debug.Log(GameManager.blueWater + "/" + GameManager.maxBlueWater);
     }
 
     private IEnumerator tickTimer()
@@ -106,6 +103,7 @@ public class PlayerStats : NetworkBehaviour
     [Command]
     public void CmdUpdateWater(float water)
     {
+        TotalWaterUsage += Mathf.RoundToInt(this.water - water);
         this.water = water;
     }
 }

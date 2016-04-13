@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.Networking.Match;
-using System.Collections;
-using UnityEngine.Networking.Types;
+using System.Collections.Generic;
 
 public delegate void OnConnectedToServer(NetworkConnection conn);
 public delegate void OnConntionLostFromServer(NetworkConnection conn);
@@ -16,6 +14,7 @@ public class LobbyManager : NetworkLobbyManager
     public OnConnectedToServer ClientConnected = null;
     public OnConntionLostFromServer ClientDisconnected = null;
     public int connectedPlayers = 0;
+    public List<GameObject> players = new List<GameObject>();
 
     private bool isSearchingForMatch = false;
     private bool isMatchFound = false;
@@ -31,9 +30,16 @@ public class LobbyManager : NetworkLobbyManager
 
     public override void OnClientDisconnect(NetworkConnection conn)
     {
-        base.OnClientDisconnect(conn);
-        if (ClientDisconnected != null)
-            ClientDisconnected(conn);
+        if (!GameManager.ended)
+        {
+            base.OnClientDisconnect(conn);
+            if (ClientDisconnected != null)
+                ClientDisconnected(conn);
+        }
+        else
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("EndScreen");
+        }
     }
 
     public override GameObject OnLobbyServerCreateGamePlayer(NetworkConnection conn, short playerControllerId)
@@ -66,6 +72,7 @@ public class LobbyManager : NetworkLobbyManager
 
         GameObject obj = (GameObject)Instantiate(gamePlayerPrefab, spawnPosition.position, spawnPosition.rotation);
         obj.GetComponent<PlayerStats>().character = ch;
+        players.Add(obj);
         return obj;
     }
 

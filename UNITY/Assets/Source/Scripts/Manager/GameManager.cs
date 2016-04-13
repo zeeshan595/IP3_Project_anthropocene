@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
-    public static List<Player> Players = new List<Player>();
+    public static Player[] Players;
     public static List<GameObject> flowers = new List<GameObject>();
     public static List<WaterTank> teamWater = new List<WaterTank>();
     public static int redFlowers = 0, blueFlowers = 0;
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     public static float redPercent = 0;
     public static float maxBlueWater = 7600;
     public static float maxRedWater = 7600;
+    public static bool ended = false;
 
     [SerializeField]
     private GameObject endScreen;
@@ -53,10 +55,34 @@ public class GameManager : MonoBehaviour
     public void EndGame(GameObject camera)
     {
         camera.GetComponent<PlayerCamera>().enabled = false;
+        camera.GetComponent<UnityStandardAssets.ImageEffects.Blur>().enabled = true;
         cam = camera.transform;
         inGameUI.SetActive(false);
         endScreen.SetActive(true);
         Invoke("StartAnim", 2);
+        //Calculate Player Scores
+        LobbyManager lobby = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        Players = new Player[lobby.connectedPlayers];
+        ended = true;
+        for (int i = 0; i < lobby.connectedPlayers; i++)
+        {
+            LobbyPlayer lp = lobby.lobbySlots[i].GetComponent<LobbyPlayer>();
+            PlayerStats ps = lobby.players[i].GetComponent<PlayerStats>();
+            Players[i] = new Player();
+            Players[i].character = lp.character;
+            Players[i].username = lp.username;
+            Players[i].team = lp.team;
+            Players[i].waterUsage = ps.TotalWaterUsage;
+            int scoreCount = 0;
+            for (int k = 0; k < flowers.Count; k++)
+            {
+                if (flowers[k].GetComponent<PlayerFlower>().userID == ps.GetComponent<NetworkIdentity>().playerControllerId)
+                {
+                    scoreCount++;
+                }
+            }
+            Players[i].score = scoreCount;
+        }
     }
 
     private void Update()
@@ -117,6 +143,10 @@ public class GameManager : MonoBehaviour
                             winImage.sprite = redVictoryDefeat[1];
                         }
                     }
+                    if (Input.GetKeyDown(KeyCode.Space) || InputManager.GetButtonDown(ControllerButtons.A))
+                    {
+                        UnityEngine.SceneManagement.SceneManager.LoadScene("EndScreen");
+                    }
                 }
                 else
                 {
@@ -172,11 +202,9 @@ public class GameManager : MonoBehaviour
 
 public class Player
 {
+    public string username;
     public Character character;
     public TeamType team;
-    public int score { get; set; }
-    public int kills { get; set; }
-    public int deaths { get; set; }
-    public int waterUsage { get; set; }
-    public string username { get; set; }
+    public int score;
+    public int waterUsage;
 }

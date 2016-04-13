@@ -1,280 +1,93 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
-using System;
-
+using System.Collections.Generic;
 
 public class EndGame : MonoBehaviour
 {
+    [SerializeField]
+    private Sprite[] characterImagesRed;
+    [SerializeField]
+    private Sprite[] characterImagesBlue;
 
-    private List<Player> redTeam;
-    private List<Player> blueTeam;
+    [SerializeField]
+    private Text points;
 
-    //Sorry...
-    public GameObject[] winningTeamObjects;
-    public GameObject[] loserTeamObjects;
-    public GameObject[] winningTeamScore;
-    public GameObject[] loserTeamScore;
-    public GameObject[] winningKills;
-    public GameObject[] loserKills;
-    public GameObject[] winningDeaths;
-    public GameObject[] loserDeaths;
-    public Sprite[] characterIcons; // 0 = Potaetree 1 = Rak 2 = Fishy 3 = JackieChan
-    public Sprite[] redIcons;
-    public GameObject[] winningCharacterIconsObjects;
-    public GameObject[] loserCharacterIconsObjects;
+    [SerializeField]
+    private Text[] winnerUsernames;
+    [SerializeField]
+    private Text[] winnerScores;
+    [SerializeField]
+    private Image[] winnerCharacters;
 
-    public GameObject mask;
-    private float redTeamTotalWaterUsage;
-    private float blueTeamTotalWaterUsage;
+    [SerializeField]
+    private Text[] loserUsernames;
+    [SerializeField]
+    private Text[] loserScores;
+    [SerializeField]
+    private Image[] loserCharacters;
 
+    private List<Player> winList = new List<Player>();
+    private List<Player> loseList = new List<Player>();
+    private int me;
 
-
-    // Use this for initialization
-    void Start()
+    private void Start()
     {
-        redTeam = new List<Player>();
-        blueTeam = new List<Player>();
-
-        RectTransform rect = mask.GetComponent<RectTransform>();
-        foreach (Player p in GameManager.Players)
+        //Re-order them with best scores
+        for (int i = 0; i < GameManager.Players.Length; i++)
         {
-            if (p.team == TeamType.Red)
+            //Store my results for later
+            if (Settings.username == GameManager.Players[i].username)
             {
-                redTeam.Add(p);
-                redTeamTotalWaterUsage += p.waterUsage;
-                if (p.username == Settings.username)
+                me = i;
+            }
+
+            for (int k = i; k < GameManager.Players.Length; k++)
+            {
+                if (GameManager.Players[i].score < GameManager.Players[k].score)
                 {
-                    float playerPercent = p.waterUsage / redTeamTotalWaterUsage * 100;
-                    float heightPercent = (rect.offsetMax.y / rect.offsetMax.y) * 100;
-                    //rect.offsetMax.y = playerPercent / heightPercent;
+                    Player temp = GameManager.Players[i];
+                    GameManager.Players[i] = GameManager.Players[k];
+                    GameManager.Players[k] = temp;
                 }
+            }
+        }
+
+        //Seperate winning and losing teams
+        TeamType winningTeam = TeamType.Red;
+        if (GameManager.redPercent < GameManager.bluePercent)
+            winningTeam = TeamType.Blue;
+        for (int i = 0; i < GameManager.Players.Length; i++)
+        {
+            if (GameManager.Players[i].team == winningTeam)
+            {
+                winList.Add(GameManager.Players[i]);
             }
             else
             {
-                blueTeam.Add(p);
-                blueTeamTotalWaterUsage += p.waterUsage;
-                if (p.username == Settings.username)
-                {
-                    float playerPercent = (p.waterUsage / blueTeamTotalWaterUsage) * 100;
-                    float heightPercent = (rect.offsetMax.y / rect.offsetMax.y) * 100;
-                    //rect.offsetMax.y = playerPercent / heightPercent;
-                }
+                loseList.Add(GameManager.Players[i]);
             }
         }
 
-        //Sort teams by score
-        QuickSort(redTeam);
-        QuickSort(blueTeam);
-
-        //RED TEAM WINS
-        if (GameManager.redPercent > GameManager.bluePercent)
+        //Update UI
+        for (int i = 0; i < winList.Count; i++)
         {
-            //THIS WILL ONLY WORK IF THEY HAVE THE SAME NUMBER OF PLAYERS ON EACH TEAM
-            for (int i = 0; i < winningTeamObjects.Length; i++)
-            {
-                //Winning Team usernames
-                Text winningUsername = winningTeamObjects[i].GetComponent<Text>();
-                winningUsername.text = redTeam[i].username;
-
-                //Loser Team usernames
-                Text loserUsername = loserTeamObjects[i].GetComponent<Text>();
-                loserUsername.text = blueTeam[i].username;
-
-                //Winning Team Score
-                Text winningScore = winningTeamScore[i].GetComponent<Text>();
-                winningScore.text = redTeam[i].score.ToString();
-
-                //Loser Team Score
-                Text loserScore = loserTeamScore[i].GetComponent<Text>();
-                loserScore.text = blueTeam[i].score.ToString();
-
-                //Winning Team kills
-                Text winningTeamKills = winningKills[i].GetComponent<Text>();
-                winningTeamKills.text = redTeam[i].kills.ToString();
-
-                //Loser Team kills
-                Text loserTeamKills = loserKills[i].GetComponent<Text>();
-                loserTeamKills.text = blueTeam[i].kills.ToString();
-
-                //Winning Team Deaths
-                Text winningTeamDeaths = winningDeaths[i].GetComponent<Text>();
-                winningTeamDeaths.text = redTeam[i].deaths.ToString();
-
-                //Loser Team Deaths
-                Text loserTeamDeaths = loserDeaths[i].GetComponent<Text>();
-                loserTeamDeaths.text = blueTeam[i].deaths.ToString();
-
-                //Assign Icon
-                if (redTeam[i].character == Character.Potatree)
-                {
-                    Image im = winningCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = redIcons[0];
-                }
-                else if (redTeam[i].character == Character.Rak)
-                {
-                    Image im = winningCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = redIcons[1];
-                }
-                else if (redTeam[i].character == Character.Fishy)
-                {
-                    Image im = winningCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = redIcons[2];
-                }
-
-                //Assign Icon
-                if (blueTeam[i].character == Character.Potatree)
-                {
-                    Image im = loserCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = characterIcons[0];
-                }
-                else if (blueTeam[i].character == Character.Rak)
-                {
-                    Image im = loserCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = characterIcons[1];
-                }
-                else if (blueTeam[i].character == Character.Fishy)
-                {
-                    Image im = loserCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = characterIcons[2];
-                }
-
-                //Winning Team Kills
-                Text winningKillsText = winningKills[i].GetComponent<Text>();
-                winningKillsText.text = redTeam[i].kills.ToString();
-
-                //Loser Team Kills
-                Text loserKillsText = loserKills[i].GetComponent<Text>();
-                loserKillsText.text = blueTeam[i].kills.ToString();
-
-                //Winning Team Deaths
-                Text winningDeathsText = winningDeaths[i].GetComponent<Text>();
-                winningDeathsText.text = redTeam[i].kills.ToString();
-
-                //Loser Team Deaths
-                Text loserDeathsText = loserDeaths[i].GetComponent<Text>();
-                loserDeathsText.text = blueTeam[i].kills.ToString();
-            }
-        }
-        //BLUE TEAM WINS
-        else
-        {
-            //THIS WILL ONLY WORK IF THEY HAVE THE SAME NUMBER OF PLAYERS ON EACH TEAM
-            for (int i = 0; i < winningTeamObjects.Length; i++)
-            {
-                //Winning Team Username
-                Text winningUsername = winningTeamObjects[i].GetComponent<Text>();
-                winningUsername.text = blueTeam[i].username;
-
-                //Loser Team Username
-                Text loserUsername = loserTeamObjects[i].GetComponent<Text>();
-                loserUsername.text = redTeam[i].username;
-
-                //Winning Team Score
-                Text winningScore = winningTeamScore[i].GetComponent<Text>();
-                winningScore.text = blueTeam[i].score.ToString();
-
-                //Loser Team Score
-                Text loserScore = loserTeamScore[i].GetComponent<Text>();
-                loserScore.text = redTeam[i].score.ToString();
-
-                //Winning Team kills
-                Text winningTeamKills = winningKills[i].GetComponent<Text>();
-                winningTeamKills.text = blueTeam[i].kills.ToString();
-
-                //Loser Team kills
-                Text loserTeamKills = loserKills[i].GetComponent<Text>();
-                loserTeamKills.text = redTeam[i].kills.ToString();
-
-                //Winning Team Deaths
-                Text winningTeamDeaths = winningDeaths[i].GetComponent<Text>();
-                winningTeamDeaths.text = blueTeam[i].deaths.ToString();
-
-                //Loser Team Deaths
-                Text loserTeamDeaths = loserDeaths[i].GetComponent<Text>();
-                loserTeamDeaths.text = redTeam[i].deaths.ToString();
-
-                //Assign Icon
-                if (blueTeam[i].character == Character.Potatree)
-                {
-                    Image im = winningCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = characterIcons[0];
-                }
-                else if (blueTeam[i].character == Character.Rak)
-                {
-                    Image im = winningCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = characterIcons[1];
-                }
-                else if (blueTeam[i].character == Character.Fishy)
-                {
-                    Image im = winningCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = characterIcons[2];
-                }
-
-                //Assign Icon
-                if (redTeam[i].character == Character.Potatree)
-                {
-                    Image im = loserCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = redIcons[0];
-                }
-                else if (redTeam[i].character == Character.Rak)
-                {
-                    Image im = loserCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = redIcons[1];
-                }
-                else if (redTeam[i].character == Character.Fishy)
-                {
-                    Image im = loserCharacterIconsObjects[i].GetComponent<Image>();
-                    im.sprite = redIcons[2];
-                }
-
-
-                //Winning Team Kills
-                Text winningKillsText = winningKills[i].GetComponent<Text>();
-                winningKillsText.text = blueTeam[i].kills.ToString();
-
-                //Loser Team Kills
-                Text loserKillsText = loserKills[i].GetComponent<Text>();
-                loserKillsText.text = redTeam[i].kills.ToString();
-
-                //Winning Team Deaths
-                Text winningDeathsText = winningDeaths[i].GetComponent<Text>();
-                winningDeathsText.text = blueTeam[i].kills.ToString();
-
-                //Loser Team Deaths
-                Text loserDeathsText = loserDeaths[i].GetComponent<Text>();
-                loserDeathsText.text = redTeam[i].kills.ToString();
-            }
-        }
-    }
-
-    //Sort list by score
-    private List<Player> QuickSort(List<Player> unsortedList)
-    {
-        List<Player> sortedList = new List<Player>();
-        List<Player> greaterList = new List<Player>();
-        List<Player> lesserList = new List<Player>();
-        System.Random r = new System.Random();
-        int pivotPos = r.Next(unsortedList.Count);
-        Player pivot = unsortedList[pivotPos];
-
-        unsortedList.RemoveAt(pivotPos);
-
-        for (int i = 0; i < unsortedList.Count; i++)
-        {
-            if (unsortedList[i].score <= pivot.score)
-            {
-                lesserList.Add(unsortedList[i]);
-            }
+            winnerUsernames[i].text = winList[i].username;
+            winnerScores[i].text = winList[i].score.ToString();
+            if (winList[i].team == TeamType.Red)
+                winnerCharacters[i].sprite = characterImagesRed[(int)winList[i].character];
             else
-            {
-                greaterList.Add(unsortedList[i]);
-            }
+                winnerCharacters[i].sprite = characterImagesBlue[(int)winList[i].character];
         }
-        sortedList.AddRange(QuickSort(lesserList));
-        sortedList.Add(pivot);
-        sortedList.AddRange(greaterList);
-        return sortedList;
+        for (int i = 0; i < loseList.Count; i++)
+        {
+            loserUsernames[i].text = loseList[i].username;
+            loserScores[i].text = loseList[i].score.ToString();
+            if (loseList[i].team == TeamType.Red)
+                loserCharacters[i].sprite = characterImagesRed[(int)loseList[i].character];
+            else
+                loserCharacters[i].sprite = characterImagesBlue[(int)loseList[i].character];
+        }
+
+        points.text = "Points: " + GameManager.Players[me].score;
     }
 }

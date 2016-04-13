@@ -185,6 +185,7 @@ public class PlayerWeapon : NetworkBehaviour
         body.AddForce(clone.transform.forward * weapons[weaponID].range * 20);
         PlayerBullet bull = clone.GetComponent<PlayerBullet>();
         bull.team = player.team;
+        bull.userID = player.GetComponent<NetworkIdentity>().playerControllerId;
         bull.explode = weapons[weaponID].explode;
     }
 

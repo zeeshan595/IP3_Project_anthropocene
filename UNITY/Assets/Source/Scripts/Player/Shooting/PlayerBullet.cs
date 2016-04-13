@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PlayerBullet : MonoBehaviour
 {
+    public short userID;
     public TeamType team;
     public int explode = 0;
 
@@ -60,6 +61,7 @@ public class PlayerBullet : MonoBehaviour
                 Vector3 offset = collider.contacts[0].normal;
                 GameObject copy = (GameObject)Instantiate(petals, pos + offset, rot);
                 copy.GetComponent<PlayerBullet>().team = team;
+                copy.GetComponent<PlayerBullet>().userID = userID;
                 Vector3 force = collider.contacts[0].normal;
                 force = new Vector3(Random.Range(-5.0f, 5.0f), Random.Range(-5.0f, 5.0f), Random.Range(-10.0f, 10.0f));
                 copy.GetComponent<Rigidbody>().AddForce(force * 100);
