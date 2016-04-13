@@ -18,6 +18,8 @@ public class EndGame : MonoBehaviour
     private Text[] winnerScores;
     [SerializeField]
     private Image[] winnerCharacters;
+    [SerializeField]
+    private Text[] winnerWaterUsage;
 
     [SerializeField]
     private Text[] loserUsernames;
@@ -25,6 +27,8 @@ public class EndGame : MonoBehaviour
     private Text[] loserScores;
     [SerializeField]
     private Image[] loserCharacters;
+    [SerializeField]
+    private Text[] loserWaterUsage;
 
     private List<Player> winList = new List<Player>();
     private List<Player> loseList = new List<Player>();
@@ -77,6 +81,7 @@ public class EndGame : MonoBehaviour
                 winnerCharacters[i].sprite = characterImagesRed[(int)winList[i].character];
             else
                 winnerCharacters[i].sprite = characterImagesBlue[(int)winList[i].character];
+            winnerWaterUsage[i].text = winList[i].waterUsage.ToString();
         }
         for (int i = 0; i < loseList.Count; i++)
         {
@@ -86,6 +91,7 @@ public class EndGame : MonoBehaviour
                 loserCharacters[i].sprite = characterImagesRed[(int)loseList[i].character];
             else
                 loserCharacters[i].sprite = characterImagesBlue[(int)loseList[i].character];
+            loserWaterUsage[i].text = loseList[i].waterUsage.ToString();
         }
 
         points.text = "Points: " + GameManager.Players[me].score;
