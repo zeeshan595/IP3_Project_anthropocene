@@ -10,8 +10,6 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField]
     public float rotateSpeed = 5;
     [SerializeField]
-    public float jumpHeight = 20;
-    [SerializeField]
     public float jumpSpeed = 1;
     //Network
     [SerializeField]
@@ -95,7 +93,6 @@ public class PlayerMovement : NetworkBehaviour
                     GetComponent<PlayerMeshUpdator>().mesh.transform.localPosition = Vector3.zero;
                     animator.SetFloat("Speed", 0.0f);
                 }
-                animator.SetBool("Jump", isJumping);
             }
             if (!controller.isGrounded && !isJumping)
             {
@@ -112,16 +109,14 @@ public class PlayerMovement : NetworkBehaviour
             //Jump
             if ((Input.GetKey(KeyCode.Space) || InputManager.GetButton(ControllerButtons.A)) && controller.isGrounded && !isJumping)
             {
+                animator.SetBool("Jump", true);
                 groundPos = transform.position.y;
                 isJumping = true;
+                Invoke("StopJumping", 0.5f);
             }
             if (isJumping)
             {
-                targetDirection.y = Mathf.Lerp(targetDirection.y, jumpHeight, jumpSpeed * Time.deltaTime);
-                if (Mathf.Abs((jumpHeight + groundPos) - transform.position.y) < 0.5f)
-                {
-                    isJumping = false;
-                }
+                targetDirection.y = jumpSpeed * Time.deltaTime;
             }
 
             controller.Move(targetDirection);
@@ -166,14 +161,28 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 
+    private void StopJumping()
+    {
+        isJumping = false;
+        animator.SetBool("Jump", false);
+    }
+
     private void FixedUpdate()
     {
         TransmitInfo();
     }
 
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (isJumping)
+        {
+            StopJumping();
+        }
+    }
+
     #endregion
 
-    #region Server Commands
+        #region Server Commands
 
     [Command]
     private void CmdSendPositionToServer(Vector3 pos)

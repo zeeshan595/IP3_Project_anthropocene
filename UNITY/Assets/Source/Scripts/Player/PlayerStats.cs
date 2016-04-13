@@ -24,13 +24,14 @@ public class PlayerStats : NetworkBehaviour
     [SyncVar]
     public float water = 100.0f;
     [SyncVar]
-    private int timer = 5;
+    private int timer = 120;
     [SyncVar]
     public int TotalWaterUsage = 0;
 
     private RectTransform waterUI;
     private RectTransform healthUI;
     private Text timerUI;
+    private GameObject refillUI;
 
     private void Start()
     {
@@ -40,6 +41,7 @@ public class PlayerStats : NetworkBehaviour
             waterUI = (RectTransform)GameObject.FindWithTag("WaterUI").transform;
             healthUI = (RectTransform)GameObject.FindWithTag("HealthUI").transform;
             timerUI = GameObject.FindWithTag("TimerUI").GetComponent<Text>();
+            refillUI = GameObject.FindWithTag("RefillUI");
         }
         if (isServer)
         {
@@ -75,6 +77,15 @@ public class PlayerStats : NetworkBehaviour
                 GameManager.singleton.EndGame(GetComponent<PlayerNetwork>().playerCamera.gameObject);
                 GetComponent<PlayerMovement>().enabled = false;
                 GetComponent<PlayerWeapon>().enabled = false;
+            }
+
+            if (water < 10)
+            {
+                refillUI.SetActive(true);
+            }
+            else
+            {
+                refillUI.SetActive(false);
             }
         }
     }

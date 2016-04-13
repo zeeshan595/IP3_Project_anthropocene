@@ -12,6 +12,9 @@ public class PlayerMeshUpdator : MonoBehaviour
     [System.NonSerialized]
     public GameObject mesh;
 
+    private PlayerStats player;
+    private Transform waterMesh;
+
     private void Start()
     {
         int c = (int)GetComponent<PlayerStats>().character;
@@ -22,15 +25,18 @@ public class PlayerMeshUpdator : MonoBehaviour
         Renderer[] renders = mesh.GetComponentsInChildren<Renderer>();
         for (int i = 0; i < renders.Length; i++)
         {
-            if (Settings.team == TeamType.Blue)
+            if (renders[i].gameObject.tag != "Jetpack")
             {
-                if (characters[c].blueTexture)
-                    renders[i].material.mainTexture = characters[c].blueTexture;
-            }
-            else
-            {
-                if (characters[c].redTexture)
-                    renders[i].material.mainTexture = characters[c].redTexture;
+                if (Settings.team == TeamType.Blue)
+                {
+                    if (characters[c].blueTexture)
+                        renders[i].material.mainTexture = characters[c].blueTexture;
+                }
+                else
+                {
+                    if (characters[c].redTexture)
+                        renders[i].material.mainTexture = characters[c].redTexture;
+                }
             }
         }
 
@@ -50,6 +56,14 @@ public class PlayerMeshUpdator : MonoBehaviour
                     guns[3] = wMeshes[k].transform;
             }
         }
+
+        player = GetComponent<PlayerStats>();
+        waterMesh = gameObject.GetComponentsInChildren<WaterMesh>()[0].transform;
+    }
+
+    private void Update()
+    {
+        waterMesh.localScale = new Vector3(player.water / 100, 1, 1);
     }
 }
 

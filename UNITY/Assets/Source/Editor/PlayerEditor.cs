@@ -10,7 +10,6 @@ public class PlayerEditor : EditorWindow
     private static float gravity;
     private static float health;
     private static float water;
-    private static float jumpHeight;
     private static float rotateSpeed;
     private static float jumpSpeed;
 
@@ -39,7 +38,6 @@ public class PlayerEditor : EditorWindow
         health = script.health;
         water = script.water;
 
-        jumpHeight = script2.jumpHeight;
         rotateSpeed = script2.rotateSpeed;
         jumpSpeed = script2.jumpSpeed;
 
@@ -55,7 +53,6 @@ public class PlayerEditor : EditorWindow
         prefab.GetComponent<PlayerStats>().health = health;
         prefab.GetComponent<PlayerStats>().water = water;
 
-        prefab.GetComponent<PlayerMovement>().jumpHeight = jumpHeight;
         prefab.GetComponent<PlayerMovement>().rotateSpeed = rotateSpeed;
         prefab.GetComponent<PlayerMovement>().jumpSpeed = jumpSpeed;
     }
@@ -95,14 +92,6 @@ public class PlayerEditor : EditorWindow
 
         GUILayout.Label("Rotate Speed", GUILayout.Width(150));
         rotateSpeed = EditorGUILayout.FloatField(rotateSpeed);
-
-        EditorGUILayout.EndHorizontal();
-
-        //Jump Height
-        EditorGUILayout.BeginHorizontal();
-
-        GUILayout.Label("Jump Height", GUILayout.Width(150));
-        jumpHeight = EditorGUILayout.FloatField(jumpHeight);
 
         EditorGUILayout.EndHorizontal();
 
