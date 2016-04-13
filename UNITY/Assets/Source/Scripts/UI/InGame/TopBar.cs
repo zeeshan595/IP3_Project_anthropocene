@@ -24,11 +24,11 @@ public class TopBar : MonoBehaviour
         {
             if (manager.lobbySlots[i].GetComponent<LobbyPlayer>().team == TeamType.Red)
             {
-                redTeamPlayers.Add(i);
+                redTeamPlayers.Add((int)manager.lobbySlots[i].GetComponent<LobbyPlayer>().character);
             }
             else
             {
-                blueTeamPlayers.Add(i);
+                blueTeamPlayers.Add((int)manager.lobbySlots[i].GetComponent<LobbyPlayer>().character);
             }
         }
     }
@@ -41,8 +41,8 @@ public class TopBar : MonoBehaviour
             if (redTeamPlayers.Count > i)
             {
                 redTeam[i].SetActive(true);
-                LobbyPlayer player = manager.lobbySlots[redTeamPlayers[i]].GetComponent<LobbyPlayer>();
-                redTeam[i].GetComponent<Image>().sprite = spriteRed[0];
+                LobbyPlayer player = manager.lobbySlots[i].GetComponent<LobbyPlayer>();
+                redTeam[i].GetComponent<Image>().sprite = spriteRed[redTeamPlayers[i]];
             }
             else
             {
@@ -55,8 +55,8 @@ public class TopBar : MonoBehaviour
             if (blueTeamPlayers.Count > i)
             {
                 blueTeam[i].SetActive(true);
-                LobbyPlayer player = manager.lobbySlots[blueTeamPlayers[i]].GetComponent<LobbyPlayer>();
-                blueTeam[i].GetComponent<Image>().sprite = spriteBlue[0];
+                LobbyPlayer player = manager.lobbySlots[i].GetComponent<LobbyPlayer>();
+                blueTeam[i].GetComponent<Image>().sprite = spriteBlue[blueTeamPlayers[i]];
             }
             else
             {

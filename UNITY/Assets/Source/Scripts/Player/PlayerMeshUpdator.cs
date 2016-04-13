@@ -13,7 +13,7 @@ public class PlayerMeshUpdator : MonoBehaviour
     public GameObject mesh;
 
     private PlayerStats player;
-    private Transform waterMesh;
+    private WaterMesh waterMesh;
 
     private void Start()
     {
@@ -58,12 +58,12 @@ public class PlayerMeshUpdator : MonoBehaviour
         }
 
         player = GetComponent<PlayerStats>();
-        waterMesh = gameObject.GetComponentsInChildren<WaterMesh>()[0].transform;
+        waterMesh = gameObject.GetComponentsInChildren<WaterMesh>()[0];
     }
 
     private void Update()
     {
-        waterMesh.localScale = new Vector3(player.water / 100, 1, 1);
+        waterMesh.water = Mathf.RoundToInt(player.water);
     }
 }
 
