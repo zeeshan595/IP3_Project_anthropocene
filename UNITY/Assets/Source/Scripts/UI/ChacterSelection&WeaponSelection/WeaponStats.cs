@@ -44,7 +44,7 @@ public class WeaponStats : MonoBehaviour
         planting.anchoredPosition = new Vector2(plantFloat, 0);
         plantingMask.anchoredPosition = new Vector2(-plantFloat, 0);
 
-        float damageFloat = (-140 * Mathf.Clamp(wep.damage / 50, 0.0f, 1.0f)) + 140;
+        float damageFloat = (-140 * Mathf.Clamp(wep.range / 100, 0.0f, 1.0f)) + 140;
         damage.anchoredPosition = new Vector2(damageFloat, 0);
         damageMask.anchoredPosition = new Vector2(-damageFloat, 0);
     }
